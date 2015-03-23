@@ -1,5 +1,6 @@
 package projectPlanner.users.tests;
 
+import projectPlanner.*;
 import projectPlanner.users.*;
 
 import org.junit.*;
@@ -45,7 +46,11 @@ public class EmployeeTest {
 	@Test 
 	public void UpdatePassword() {
 		String newPassword = "Zxcv!234";
-		employee.updatePassword(password, newPassword);
+		try {		
+			employee.updatePassword(password, newPassword);
+		} catch (ActionNotAllowedException ex) {
+			Assert.fail("Password was wrong, but should be correct");
+		}
 		Assert.assertTrue(employee.checkPassword(newPassword));
 	}
 	

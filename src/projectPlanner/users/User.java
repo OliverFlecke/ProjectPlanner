@@ -1,5 +1,7 @@
 package projectPlanner.users;
 
+import projectPlanner.*;
+
 /**
  * Abstract user class to define the elements of a user
  */
@@ -67,6 +69,13 @@ public abstract class User {
 	}
 	
 	/**
+	 * @return Will return true, if the user is an admin
+	 */
+	public boolean isAdmin() {
+		return false;
+	}
+	
+	/**
 	 * Check if the passed password is correct
 	 * @param password to check
 	 * @return true, if the password is correct
@@ -75,9 +84,11 @@ public abstract class User {
 		return this.password.equals(password);
 	}
 	
-	public void updatePassword(String currentPassword, String newPassword) {
+	public void updatePassword(String currentPassword, String newPassword) throws ActionNotAllowedException {
 		if (this.checkPassword(currentPassword)) {
-			
+			this.password = newPassword;
+		} else {
+			throw new ActionNotAllowedException("Wrong password", this);
 		}
 	}
 }
