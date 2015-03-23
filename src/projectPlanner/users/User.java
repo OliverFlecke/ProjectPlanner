@@ -1,15 +1,17 @@
 package projectPlanner.users;
 
 /**
- *
+ * Abstract user class to define the elements of a user
  */
 public abstract class User {
+	// Static variable to hold the count of users, and to create new user IDs
 	private static int numberOfUsers = 0;
 	
 	// Username and password for the user
 	private String username;
 	private String password;
 	
+	// Name and ID of the user
 	private int id;
 	private String name;
 	
@@ -36,20 +38,46 @@ public abstract class User {
 	}
 	
 	/**
+	 * @return The static number of users current in the system
+	 */
+	public static int getNumberOfUsers() {
+		return numberOfUsers;
+	}
+	
+	/**
 	 * @return the ID of this user
 	 */
 	public int getID() {
 		return this.id;
 	}
 	
+	/**
+	 * Get the username of this user
+	 * @return the username of this user
+	 */
 	public String getUsername() {
 		return this.username;
 	}
-
+	
 	/**
-	 * @return The static number of users current in the system
+	 * @return The name of this user
 	 */
-	public static int getNumberOfUsers() {
-		return numberOfUsers;
+	public String getName() {
+		return this.name;
+	}
+	
+	/**
+	 * Check if the passed password is correct
+	 * @param password to check
+	 * @return true, if the password is correct
+	 */
+	public boolean checkPassword(String password) {
+		return this.password.equals(password);
+	}
+	
+	public void updatePassword(String currentPassword, String newPassword) {
+		if (this.checkPassword(currentPassword)) {
+			
+		}
 	}
 }
