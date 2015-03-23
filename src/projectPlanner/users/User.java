@@ -84,9 +84,41 @@ public abstract class User {
 		return this.password.equals(password);
 	}
 	
+	/**
+	 * Update the password of this user
+	 * @param currentPassword for this user, to insure it is the user, which changes the password
+	 * @param newPassword the new password for this user. 
+	 * @throws ActionNotAllowedException thrown if the password is wrong
+	 */
 	public void updatePassword(String currentPassword, String newPassword) throws ActionNotAllowedException {
 		if (this.checkPassword(currentPassword)) {
 			this.password = newPassword;
+		} else {
+			throw new ActionNotAllowedException("Wrong password", this);
+		}
+	}
+	
+	/**
+	 * Update the username, and check if the user is allowed
+	 * @param newUsername new username for this user
+	 * @param password to insure it is the user, that are changing the username
+	 */
+	public void updateUsername(String newUsername, String password) throws ActionNotAllowedException {
+		if (this.checkPassword(password)) {
+			this.username = newUsername;
+		} else {
+			throw new ActionNotAllowedException("Wrong password", this);
+		}
+	}
+	
+	/**
+	 * Update the name of the user
+	 * @param newName the new name of the user
+	 * @param password to insure the user have rights to change the name
+	 */
+	public void updateName(String newName, String password) throws ActionNotAllowedException {
+		if (this.checkPassword(password)) {
+			this.name = newName;
 		} else {
 			throw new ActionNotAllowedException("Wrong password", this);
 		}

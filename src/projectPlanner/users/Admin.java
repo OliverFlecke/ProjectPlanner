@@ -1,12 +1,12 @@
 package projectPlanner.users;
 
 /**
- * 
+ * Admin class to have extra access to the program
  */
 public class Admin extends User {
 
 	public Admin() {
-		super("Admin", "Admin1234", "Admin");
+		super("Admin", "Admin!234", "Admin");
 	}
 	
 	/**

@@ -19,4 +19,9 @@ public class AdminTest {
 	public void CreateAdmin() {
 		Assert.assertEquals(User.getNumberOfUsers(), admin.getID());
 	}
+	
+	@Test 
+	public void IsAdmin_AlwaysReturnTrue() {
+		Assert.assertTrue(admin.isAdmin());
+	}
 }
