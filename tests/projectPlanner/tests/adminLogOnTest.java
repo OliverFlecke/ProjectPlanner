@@ -88,12 +88,4 @@ public void testLoginFailedWrongUsername() {
 	assertFalse(planner.adminLoggedIn());
 }
 
-/** 
- * Tests the scenario that the administrator can add a book to the library via the library application.
- * <ol>
- *  <li> The administrator has to login with password "adminadmin".
- *  <li> The book to be added is created.
- *  <li> The book is added to the library by calling addBook from the library application.
- * </ol>
- */
 }
