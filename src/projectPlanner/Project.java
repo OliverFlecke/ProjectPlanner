@@ -75,8 +75,14 @@ public class Project {
 	public void addProjectLeader(User admin, Employee employee) throws ActionNotAllowedException{
 		projectLeaders.add(employee);			
 	}
+	public void removeProjectLeader(User admin, Employee employee) throws ActionNotAllowedException{
+		projectLeaders.remove(employee);	
+	}
 	public void addActivity(Activity activity){
 		activities.add(activity);
+	}
+	public void removeActivity(Activity activity){
+		activities.remove(activity);
 	}
 	public void printProjectReport(){
 		ProjectReport projectReport = new ProjectReport();
