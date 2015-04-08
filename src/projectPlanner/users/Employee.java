@@ -14,10 +14,17 @@ public class Employee extends User {
 	 * Default contructor, which takes a username, a password, and a name for the user
 	 * @param username of the employee
 	 * @param password for the employee to login to the system
-	 * @param name of the employee
+	 * @param firstname of the employee
+	 * @param lastname of the employee
 	 */
-	public Employee(String username, String password, String name) {
-		super(username, password, name);
+	public Employee(String username, String password, String firstname, String lastname) {
+		super(username, password, firstname, lastname);
+		this.activities = new ArrayList<Activity>();
+	}
+	
+	
+	public Employee(String username, String password, String firstname, String lastname, int id) {
+		super(username, password, firstname, lastname, id);
 		this.activities = new ArrayList<Activity>();
 	}
 }

@@ -14,7 +14,7 @@ public class UserEmployeeTest {
 	
 	@Before
 	public void setup() {
-		employee = new Employee("Ole42", "Qwer!234", "Ole Jensen");
+		employee = new Employee("Ole42", "Qwer!234", "Ole", "Jensen");
 		password = "Qwer!234";
 	}
 	
@@ -45,7 +45,7 @@ public class UserEmployeeTest {
 	
 	@Test
 	public void EmployeeNameIsCorrect() {
-		Assert.assertEquals("Ole Jensen", employee.getName());
+		Assert.assertEquals("Ole Jensen", employee.getFirstname() + " " + employee.getLastname());
 	}
 	
 	@Test
@@ -104,18 +104,18 @@ public class UserEmployeeTest {
 	public void SetNameOfTheUser() {
 		String newName = "Ole Hansen";
 		try {		
-			employee.updateName(newName, password);
+			employee.updateFirstname(newName, password);
 		} catch (ActionNotAllowedException ex) {
 			Assert.fail(ex.getMessage());
 		}
-		Assert.assertEquals(newName, employee.getName());
+		Assert.assertEquals(newName, employee.getFirstname() + " " + employee.getLastname());
 	}
 	
 	@Test
 	public void SetNameOfUser_PasswordIsWrong() {
 		String newName = "Ole Hansen";
 		try {
-			employee.updateName(newName, "Wrong password");
+			employee.updateFirstname(newName, "Wrong password");
 			Assert.fail("Exception should have been thrown due to wrong password");
 		} catch (ActionNotAllowedException ex) {
 			Assert.assertEquals("Wrong password", ex.getMessage());

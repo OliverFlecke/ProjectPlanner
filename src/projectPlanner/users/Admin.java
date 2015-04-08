@@ -6,7 +6,7 @@ package projectPlanner.users;
 public class Admin extends User {
 
 	public Admin() {
-		super("Admin", "Admin!234", "Admin");
+		super("Admin", "Admin!234", "Admin", "Admin");
 	}
 	
 	/**

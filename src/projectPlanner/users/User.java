@@ -1,13 +1,14 @@
 package projectPlanner.users;
 
 import projectPlanner.*;
+import projectPlanner.database.*;
 
 /**
  * Abstract user class to define the elements of a user
  */
 public abstract class User {
-	// Static variable to hold the count of users, and to create new user IDs
-	private static int numberOfUsers = 0;
+	// Will manage the saving and retriving of user objects 
+	private static IUserDataManager dataManager;
 	
 	// Username and password for the user
 	private String username;
@@ -15,20 +16,62 @@ public abstract class User {
 	
 	// Name and ID of the user
 	private int id;
-	private String name;
+	private String firstname;
+	private String lastname;
 	
 	/**
 	 * Create the user with all the relevant data
 	 * @param username of the usr
 	 * @param password to login to the system
 	 * @param id of the user, which should be unic
-	 * @param name of the user
+	 * @param firstname of the user
+	 * @param lastname of the user
 	 */
-	protected User(String username, String password, String name) {
+	protected User(String username, String password, String firstname, String lastname) {
 		this.username = username;
 		this.password = password;
-		this.name = name;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		
+		// Insures the user class has an data manager before trying to get a new user ID
+		if (dataManager == null) {
+			dataManager = new UserDatabaseManager();
+		}
 		this.id = User.getNewUserID();
+		
+		// Save the user by using the dataManager when the user has been created
+		dataManager.saveEmployee(this, password);
+	}
+	
+	/**
+	 * Create a new user with an already exciting id
+	 * @param username of the user
+	 * @param password to login to our system
+	 * @param firstname of the user
+	 * @param lastname of the user
+	 * @param id to identify the user
+	 */
+	protected User(String username, String password, String firstname, String lastname, int id) {
+		this.username = username;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.id = id;
+	}
+	
+	/**
+	 * @return get the userdata manager
+	 */
+	public IUserDataManager getDataManager() {
+		return dataManager;
+	}
+	
+	/**
+	 * Set the datamanager of all the user objects 
+	 * @param newDataManager the new datamanager for all the users
+	 */
+	public static void setDataManager(IUserDataManager newDataManager) {
+		dataManager = newDataManager;
 	}
 	
 	/**
@@ -36,14 +79,14 @@ public abstract class User {
 	 * @return a new, unic user ID
 	 */
 	private static int getNewUserID() {
-		return ++numberOfUsers;
+		return User.getNumberOfUsers() + 1;
 	}
 	
 	/**
 	 * @return The static number of users current in the system
 	 */
 	public static int getNumberOfUsers() {
-		return numberOfUsers;
+		return dataManager.getNumberOfUsers();
 	}
 	
 	/**
@@ -62,10 +105,17 @@ public abstract class User {
 	}
 	
 	/**
-	 * @return The name of this user
+	 * @return The firstname of this user
 	 */
-	public String getName() {
-		return this.name;
+	public String getFirstname() {
+		return this.firstname;
+	}
+	
+	/**
+	 * @return the lastname of this user
+	 */
+	public String getLastname() {
+		return this.lastname;
 	}
 	
 	/**
@@ -113,14 +163,38 @@ public abstract class User {
 	
 	/**
 	 * Update the name of the user
-	 * @param newName the new name of the user
+	 * @param newFirstname the new name of the user
 	 * @param password to insure the user have rights to change the name
 	 */
-	public void updateName(String newName, String password) throws ActionNotAllowedException {
+	public void updateFirstname(String newFirstname, String password) throws ActionNotAllowedException {
 		if (this.checkPassword(password)) {
-			this.name = newName;
+			this.firstname = newFirstname;
 		} else {
 			throw new ActionNotAllowedException("Wrong password", this);
 		}
+	}
+	
+	/**
+	 * Update the lastname of the user
+	 * @param newLastname for the username
+	 * @param password to insure the user has access to change the name
+	 * @throws ActionNotAllowedException thrown if the password is wrong. 
+	 */
+	public void updateLastname(String newLastname, String password) throws ActionNotAllowedException {
+		if (this.checkPassword(password)) {
+			this.lastname = newLastname;
+		} else {
+			throw new ActionNotAllowedException("Wrong password", this);
+		}
+	}
+	
+	@Override
+	public String toString() {
+		return this.firstname + " " + this.lastname + " Username: " + this.username + " Password: " 
+				+ this.password + " ID: " + this.id;
+	}
+	
+	public static User getUser(int id) {
+		return dataManager.getEmployee(id);
 	}
 }
