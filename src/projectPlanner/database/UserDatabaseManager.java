@@ -5,22 +5,14 @@ import projectPlanner.users.*;
 import java.sql.*;
 import java.util.List;
 
-import com.microsoft.sqlserver.jdbc.*;
+//import com.microsoft.sqlserver.jdbc.*;
 
 
 /**
  * @author Oliver Fleckenstein
  *
  */
-public class UserDatabaseManager implements IUserDataManager {
-	// String to connect to the server
-	private static String connectionString = "jdbc:sqlserver://v1bco1pzko.database.windows.net:1433;"
-			+ "database=WebApplicationodata_db;"
-			+ "user=oliver@v1bco1pzko;"
-			+ "password=ZAq1XSw2;";
-//			+ "encrypt=true;"
-//			+ "hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-	
+public class UserDatabaseManager extends DatabaseManager implements IUserDataManager {
 	// Fields for the connection, statement and the result. 
 	private static Connection connection = null;
 	private static Statement statement = null;
@@ -102,7 +94,7 @@ public class UserDatabaseManager implements IUserDataManager {
 	@Override
 	public void saveEmployee(int id, String firstname, String lastname, String username, String password) {
 		String sql = "INSERT INTO Employees " + 
-				"(ID, Firstname, Lastname, Username, Password) " + 
+				"(EmployeeID, Firstname, Lastname, Username, Password) " + 
 				"VALUES(" + id + ", '" 
 				+ firstname + "', '" 
 				+ lastname + "', '" 
@@ -120,7 +112,7 @@ public class UserDatabaseManager implements IUserDataManager {
 	@Override
 	public void saveEmployee(User user, String password) {
 		String SQL = "INSERT INTO Employees " +
-				"(ID, Firstname, Lastname, Username, Password) " + 
+				"(EmployeeID, Firstname, Lastname, Username, Password) " + 
 				"VALUES(" + user.getID() + ", '" 
 				+ user.getFirstname() + "', '" 
 				+ user.getLastname() + "', '"
@@ -141,7 +133,7 @@ public class UserDatabaseManager implements IUserDataManager {
 			connection = DriverManager.getConnection(connectionString);
 			statement = connection.createStatement();
 			
-			String sql = "SELECT COUNT (ID) FROM Employees";
+			String sql = "SELECT COUNT (EmployeeID) FROM Employees";
 			resultSet = statement.executeQuery(sql);
 			
 			// Use of a while loop to insure we have some result. Does not loop through anything
@@ -167,17 +159,17 @@ public class UserDatabaseManager implements IUserDataManager {
 			connection = DriverManager.getConnection(connectionString);
 			statement = connection.createStatement();
 			
-			String SQL = "SELECT * FROM Employees WHERE id=" + id + "";
+			String SQL = "SELECT * FROM Employees WHERE EmployeeID=" + id + "";
 			resultSet = statement.executeQuery(SQL);
 			
 			
-			// Get the first resualt and return it
+			// Get the first result and return it
 			if (resultSet.next()) {
 				String firstname = resultSet.getString("Firstname");
 				String lastname = resultSet.getString("Lastname");
 				String username = resultSet.getString("Username");
 				String password = resultSet.getString("Password");
-				int databaseID = resultSet.getInt("ID");
+				int databaseID = resultSet.getInt("EmployeeID");
 				
 				user = new Employee(username, password, firstname, lastname, databaseID);
 			}

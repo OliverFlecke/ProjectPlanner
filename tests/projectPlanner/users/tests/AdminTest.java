@@ -2,6 +2,7 @@ package projectPlanner.users.tests;
 
 import org.junit.*;
 
+import projectPlanner.database.tests.TestDatabaseManager;
 import projectPlanner.users.Admin;
 import projectPlanner.users.User;
 /**
@@ -12,6 +13,7 @@ public class AdminTest {
 	
 	@Before
 	public void setup() {
+		User.setDataManager(new TestDatabaseManager());
 		admin = new Admin();
 	}
 	

@@ -1,6 +1,7 @@
 package projectPlanner.users.tests;
 
 import projectPlanner.*;
+import projectPlanner.database.tests.TestDatabaseManager;
 import projectPlanner.users.*;
 
 import org.junit.*;
@@ -14,6 +15,7 @@ public class UserEmployeeTest {
 	
 	@Before
 	public void setup() {
+		User.setDataManager(new TestDatabaseManager());
 		employee = new Employee("Ole42", "Qwer!234", "Ole", "Jensen");
 		password = "Qwer!234";
 	}
@@ -108,7 +110,7 @@ public class UserEmployeeTest {
 		} catch (ActionNotAllowedException ex) {
 			Assert.fail(ex.getMessage());
 		}
-		Assert.assertEquals(newName, employee.getFirstname() + " " + employee.getLastname());
+		Assert.assertEquals(newName, employee.getFirstname());
 	}
 	
 	@Test
