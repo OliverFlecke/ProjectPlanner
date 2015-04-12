@@ -3,85 +3,20 @@ package projectPlanner.database;
 import projectPlanner.users.*;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 //import com.microsoft.sqlserver.jdbc.*;
 
 
 /**
+ * <p>
+ * Handles all the communication between the SQL server and the user class. Insures the user data is saved right
+ * and can be retrived again. 
+ * </p>
  * @author Oliver Fleckenstein
- *
  */
 public class UserDatabaseManager extends DatabaseManager implements IUserDataManager {
-	// Fields for the connection, statement and the result. 
-	private static Connection connection = null;
-	private static Statement statement = null;
-	private static ResultSet resultSet = null;
-	
-	///////////////////////////////
-	// Test the database connection
-	///////////////////////////////
-	public static void main(String[] args) {
-		//new Employee("Ken", "1234", "Kenneth", "Hansen");
-		
-		//UserDatabaseManager dataManager = new UserDatabaseManager();
-		//dataManager.saveEmployee(user, "1234");
-		
-		User.setDataManager(new UserDatabaseManager());
-		User user = User.getUser(4);
-		
-		System.out.println(user);
-	}
-	
-	/**
-	 * Close all the connections to the server, if they are still active 
-	 */
-	private static void closeConnections() {
-		// Try to close all the connection. 
-		try {
-			if (connection != null) connection.close();
-			if (statement != null) statement.close();
-			if (resultSet != null) resultSet.close();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-	}
-	
-	/**
-	 * Execute a SQL statement on the database
-	 * @param sql statement to execute
-	 * @return whenehter the statement succeded
-	 */
-	private static boolean executeStatement(String sql) {
-		boolean state = false;
-		try {
-//			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			
-			// Create the connection
-			connection = DriverManager.getConnection(connectionString);
-			
-			// Create the sql statement and execute it
-			statement = connection.createStatement();
-			statement.executeUpdate(sql);
-			
-			System.out.println("SQL statment send");
-			state = true;
-			
-		} catch (Exception ex) {
-			System.out.println("Class not found");
-			ex.printStackTrace();
-		} finally {
-			// Try to close all the connection. 
-			try {
-				if (connection != null) connection.close();
-				if (statement != null) statement.close();
-				if (resultSet != null) resultSet.close();
-			} catch (SQLException ex) {
-				ex.printStackTrace();
-			}
-		}
-		return state;
-	}
 	
 	/**
 	 * Create an employee in the database
@@ -101,7 +36,7 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 				+ username + "', '" 
 				+ password + "')";
 		
-		UserDatabaseManager.executeStatement(sql);
+		UserDatabaseManager.executeUpdate(sql);
 	}
 	
 	/**
@@ -111,15 +46,20 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 	 */
 	@Override
 	public void saveEmployee(User user, String password) {
-		String SQL = "INSERT INTO Employees " +
-				"(EmployeeID, Firstname, Lastname, Username, Password) " + 
-				"VALUES(" + user.getID() + ", '" 
-				+ user.getFirstname() + "', '" 
-				+ user.getLastname() + "', '"
-				+ user.getUsername() + "', '"
-				+ password + "')";
-		
-		UserDatabaseManager.executeStatement(SQL);
+		// Check that the user is not allready in the database. 
+		if (this.getEmployee(user.getID()) != null) 
+			return;
+		else {
+			String SQL = "INSERT INTO Employees " +
+					"(EmployeeID, Firstname, Lastname, Username, Password) " + 
+					"VALUES(" + user.getID() + ", '" 
+					+ user.getFirstname() + "', '" 
+					+ user.getLastname() + "', '"
+					+ user.getUsername() + "', '"
+					+ password + "')";
+			
+			UserDatabaseManager.executeUpdate(SQL);
+		}
 	}
 	
 	/**
@@ -145,48 +85,101 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		} finally {
 			closeConnections();
 		}
-		return 0;
+		return -1;
 	}
 
 	@Override
 	/**
+	 * Get an employee by his ID from the database
 	 * @param id to get employee by
 	 */
 	public User getEmployee(int id) {
 		User user = null;
+		String SQL = "SELECT * FROM Employees WHERE EmployeeID=" + id + "";
+		
 		try {
-			// Create connection
-			connection = DriverManager.getConnection(connectionString);
-			statement = connection.createStatement();
-			
-			String SQL = "SELECT * FROM Employees WHERE EmployeeID=" + id + "";
-			resultSet = statement.executeQuery(SQL);
-			
+			resultSet = UserDatabaseManager.executeQuery(SQL);	
 			
 			// Get the first result and return it
-			if (resultSet.next()) {
-				String firstname = resultSet.getString("Firstname");
-				String lastname = resultSet.getString("Lastname");
-				String username = resultSet.getString("Username");
-				String password = resultSet.getString("Password");
-				int databaseID = resultSet.getInt("EmployeeID");
-				
-				user = new Employee(username, password, firstname, lastname, databaseID);
-			}
+			if (resultSet.next()) 
+				user = getUserFromResultSet();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-		} finally {
-			closeConnections();
 		}
 		return user;
 	}
 
 	@Override
+	public User getEmployeeByUsername(String username) {
+		User user = null;
+		String SQL = "SELECT * FROM Employees WHERE Username='" + username + "'";
+		
+		try {
+			resultSet = UserDatabaseManager.executeQuery(SQL);
+			if (resultSet.next()) 
+				user = getUserFromResultSet();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return user;
+	}
+	
 	/**
 	 * Get all employees in the database
 	 */
+	@Override
 	public List<User> getAllEmployees() {
-		// TODO Auto-generated method stub
-		return null;
+		List<User> list = new ArrayList<User>();
+		String SQL = "SELECT * FROM Employees";
+
+		resultSet = executeQuery(SQL);
+		
+		try {
+			// Iterate over the result set and add each user to the list
+			while (resultSet.next()) {
+				list.add(getUserFromResultSet());
+			}	
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		}
+		return list;
+	}
+
+	/**
+	 * Get the current user from the resultSet. This should be used when a SQL statement has been made 
+	 * on the server, and the resultSet has got a respond including user data
+	 * @return The user in the current result set
+	 * @throws SQLException is thrown if the coloumns can't be found
+	 */
+	private User getUserFromResultSet() throws SQLException {
+		// Get all the required user data from the table
+		String firstname = resultSet.getString("Firstname");
+		String lastname = resultSet.getString("Lastname");
+		String username = resultSet.getString("Username");
+		String password = resultSet.getString("Password");
+		int databaseID = resultSet.getInt("EmployeeID");
+		return new Employee(username, password, firstname, lastname, databaseID);
+	}
+	
+	/**
+	 * <p>
+	 * This implementation of getNewID will find the highest ID in the employee table, and return an new ID
+	 * that is 1 higher than the found ID. If no ID was found, the table must be empty, and we can safely 
+	 * assign 1 as the ID to the requsting object. 
+	 * </p>
+	 */
+	@Override
+	public int getNewID() {
+		// This SQL statment should get the highest employee ID in the table
+		String SQL = "SELECT TOP 1 EmployeeID FROM Employees ORDER BY EmployeeID DESC";
+		resultSet = executeQuery(SQL);
+		
+		try {
+			// If we get a result, get the ID of that employee and return a new, higher ID
+			if (resultSet.next()) 
+				return resultSet.getInt("EmployeeID") + 1;
+		} catch (SQLException ex) {	}
+		// If we don't get a result, the table will be empty, and we can just use 1 as an id. 
+		return 1; 		
 	}
 }

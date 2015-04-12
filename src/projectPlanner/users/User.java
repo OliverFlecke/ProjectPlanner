@@ -6,7 +6,7 @@ import projectPlanner.database.*;
 /**
  * Abstract user class to define the elements of a user
  */
-public abstract class User {
+public abstract class User implements Comparable<User> {
 	// Will manage the saving and retriving of user objects 
 	private static IUserDataManager dataManager;
 	
@@ -79,7 +79,7 @@ public abstract class User {
 	 * @return a new, unic user ID
 	 */
 	private static int getNewUserID() {
-		return User.getNumberOfUsers() + 1;
+		return dataManager.getNewID();
 	}
 	
 	/**
@@ -194,7 +194,45 @@ public abstract class User {
 				+ this.password + " ID: " + this.id;
 	}
 	
+	/**
+	 * Get a user by it's id
+	 * @param id to get user by
+	 * @return the user found with the relative user id
+	 */
 	public static User getUser(int id) {
 		return dataManager.getEmployee(id);
+	}
+	
+	/**
+	 * Get a user by his username
+	 * @param username to get user by
+	 * @return The user with a matching username 
+	 */
+	public static User getUserByUsername(String username) {
+		return dataManager.getEmployeeByUsername(username);
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		User otherUser;
+		if (other instanceof User)		// Check the passed object
+			otherUser = (User) other;
+		else 
+			return false;
+		
+		// Statement to compare all fields in the User class
+		if (this.getFirstname().equals(otherUser.getFirstname()) &&
+				this.getLastname().equals(otherUser.getLastname()) &&
+				this.getID() == otherUser.getID() &&
+				this.getUsername().equals(otherUser.getUsername()) &&
+				otherUser.checkPassword(this.password))
+			return true;
+		else 
+			return false;
+	}
+	
+	@Override 
+	public int compareTo(User other) {
+		return Integer.compare(this.getID(), other.getID());
 	}
 }

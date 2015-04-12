@@ -39,8 +39,21 @@ public interface IUserDataManager {
 	public User getEmployee(int id);	
 	
 	/**
+	 * Get a user by his username
+	 * @param username to get user by
+	 * @return A user from the database with the passed username
+	 */
+	public User getEmployeeByUsername(String username);
+	
+	/**
 	 * Get all users in the database
-	 * @return all the users in the database
+	 * @return All the users in the database
 	 */
 	public List<User> getAllEmployees();
+	
+	/**
+	 * Get a new ID for a user
+	 * @return A new ID for a user in the database
+	 */
+	public int getNewID();
 }

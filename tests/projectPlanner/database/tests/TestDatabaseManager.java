@@ -12,7 +12,7 @@ public class TestDatabaseManager implements IUserDataManager {
 	
 	@Override
 	public int getNumberOfUsers() {
-		return this.numberOfUsers++;
+		return this.numberOfUsers;
 	}
 
 	@Override
@@ -21,11 +21,14 @@ public class TestDatabaseManager implements IUserDataManager {
 
 	}
 
+	/**
+	 * <p>
+	 * This should not do anything, and the test class under test should just assume this is done right
+	 * </p>
+	 */
 	@Override
-	public void saveEmployee(int id, String firstname, String lastname,
-			String username, String password) {
+	public void saveEmployee(int id, String firstname, String lastname, String username, String password) {
 		// This should not do anything. The class under test should just assume this is done right. 
-
 	}
 
 	@Override
@@ -36,6 +39,18 @@ public class TestDatabaseManager implements IUserDataManager {
 
 	@Override
 	public List<User> getAllEmployees() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getNewID() {
+		this.numberOfUsers++;
+		return this.getNumberOfUsers();
+	}
+
+	@Override
+	public User getEmployeeByUsername(String username) {
 		// TODO Auto-generated method stub
 		return null;
 	}

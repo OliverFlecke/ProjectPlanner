@@ -2,9 +2,11 @@ package projectPlanner.users.tests;
 
 import projectPlanner.*;
 import projectPlanner.database.tests.TestDatabaseManager;
+import projectPlanner.testCategories.*;
 import projectPlanner.users.*;
 
 import org.junit.*;
+import org.junit.experimental.categories.Category;
 
 /**
  * Test for the user class
@@ -26,36 +28,43 @@ public class UserEmployeeTest {
 	}
 	
 	@Test
+	@Category({UserTest.class, FastTest.class})
 	public void CreateNewEmployeeIDCheck() {
 		Assert.assertEquals(User.getNumberOfUsers(), employee.getID());
 	}
 	
 	@Test
+	@Category({UserTest.class, FastTest.class})
 	public void UsernameIsCorrect() {
 		Assert.assertEquals("Ole42", employee.getUsername());
 	}
 	
 	@Test 
+	@Category({UserTest.class, FastTest.class})
 	public void PasswordIsCorrect() {
 		Assert.assertTrue(employee.checkPassword(password));
 	}
 	
 	@Test 
+	@Category({UserTest.class, FastTest.class})
 	public void PasswordIsWrong() {
 		Assert.assertFalse(employee.checkPassword("This password is wrong"));
 	}
 	
 	@Test
+	@Category({UserTest.class, FastTest.class})
 	public void EmployeeNameIsCorrect() {
 		Assert.assertEquals("Ole Jensen", employee.getFirstname() + " " + employee.getLastname());
 	}
 	
 	@Test
+	@Category({UserTest.class, FastTest.class})
 	public void EmployeeIsNotAdmin() {
 		Assert.assertFalse(employee.isAdmin());
 	}
 	
 	@Test 
+	@Category({UserTest.class, FastTest.class})
 	public void UpdatePassword() {
 		String newPassword = "Zxcv!234";
 		try {		
@@ -67,6 +76,7 @@ public class UserEmployeeTest {
 	}
 	
 	@Test
+	@Category({UserTest.class, FastTest.class})
 	public void UpdatePassword_OldPasswordIsWrong() {
 		String newPassword = "Zxcv!234";
 		try {		
@@ -90,6 +100,7 @@ public class UserEmployeeTest {
 	}
 	
 	@Test 
+	@Category({UserTest.class, FastTest.class})
 	public void ChangeUsername_PasswordIsWrong() {
 		String newUsername = "Ole43";
 		try {
@@ -114,6 +125,7 @@ public class UserEmployeeTest {
 	}
 	
 	@Test
+	@Category({UserTest.class, FastTest.class})
 	public void SetNameOfUser_PasswordIsWrong() {
 		String newName = "Ole Hansen";
 		try {
