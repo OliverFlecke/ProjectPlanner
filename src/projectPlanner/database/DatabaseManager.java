@@ -48,41 +48,34 @@ public abstract class DatabaseManager {
 	 * @param sql statement to execute
 	 * @return whenehter the statement succeded
 	 */
-	protected static boolean executeUpdate(String sql) {
-		boolean state = false;
-		try {
-			// Create the connection
-			connection = DriverManager.getConnection(connectionString);
-			
-			// Create the sql statement and execute it
-			statement = connection.createStatement();
-			statement.executeUpdate(sql);
-			state = true;
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			// Try to close all the connection. 
-			closeConnections();
-		}
-		return state;
+	protected static boolean executeUpdate(String sql) throws SQLException {	
+		// Create the connection
+		connection = DriverManager.getConnection(connectionString);
+		
+		// Create the sql statement and execute it
+		statement = connection.createStatement();
+		statement.executeUpdate(sql);
+		
+		// Try to close all the connection. 
+		closeConnections();
+		return true;
 	}
 	
 	/**
 	 * Execute a SQL query and returns the result as an result set
 	 * @param SQL string to send and get result from. 
 	 */
-	protected static ResultSet executeQuery(String SQL) {
+	protected static ResultSet executeQuery(String SQL) throws SQLException {
 		ResultSet result = null;
-		try {
-			// Create a connection and a statement and execute it 
-			connection = DriverManager.getConnection(connectionString);
-			statement = connection.createStatement();
-			result = statement.executeQuery(SQL);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
+		// Create a connection and a statement and execute it 
+		connection = DriverManager.getConnection(connectionString);
+		statement = connection.createStatement();
+		result = statement.executeQuery(SQL);
+//		} catch (Exception ex) {
+//			ex.printStackTrace();
+//		} finally {
 			closeConnections();
-		}
+//		}
 		return result;
 	}
 }
