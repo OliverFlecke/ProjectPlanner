@@ -7,7 +7,11 @@ import java.util.List;
 import projectPlanner.users.Employee;
 import projectPlanner.users.User;
 
-public class Project {
+/**
+ * Abstract project class containing project elements
+ */
+
+public abstract class Project implements Comparable<Project> {
 
 	private Double allottedTime;
 	private String name;
@@ -38,7 +42,7 @@ public class Project {
 		this(name, allottedTime, projectLeader,startDate);
 		this.setEndDate(endDate);
 	}
-	public int getId(){
+	public int getID(){
 		return this.id;
 	}
 
@@ -87,6 +91,30 @@ public class Project {
 	public void printProjectReport(){
 		ProjectReport projectReport = new ProjectReport();
 		projectReport.print(this);
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		Project otherProject;
+		if (other instanceof Project)		// Check the argument is a Project
+			otherProject = (Project) other;
+		else 
+			return false;
+		
+		// Statement to compare all fields in the User class
+		if (this.getName().equals(otherProject.getName()) &&
+				this.getID()==otherProject.getID() &&
+				this.getEndDate().equals(otherProject) &&
+				this.getStartDate().equals(otherProject) &&
+				this.getAllottedTime().equals(otherProject.getAllottedTime()))
+			return true;
+		else 
+			return false;
+	}
+	
+	@Override 
+	public int compareTo(Project other) {
+		return Integer.compare(this.getID(), other.getID());
 	}
 
 }
