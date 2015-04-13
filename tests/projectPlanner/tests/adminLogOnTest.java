@@ -1,5 +1,10 @@
 package projectPlanner.tests;
 
+/**
+ * @author Mark Bo Jensen
+ *
+ */
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -95,23 +100,23 @@ public class adminLogOnTest {
  *  <li> The administrator is not logged in to the project planner
  * </ol>
  */
-@Test
-public void testLoginFailedRightUsernameNWrongPassword() {
-
-	ProjectPlanner planner = new ProjectPlanner();
-	
-	// Check first that the administrator is not logged in.
-
-	assertFalse(planner.adminLoggedIn());
-	
-	// Step 1)
-	
-	boolean login = planner.adminLogin("admin","wrong password");
-	
-	// Step 2+3) Check that the method returned false and check that admin is still not logged in.
-	assertFalse(login);
-	assertFalse(planner.adminLoggedIn());
-}
+//@Test
+//public void testLoginFailedRightUsernameNWrongPassword() {
+//
+//	ProjectPlanner planner = new ProjectPlanner();
+//	
+//	// Check first that the administrator is not logged in.
+//
+//	assertFalse(planner.adminLoggedIn());
+//	
+//	// Step 1)
+//	
+//	boolean login = planner.adminLogin("admin","wrong password");
+//	
+//	// Step 2+3) Check that the method returned false and check that admin is still not logged in.
+//	assertFalse(login);
+//	assertFalse(planner.adminLoggedIn());
+//}
 /** 
  * Tests the scenario when the administrator wants to log in with the wrong username and the right password.
  * <ol>
