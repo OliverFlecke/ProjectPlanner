@@ -8,7 +8,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
 
-public class View extends JFrame {
+public class DnDTest extends JFrame {
 	
 	public JList dragToList;
 	public JList dragFromList;
@@ -19,7 +19,7 @@ public class View extends JFrame {
 	 */
 	private static final long serialVersionUID = 1669099048319235705L;
 
-	public View() {
+	public DnDTest() {
 		
 		
 		
