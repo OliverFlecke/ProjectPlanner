@@ -1,9 +1,8 @@
-package projectPlanner.tests;
+package projectPlanner;
 
 import org.junit.*;
 
-import projectPlanner.Project;
-import projectPlanner.tests.*;
+import projectPlanner.*;
 
 public class ProjectTest {
 	private Project project;

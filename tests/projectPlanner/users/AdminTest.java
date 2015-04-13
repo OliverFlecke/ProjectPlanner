@@ -1,8 +1,8 @@
-package projectPlanner.users.tests;
+package projectPlanner.users;
 
 import org.junit.*;
 
-import projectPlanner.database.tests.TestDatabaseManager;
+import projectPlanner.database.TestDatabaseManager;
 import projectPlanner.users.Admin;
 import projectPlanner.users.User;
 /**

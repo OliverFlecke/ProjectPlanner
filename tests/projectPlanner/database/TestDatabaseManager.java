@@ -1,4 +1,4 @@
-package projectPlanner.database.tests;
+package projectPlanner.database;
 
 import java.util.List;
 

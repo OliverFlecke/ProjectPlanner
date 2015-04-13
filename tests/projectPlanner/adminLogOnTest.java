@@ -1,4 +1,4 @@
-package projectPlanner.tests;
+package projectPlanner;
 
 /**
  * @author Mark Bo Jensen

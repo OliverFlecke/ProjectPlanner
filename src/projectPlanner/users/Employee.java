@@ -2,8 +2,7 @@ package projectPlanner.users;
 
 import java.util.*;
 
-import projectPlanner.Activity;
-import projectPlanner.tests.*;
+import projectPlanner.*;
 
 /**
  * Standard employee account, which will have be able to work and log time

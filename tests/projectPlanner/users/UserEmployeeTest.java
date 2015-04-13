@@ -1,9 +1,8 @@
-package projectPlanner.users.tests;
+package projectPlanner.users;
 
-import projectPlanner.ActionNotAllowedException;
-import projectPlanner.database.tests.TestDatabaseManager;
+import projectPlanner.*;
+import projectPlanner.database.TestDatabaseManager;
 import projectPlanner.testCategories.*;
-import projectPlanner.tests.*;
 import projectPlanner.users.*;
 
 import org.junit.*;

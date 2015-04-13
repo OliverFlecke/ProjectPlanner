@@ -1,8 +1,7 @@
 package projectPlanner.users;
 
-import projectPlanner.ActionNotAllowedException;
+import projectPlanner.*;
 import projectPlanner.database.*;
-import projectPlanner.tests.*;
 
 /**
  * Abstract user class to define the elements of a user

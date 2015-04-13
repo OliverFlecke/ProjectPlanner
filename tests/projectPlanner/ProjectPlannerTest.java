@@ -1,11 +1,10 @@
-package projectPlanner.tests;
+package projectPlanner;
 
 import org.junit.*;
 import org.junit.experimental.categories.Category;
 
-import projectPlanner.ProjectPlanner;
+import projectPlanner.*;
 import projectPlanner.testCategories.*;
-import projectPlanner.tests.*;
 /**
  * @author Oliver Fleckenstein
  *
