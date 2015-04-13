@@ -9,7 +9,7 @@ public class ProjectTest {
 	
 	@Before
 	public void setup(){
-		project = new Project("project_name", 10.0);
+		//project = new Project("project_name", 10.0);
 	}
 	
 	

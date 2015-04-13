@@ -1,5 +1,7 @@
 package projectPlanner.users;
 
+import java.sql.SQLException;
+
 import projectPlanner.*;
 import projectPlanner.database.*;
 
@@ -27,7 +29,7 @@ public abstract class User implements Comparable<User> {
 	 * @param firstname of the user
 	 * @param lastname of the user
 	 */
-	protected User(String username, String password, String firstname, String lastname) {
+	protected User(String username, String password, String firstname, String lastname) throws Exception {
 		this.username = username;
 		this.password = password;
 		this.firstname = firstname;
@@ -62,7 +64,7 @@ public abstract class User implements Comparable<User> {
 	/**
 	 * @return get the userdata manager
 	 */
-	public IUserDataManager getDataManager() {
+	IUserDataManager getDataManager() {
 		return dataManager;
 	}
 	
@@ -70,22 +72,24 @@ public abstract class User implements Comparable<User> {
 	 * Set the datamanager of all the user objects 
 	 * @param newDataManager the new datamanager for all the users
 	 */
-	public static void setDataManager(IUserDataManager newDataManager) {
+	static void setDataManager(IUserDataManager newDataManager) {
 		dataManager = newDataManager;
 	}
 	
 	/**
 	 * Get a new user ID
 	 * @return a new, unic user ID
+	 * @throws SQLException thrown if the database connection fails
 	 */
-	private static int getNewUserID() {
+	private static int getNewUserID() throws SQLException {
 		return dataManager.getNewID();
 	}
 	
 	/**
 	 * @return The static number of users current in the system
+	 * @throws SQLException thrown if the database connection fails
 	 */
-	public static int getNumberOfUsers() {
+	public static int getNumberOfUsers() throws SQLException {
 		return dataManager.getNumberOfUsers();
 	}
 	
@@ -198,8 +202,9 @@ public abstract class User implements Comparable<User> {
 	 * Get a user by it's id
 	 * @param id to get user by
 	 * @return the user found with the relative user id
+	 * @throws SQLException 
 	 */
-	public static User getUser(int id) {
+	public static User getUser(int id) throws SQLException {
 		return dataManager.getEmployee(id);
 	}
 	
@@ -207,9 +212,10 @@ public abstract class User implements Comparable<User> {
 	 * Get a user by his username
 	 * @param username to get user by
 	 * @return The user with a matching username 
+	 * @throws SQLException 
 	 */
-	public static User getUserByUsername(String username) {
-		return dataManager.getEmployeeByUsername(username);
+	public static User getUser(String username) throws SQLException {
+		return dataManager.getEmployee(username);
 	}
 	
 	@Override

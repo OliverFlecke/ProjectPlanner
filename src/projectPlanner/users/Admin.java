@@ -5,7 +5,7 @@ package projectPlanner.users;
  */
 public class Admin extends User {
 
-	public Admin() {
+	public Admin() throws Exception {
 		super("Admin", "Admin!234", "Admin", "Admin");
 	}
 	

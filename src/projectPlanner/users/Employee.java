@@ -17,8 +17,9 @@ public class Employee extends User {
 	 * @param password for the employee to login to the system
 	 * @param firstname of the employee
 	 * @param lastname of the employee
+	 * @throws Exception 
 	 */
-	public Employee(String username, String password, String firstname, String lastname) {
+	public Employee(String username, String password, String firstname, String lastname) throws Exception {
 		super(username, password, firstname, lastname);
 		this.activities = new ArrayList<Activity>();
 	}

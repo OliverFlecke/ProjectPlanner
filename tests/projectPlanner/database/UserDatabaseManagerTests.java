@@ -1,8 +1,8 @@
 package projectPlanner.database;
 
+import java.sql.SQLException;
 import java.util.List;
 
-import projectPlanner.database.*;
 import projectPlanner.users.*;
 import projectPlanner.testCategories.*;
 
@@ -30,7 +30,7 @@ public class UserDatabaseManagerTests {
 	
 	@Test
 	@Category({DatabaseTest.class, SlowTest.class})
-	public void getUserByID() {
+	public void getUserByID() throws SQLException {
 		// Create a copy of the user in the database
 		User user = new Employee("Oliver", "1234", "Oliver", "Fleckenstein", 1);
 		
@@ -44,10 +44,11 @@ public class UserDatabaseManagerTests {
 	/**
 	 * This test will not check the exact count is right, but will just assume the user table is not empty. 
 	 * Do to the fact, that the table will keep growning, we can't compare the number of users to a static number
+	 * @throws SQLException 
 	 */
 	@Test
 	@Category({DatabaseTest.class, SlowTest.class})
-	public void GetNumberOfUsers_CantCheckExactNumber() {
+	public void GetNumberOfUsers_CantCheckExactNumber() throws SQLException {
 		int result = dataManager.getNumberOfUsers();
 		Assert.assertTrue(result > 0);
 	}
@@ -55,10 +56,11 @@ public class UserDatabaseManagerTests {
 	/**
 	 * As more and more users will keep being added, we can't compare each user to something. 
 	 * We will check to see, if we have got the right amount of users back in this test. 
+	 * @throws SQLException 
 	 */
 	@Test
 	@Category({DatabaseTest.class, SlowTest.class}) 
-	public void getAllUsers_CheckIfRightAmountIsReturned() {
+	public void getAllUsers_CheckIfRightAmountIsReturned() throws SQLException {
 		int numberOfUsers = dataManager.getNumberOfUsers();
 		List<User> listOfUsers = dataManager.getAllEmployees();
 		

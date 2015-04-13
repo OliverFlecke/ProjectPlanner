@@ -11,7 +11,7 @@ public class ProjectPlanner {
 	private boolean isLoggedIn;
 	
 	public boolean login(String username, String password) throws UserLoginException, Exception {
-		currentUser = User.getUserByUsername(username);
+		currentUser = User.getUser(username);
 		if (currentUser == null) {
 			throw new UserLoginException("Invalid username or password");
 		}

@@ -1,12 +1,16 @@
 package projectPlanner.users;
 
+import java.sql.SQLException;
+
 import projectPlanner.*;
-import projectPlanner.database.TestDatabaseManager;
+import projectPlanner.database.IUserDataManager;
 import projectPlanner.testCategories.*;
-import projectPlanner.users.*;
 
 import org.junit.*;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mock;
+
+import static org.mockito.Mockito.*;
 
 /**
  * Test for the user class
@@ -15,21 +19,41 @@ public class UserEmployeeTest {
 	private Employee employee;
 	private String password;
 	
+	@Mock 
+	private IUserDataManager dataManager;
+	
 	@Before
 	public void setup() {
-		User.setDataManager(new TestDatabaseManager());
-		employee = new Employee("Ole42", "Qwer!234", "Ole", "Jensen");
 		password = "Qwer!234";
+		
+		dataManager = mock(IUserDataManager.class);
+		User.setDataManager(dataManager);
+		try {
+			employee = new Employee("Ole42", password, "Ole", "Jensen");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@After
-	public void tearDown() {
-		employee = null;
-	}
+	public void tearDown() { }
 	
 	@Test
 	@Category({UserTest.class, FastTest.class})
-	public void CreateNewEmployeeIDCheck() {
+	public void CreateNewEmployeeIDCheck() throws SQLException {
+		// Create the two mock methods and send it to the user class
+		try {
+			when(dataManager.getNewID()).thenReturn(1);
+			when(dataManager.getNumberOfUsers()).thenReturn(1);
+
+			User.setDataManager(dataManager);
+			
+			employee = new Employee("Ole42", password, "Ole", "Jensen");
+		} catch (Exception e) {
+			Assert.fail("No exception should be thrown");
+			e.printStackTrace();
+		}
+		// Assert that the new user have 1 as ID which is the same number of users. 
 		Assert.assertEquals(User.getNumberOfUsers(), employee.getID());
 	}
 	
