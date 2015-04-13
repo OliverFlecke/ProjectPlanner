@@ -43,6 +43,12 @@ public class View extends JFrame {
 		
 		JComponent panel3 = makeTextPanel("Panel #3");
 		tabbedPane.addTab("Activities", icon, panel3, "Activities you are part of" );
+		
+		JComponent panel4 = makeTextPanel("Panel #4");
+		tabbedPane.addTab("Project", icon, panel4, "Project Managers can create new projects" );
+		
+		JComponent panel5 = makeTextPanel("Panel #5");
+		tabbedPane.addTab("adminTab", icon, panel5, "Super secret tab for admins only" );
 
 		this.add(tabbedPane, BorderLayout.CENTER);
 		setSize(1200,800);
