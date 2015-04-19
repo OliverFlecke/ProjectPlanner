@@ -1,5 +1,6 @@
 package projectPlanner;
 
+import java.sql.SQLException;
 import java.util.*;
 
 import projectPlanner.database.*;
@@ -13,21 +14,27 @@ public class Activity {
 	// Data manager for the activity
 	private static IActivityDatabaseManager dataManager;
 	
-	private List<Employee> employeesAttached;		// List of employees attached to the project
 	private String title;							// Title of the project
 	private int id;									// ID of the project
 	private final Project project;					// Project which the activity is linked to
-	private double timeAccumulated;					// Time accumulated in this activity
+	private int hoursAccumulated;					// Time accumulated in this activity
+	private boolean isActive;
 
 	/**
-	 * Create a new activity with a title and a linked projet
+	 * Create a new activity with a title and a linked project
 	 * @param title of the activity
 	 * @param project which this activity is linked to
+	 * @throws SQLException 
 	 */
-	public Activity(String title, Project project) {
+	public Activity(String title, Project project) throws SQLException {
 		this.title = title;
 		this.project = project;
-		this.id = Activity.getNewID();
+		this.hoursAccumulated = 0;
+		this.isActive = true;
+		
+		if (dataManager == null) 
+			dataManager = new ActivityDatabaseManager();
+		dataManager.saveActivity(this);
 	}
 	
 	/**
@@ -37,19 +44,12 @@ public class Activity {
 	 * @param project parent of this activity
 	 * @param hours spend on the activity
 	 */
-	public Activity(int id, String title, Project project, int hours) {
-		this.title = title;
+	public Activity(int id, String title, Project project, int hours, boolean isActive) {
 		this.id = id;
+		this.title = title;
 		this.project = project;
-		this.timeAccumulated = hours;
-	}
-
-	/**
-	 * @return A new ID for an activity
-	 */
-	private static int getNewID() {
-		// TODO Get a new ID from the database manager
-		return 0;
+		this.hoursAccumulated = hours;
+		this.isActive = isActive;
 	}
 	
 	/**
@@ -60,32 +60,34 @@ public class Activity {
 	}
 
 	/**
-	 * @param title to set give to this acticity
+	 * @param title to set give to this activity
 	 */
-	public void setName(String title) {
-		// TODO Update the datamanager entry
+	public void setName(String title) throws SQLException {
 		this.title = title;
+		dataManager.updateActivity(this);
 	}
 	
-	public double getTimeAccumulated() {
-		// TODO Get the data from the database manager
-		return timeAccumulated;
+	/**
+	 * @return The time accumulated in this activity
+	 */
+	public int getTimeAccumulated() {
+		return this.hoursAccumulated;
 	}
 
 	/**
 	 * @return The list of employees working on this activity
+	 * @throws SQLException 
 	 */
-	public List<Employee> getEmployeesAttached() {
-		// TODO Get users from database
-		return employeesAttached;
+	public List<Employee> getEmployees() throws SQLException {
+		return dataManager.getUsers(this);
 	}
 	
 	/**
 	 * @param employee to add to this activity
+	 * @throws SQLException 
 	 */
-	public void addEmployee(Employee employee) {
-		this.employeesAttached.add(employee);
-		// TODO Save user in the database
+	public void addEmployee(Employee employee) throws SQLException {
+		dataManager.addEmployee(employee, this);
 	}
 
 	/**
@@ -93,5 +95,29 @@ public class Activity {
 	 */
 	public int getID() {
 		return this.id;
+	}
+
+	/**
+	 * @return The ID of the project, linked to this activity
+	 */
+	public int getProjectID() {
+		return this.project.getID();
 	}	
+	
+	/**
+	 * @return If the activity is active or not
+	 */
+	public boolean isActive() {
+		return this.isActive;
+	}
+	
+	/**
+	 * Set the activity status of this activity
+	 * @param status of the activity
+	 * @throws SQLException 
+	 */
+	public void setActive(boolean status) throws SQLException {
+		this.isActive = status;
+		dataManager.updateActivity(this);
+	}
 }

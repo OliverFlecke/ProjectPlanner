@@ -20,12 +20,22 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 	public static Activity getCurrentActivity(ResultSet result) throws SQLException {
 		String title = result.getString("Title");
 		int ID = result.getInt("ActivityID");
-		int hours = result.getInt("AccumilatedHours");
+		int hours = result.getInt("AccumulatedHours");
 		int projectID = result.getInt("ProjectID");
+		boolean status = result.getBoolean("IsActive");
 		
-		Project project = Project.getProject(projectID);
+		Project project = ProjectDatabaseManager.getCurrentProject(result);
 		
-		return new Activity(ID, title, project, hours);
+		return new Activity(ID, title, project, hours, status);
+	}
+	
+	@Override
+	public void saveActivity(Activity activity) throws SQLException {
+		String SQL = "INSERT INTO Activity (Title, AccumulatedHours, ProjectID) " +
+				"VALUES('" + activity.getTitle() + "', " +
+				activity.getTimeAccumulated() + ", " +
+				activity.getProjectID() + ";";
+		executeQuery(SQL);
 	}
 	
 	@Override
@@ -41,8 +51,8 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 	}
 	
 	@Override
-	public List<User> getUsers(Activity activity) throws SQLException {
-		List<User> list = new ArrayList<User>();
+	public List<Employee> getUsers(Activity activity) throws SQLException {
+		List<Employee> list = new ArrayList<Employee>();
 		String SQL = "SELECT Activities.*, Employees.*, Projects.* FROM WorksOn " +
 						"INNER JOIN Employees ON WorksOn.EmployeeID=Employees.EmployeeID " +
 						"INNER JOIN Activities ON WorksOn.ActivityID=Activities.ActivityID " +
@@ -51,15 +61,26 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		resultSet = executeQuery(SQL);
 		
 		while (resultSet.next()) {
-			String firstname = resultSet.getString("Firstname");
-			String lastname = resultSet.getString("Lastname");
-			String username = resultSet.getString("Username");
-			String password = resultSet.getString("Password");
-			int ID = resultSet.getInt("EmployeeID");
-			list.add(new Employee(username, password, firstname, lastname, ID));
+			list.add(UserDatabaseManager.getUserFromResultSet(resultSet));
 		}
-		
-		
 		return list;
+	}
+	
+	@Override
+	public void addEmployee(Employee employee, Activity activity) throws SQLException {
+		String SQL = "INSERT INTO WorksOn Values(" + 
+				employee.getID() + ", " + 
+				activity.getID() + ");";
+		executeUpdate(SQL);
+	}
+	
+	@Override 
+	public void updateActivity(Activity activity) throws SQLException {
+		String SQL = "UPDATE Activities " +
+				"SET Title = '" + 			activity.getTitle() + "'," +
+				"AccumulatedHours = " + 	activity.getTimeAccumulated() + ", " +
+				"ProjectID = " + 			activity.getProjectID() +
+				"WHERE ActivityID = " + 	activity.getID();
+		executeQuery(SQL);
 	}
 }

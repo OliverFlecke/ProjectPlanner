@@ -40,7 +40,6 @@ public abstract class User implements Comparable<User> {
 		if (dataManager == null) {
 			dataManager = new UserDatabaseManager();
 		}
-		this.id = User.getNewUserID();
 		
 		// Save the user by using the dataManager when the user has been created
 		dataManager.saveEmployee(this, password);
@@ -75,15 +74,6 @@ public abstract class User implements Comparable<User> {
 	 */
 	public static void setDataManager(IUserDataManager newDataManager) {
 		dataManager = newDataManager;
-	}
-	
-	/**
-	 * Get a new user ID
-	 * @return a new, unic user ID
-	 * @throws SQLException thrown if the database connection fails
-	 */
-	private static int getNewUserID() throws SQLException {
-		return dataManager.getNewID();
 	}
 	
 	/**
@@ -252,7 +242,7 @@ public abstract class User implements Comparable<User> {
 	
 	/**
 	 * Get all the employees in the database
-	 * @return All the meployees in the database
+	 * @return All the employees in the database
 	 * @throws SQLException
 	 */
 	public static List<User> getAllUsers() throws SQLException {

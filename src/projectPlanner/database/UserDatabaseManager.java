@@ -6,9 +6,6 @@ import projectPlanner.users.*;
 import java.sql.*;
 import java.util.*;
 
-//import com.microsoft.sqlserver.jdbc.*;
-
-
 /**
  * <p>
  * Handles all the communication between the SQL server and the user class. Insures the user data is saved right
@@ -24,7 +21,7 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 	 * @return The user in the current result set
 	 * @throws SQLException is thrown if the coloumns can't be found
 	 */
-	public static User getUserFromResultSet(ResultSet resultSet) throws SQLException {
+	public static Employee getUserFromResultSet(ResultSet resultSet) throws SQLException {
 		// Get all the required user data from the table
 		String firstname = resultSet.getString("Firstname");
 		String lastname = resultSet.getString("Lastname");
@@ -63,13 +60,13 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 	 */
 	@Override
 	public void saveEmployee(User user, String password) throws SQLException {
-		// Check that the user is not allready in the database. 
+		// Check that the user is not already in the database. 
 		if (this.getEmployee(user.getID()) != null) 
 			return;
 		else {
 			String SQL = "INSERT INTO Employees " +
-					"(EmployeeID, Firstname, Lastname, Username, Password) " + 
-					"VALUES(" + user.getID() + ", '" 
+					"(Firstname, Lastname, Username, Password) " + 
+					"VALUES('"
 					+ user.getFirstname() + "', '" 
 					+ user.getLastname() + "', '"
 					+ user.getUsername() + "', '"
@@ -133,7 +130,7 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		resultSet = UserDatabaseManager.executeQuery(SQL);
 		if (resultSet.next()) 
 			user = getUserFromResultSet(resultSet);
-		
+		closeConnections();
 		return user;
 	}
 	
@@ -153,27 +150,6 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 			list.add(getUserFromResultSet(resultSet));
 		}	
 		return list;
-	}
-	
-	/**
-	 * <p>
-	 * This implementation of getNewID will find the highest ID in the employee table, and return an new ID
-	 * that is 1 higher than the found ID. If no ID was found, the table must be empty, and we can safely 
-	 * assign 1 as the ID to the requsting object. 
-	 * </p>
-	 * @throws SQLException 
-	 */
-	@Override
-	public int getNewID() throws SQLException {
-		// This SQL statment should get the highest employee ID in the table
-		String SQL = "SELECT TOP 1 EmployeeID FROM Employees ORDER BY EmployeeID DESC";
-		resultSet = executeQuery(SQL);
-	
-		// If we get a result, get the ID of that employee and return a new, higher ID
-		if (resultSet.next()) 
-			return resultSet.getInt("EmployeeID") + 1;
-		// If we don't get a result, the table will be empty, and we can just use 1 as an id. 
-		return 1; 		
 	}
 
 	@Override
@@ -200,6 +176,6 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 				"', Password='" + password + 
 				"' WHERE EmployeeID=" + user.getID();
 		
-		executeUpdate(SQL);
+		UserDatabaseManager.executeUpdate(SQL);
 	}
 }

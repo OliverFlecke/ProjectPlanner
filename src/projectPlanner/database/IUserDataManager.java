@@ -1,11 +1,10 @@
 package projectPlanner.database;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 import projectPlanner.Activity;
-import projectPlanner.users.User;
+import projectPlanner.users.*;
 
 /**
  * Interface to get user data from any data source
@@ -71,12 +70,6 @@ public interface IUserDataManager {
 	 * @return All the users in the database
 	 */
 	public List<User> getAllEmployees() throws SQLException;
-	
-	/**
-	 * Get a new ID for a user
-	 * @return A new ID for a user in the database
-	 */
-	public int getNewID() throws SQLException;
 	
 	/**
 	 * Get the open activities related to this user

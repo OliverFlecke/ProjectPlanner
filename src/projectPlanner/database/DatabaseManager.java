@@ -5,6 +5,7 @@ package projectPlanner.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,6 +28,7 @@ public abstract class DatabaseManager {
 	// Fields for the connection, statement and the result. 
 	protected static Connection connection = null;
 	protected static Statement statement = null;
+	protected static PreparedStatement preStatement = null;
 	protected static ResultSet resultSet = null;
 	
 	/**
@@ -46,13 +48,13 @@ public abstract class DatabaseManager {
 	/**
 	 * Execute a SQL statement on the database
 	 * @param sql statement to execute
-	 * @return whenehter the statement succeded
+	 * @return If the statement succeed or not
 	 */
 	protected static boolean executeUpdate(String sql) throws SQLException {	
 		// Create the connection
 		connection = DriverManager.getConnection(connectionString);
 		
-		// Create the sql statement and execute it
+		// Create the SQL statement and execute it
 		statement = connection.createStatement();
 		statement.executeUpdate(sql);
 		// Try to close all the connection. 

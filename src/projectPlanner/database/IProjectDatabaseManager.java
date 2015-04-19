@@ -3,6 +3,7 @@ package projectPlanner.database;
 import java.sql.SQLException;
 import java.util.List;
 
+import projectPlanner.Activity;
 import projectPlanner.Project;
 import projectPlanner.users.*;
 
@@ -30,13 +31,6 @@ public interface IProjectDatabaseManager {
 	 * @throws SQLException
 	 */
 	public List<Project> getAllProjects() throws SQLException;
-
-	/**
-	 * Create a new ID for a project
-	 * @return A new ID for a project
-	 * @throws SQLException
-	 */
-	public int getNewID() throws SQLException;
 	
 	/**
 	 * Save the passed project to the database
@@ -54,9 +48,10 @@ public interface IProjectDatabaseManager {
 	
 	/**
 	 * Get all the active projects
+	 * @return A list with all the active projects
 	 * @throws SQLException
 	 */
-	public void getActiveProjects() throws SQLException;
+	public List<Project> getActiveProjects() throws SQLException;
 	
 	/**
 	 * Get all the projects, where the passed user is project leader
@@ -65,4 +60,25 @@ public interface IProjectDatabaseManager {
 	 * @throws SQLException
 	 */
 	public List<Project> getProjectsByProjectLeader(User user) throws SQLException;
+
+	/**
+	 * Add an activity to this project
+	 * @param project to add the activity to
+	 * @param activity to add
+	 */
+	public void addActivityToProject(Project project, Activity activity) throws SQLException;
+
+	/**
+	 * Removes an activity from the project
+	 * @param project to remove the project from
+	 * @param activity to remove
+	 */
+	public void removeActivityToProjcet(Project project, Activity activity) throws SQLException;
+
+	/**
+	 * Get all the activities related to the passed project
+	 * @param project to get the related activities form
+	 * @return A list of related activities
+	 */
+	public List<Activity> getActivitiesInProject(Project project) throws SQLException;
 }
