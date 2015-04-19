@@ -6,6 +6,6 @@ package projectPlanner.testCategories;
  * </p>
  * @author Oliver Fleckenstein
  */
-public interface DatabaseTest {
+public interface DatabaseTest extends SlowTest {
 
 }

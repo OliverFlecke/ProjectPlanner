@@ -86,5 +86,12 @@ public class Activity {
 	public void addEmployee(Employee employee) {
 		this.employeesAttached.add(employee);
 		// TODO Save user in the database
+	}
+
+	/**
+	 * @return The id of the activity
+	 */
+	public int getID() {
+		return this.id;
 	}	
 }

@@ -55,7 +55,6 @@ public abstract class DatabaseManager {
 		// Create the sql statement and execute it
 		statement = connection.createStatement();
 		statement.executeUpdate(sql);
-		
 		// Try to close all the connection. 
 		closeConnections();
 		return true;
@@ -66,16 +65,9 @@ public abstract class DatabaseManager {
 	 * @param SQL string to send and get result from. 
 	 */
 	protected static ResultSet executeQuery(String SQL) throws SQLException {
-		ResultSet result = null;
 		// Create a connection and a statement and execute it 
 		connection = DriverManager.getConnection(connectionString);
 		statement = connection.createStatement();
-		result = statement.executeQuery(SQL);
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//		} finally {
-			closeConnections();
-//		}
-		return result;
+		return statement.executeQuery(SQL);
 	}
 }

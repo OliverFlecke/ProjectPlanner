@@ -19,6 +19,14 @@ public interface IUserDataManager {
 	public int getNumberOfUsers() throws SQLException;
 	
 	/**
+	 * Update the database with new user data
+	 * @param user to update data about
+	 * @param password for the user
+	 * @throws SQLException
+	 */
+	public void updateEmployee(User user, String password) throws SQLException;
+	
+	/**
 	 * Save an employee by passing the user object and the password for the user
 	 * @param user to be saved 
 	 * @param password of the user to be saved

@@ -3,6 +3,7 @@ package projectPlanner.database;
 import java.sql.SQLException;
 import java.util.List;
 
+import projectPlanner.ActionNotAllowedException;
 import projectPlanner.users.*;
 import projectPlanner.testCategories.*;
 
@@ -47,7 +48,7 @@ public class UserDatabaseManagerTests {
 	 * @throws SQLException 
 	 */
 	@Test
-	@Category({DatabaseTest.class, SlowTest.class})
+	@Category(DatabaseTest.class)
 	public void GetNumberOfUsers_CantCheckExactNumber() throws SQLException {
 		int result = dataManager.getNumberOfUsers();
 		Assert.assertTrue(result > 0);
@@ -59,12 +60,44 @@ public class UserDatabaseManagerTests {
 	 * @throws SQLException 
 	 */
 	@Test
-	@Category({DatabaseTest.class, SlowTest.class}) 
+	@Category(DatabaseTest.class) 
 	public void getAllUsers_CheckIfRightAmountIsReturned() throws SQLException {
 		int numberOfUsers = dataManager.getNumberOfUsers();
 		List<User> listOfUsers = dataManager.getAllEmployees();
 		
 		// Check to see, if we have the right amount of users. 
 		Assert.assertEquals(numberOfUsers, listOfUsers.size());
+	}
+	
+	@Test
+	@Category(DatabaseTest.class)
+	public void getActivities() throws SQLException {
+		User user = dataManager.getEmployee(1);
+		
+		
+	}
+	
+	@Test
+	@Category(DatabaseTest.class) 
+	public void updateUser_UpdatesEachElementInSteps() throws SQLException, ActionNotAllowedException {
+		// Get the user with id = 1 from the database
+		User user = dataManager.getEmployee(1);
+		User.setDataManager(dataManager);
+		
+		// Updates its firstname to Oliver
+		user.updateFirstname("Oliver", "1234");
+		Assert.assertEquals("Oliver", user.getFirstname());
+		
+		// Update the lastname of the user
+		user.updateLastname("Fleckenstein", "1234");
+		Assert.assertEquals("Fleckenstein", user.getLastname());
+	
+		// Update the username
+		user.updateUsername("Oliver", "1234");
+		Assert.assertEquals("Oliver", user.getUsername());
+		
+		// Updates the password 
+		user.updatePassword("1234", "1234");
+		Assert.assertTrue(user.checkPassword("1234"));
 	}
 }

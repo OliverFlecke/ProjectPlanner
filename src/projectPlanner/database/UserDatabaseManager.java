@@ -187,6 +187,19 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		while (resultSet.next()) {
 			list.add(ActivityDatabaseManager.getCurrentActivity(resultSet));
 		}	
+		closeConnections();
 		return list;
+	}
+
+	@Override
+	public void updateEmployee(User user, String password) throws SQLException {
+		String SQL = "UPDATE Employees " + 
+				"SET Firstname='" + user.getFirstname() + 
+				"', Lastname='" + user.getLastname() + 
+				"', Username='" + user.getUsername() + 
+				"', Password='" + password + 
+				"' WHERE EmployeeID=" + user.getID();
+		
+		executeUpdate(SQL);
 	}
 }

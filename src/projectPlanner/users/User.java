@@ -1,6 +1,7 @@
 package projectPlanner.users;
 
 import java.sql.SQLException;
+import java.util.*;
 
 import projectPlanner.*;
 import projectPlanner.database.*;
@@ -10,7 +11,7 @@ import projectPlanner.database.*;
  */
 public abstract class User implements Comparable<User> {
 	// Will manage the saving and retriving of user objects 
-	private static IUserDataManager dataManager;
+	protected static IUserDataManager dataManager;
 	
 	// Username and password for the user
 	private String username;
@@ -72,7 +73,7 @@ public abstract class User implements Comparable<User> {
 	 * Set the datamanager of all the user objects 
 	 * @param newDataManager the new datamanager for all the users
 	 */
-	static void setDataManager(IUserDataManager newDataManager) {
+	public static void setDataManager(IUserDataManager newDataManager) {
 		dataManager = newDataManager;
 	}
 	
@@ -143,10 +144,12 @@ public abstract class User implements Comparable<User> {
 	 * @param currentPassword for this user, to insure it is the user, which changes the password
 	 * @param newPassword the new password for this user. 
 	 * @throws ActionNotAllowedException thrown if the password is wrong
+	 * @throws SQLException 
 	 */
-	public void updatePassword(String currentPassword, String newPassword) throws ActionNotAllowedException {
+	public void updatePassword(String currentPassword, String newPassword) throws ActionNotAllowedException, SQLException {
 		if (this.checkPassword(currentPassword)) {
 			this.password = newPassword;
+			dataManager.updateEmployee(this, password);
 		} else {
 			throw new ActionNotAllowedException("Wrong password", this);
 		}
@@ -156,10 +159,12 @@ public abstract class User implements Comparable<User> {
 	 * Update the username, and check if the user is allowed
 	 * @param newUsername new username for this user
 	 * @param password to insure it is the user, that are changing the username
+	 * @throws SQLException 
 	 */
-	public void updateUsername(String newUsername, String password) throws ActionNotAllowedException {
+	public void updateUsername(String newUsername, String password) throws ActionNotAllowedException, SQLException {
 		if (this.checkPassword(password)) {
 			this.username = newUsername;
+			dataManager.updateEmployee(this, password);
 		} else {
 			throw new ActionNotAllowedException("Wrong password", this);
 		}
@@ -169,10 +174,12 @@ public abstract class User implements Comparable<User> {
 	 * Update the name of the user
 	 * @param newFirstname the new name of the user
 	 * @param password to insure the user have rights to change the name
+	 * @throws SQLException 
 	 */
-	public void updateFirstname(String newFirstname, String password) throws ActionNotAllowedException {
+	public void updateFirstname(String newFirstname, String password) throws ActionNotAllowedException, SQLException {
 		if (this.checkPassword(password)) {
 			this.firstname = newFirstname;
+			dataManager.updateEmployee(this, password);
 		} else {
 			throw new ActionNotAllowedException("Wrong password", this);
 		}
@@ -183,10 +190,12 @@ public abstract class User implements Comparable<User> {
 	 * @param newLastname for the username
 	 * @param password to insure the user has access to change the name
 	 * @throws ActionNotAllowedException thrown if the password is wrong. 
+	 * @throws SQLException 
 	 */
-	public void updateLastname(String newLastname, String password) throws ActionNotAllowedException {
+	public void updateLastname(String newLastname, String password) throws ActionNotAllowedException, SQLException {
 		if (this.checkPassword(password)) {
 			this.lastname = newLastname;
+			dataManager.updateEmployee(this, password);
 		} else {
 			throw new ActionNotAllowedException("Wrong password", this);
 		}
@@ -197,27 +206,6 @@ public abstract class User implements Comparable<User> {
 		return this.firstname + " " + this.lastname + " Username: " + this.username + " Password: " 
 				+ this.password + " ID: " + this.id;
 	}
-	
-	/**
-	 * Get a user by it's id
-	 * @param id to get user by
-	 * @return the user found with the relative user id
-	 * @throws SQLException 
-	 */
-	public static User getUser(int id) throws SQLException {
-		return dataManager.getEmployee(id);
-	}
-	
-	/**
-	 * Get a user by his username
-	 * @param username to get user by
-	 * @return The user with a matching username 
-	 * @throws SQLException 
-	 */
-	public static User getUser(String username) throws SQLException {
-		return dataManager.getEmployee(username);
-	}
-	
 	@Override
 	public boolean equals(Object other) {
 		User otherUser;
@@ -240,5 +228,34 @@ public abstract class User implements Comparable<User> {
 	@Override 
 	public int compareTo(User other) {
 		return Integer.compare(this.getID(), other.getID());
+	}
+	
+	/**
+	 * Get a user by it's id
+	 * @param id to get user by
+	 * @return the user found with the relative user id
+	 * @throws SQLException 
+	 */
+	public static User getUser(int id) throws SQLException {
+		return dataManager.getEmployee(id);
+	}
+	
+	/**
+	 * Get a user by his username
+	 * @param username to get user by
+	 * @return The user with a matching username 
+	 * @throws SQLException 
+	 */
+	public static User getUser(String username) throws SQLException {
+		return dataManager.getEmployee(username);
+	}
+	
+	/**
+	 * Get all the employees in the database
+	 * @return All the meployees in the database
+	 * @throws SQLException
+	 */
+	public static List<User> getAllUsers() throws SQLException {
+		return dataManager.getAllEmployees();
 	}
 }

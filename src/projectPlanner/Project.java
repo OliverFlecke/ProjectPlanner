@@ -22,8 +22,8 @@ public class Project implements Comparable<Project> {
 	private int id;
 	private List<Activity> activities;
 
-	public Project(String name, Double allottedTime) {
-		this.setName(name);
+	public Project(String title, Double allottedTime) {
+		this.setTitle(title);
 		this.setAllottedTime(allottedTime);
 		this.projectLeaders = new ArrayList<User>();
 		this.activities = new ArrayList<Activity>();
@@ -58,32 +58,40 @@ public class Project implements Comparable<Project> {
 	public boolean isActive() {
 		return isActive;
 	}
-	public void setActive(boolean isActive) {
+	
+	public void activateProject(boolean isActive) {
 		this.isActive = isActive;
 	}
+	
 	public Double getAllottedTime() {
 		return allottedTime;
 	}
+	
 	public void setAllottedTime(Double allottedTime) {
 		this.allottedTime = allottedTime;
 	}
+	
 	public Calendar getEndDate() {
 		return endDate;
 	}
+	
 	public void setEndDate(Calendar endDate) {
 		this.endDate = endDate;
 	}
+	
 	public Calendar getStartDate() {
 		return startDate;
 	}
+	
 	public void setStartDate(Calendar startDate) {
 		this.startDate = startDate;
 	}
-	public String getName() {
+	
+	public String getTitle() {
 		return title;
 	}
 	
-	public void setName(String title) {
+	public void setTitle(String title) {
 		this.title = title;
 	}
 	
@@ -117,7 +125,7 @@ public class Project implements Comparable<Project> {
 			return false;
 		
 		// Statement to compare all fields in the User class
-		if (this.getName().equals(otherProject.getName()) &&
+		if (this.getTitle().equals(otherProject.getTitle()) &&
 				this.getID()==otherProject.getID() &&
 				this.getEndDate().equals(otherProject) &&
 				this.getStartDate().equals(otherProject) &&

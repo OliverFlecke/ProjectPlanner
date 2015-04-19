@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.*;
 
 /**
- * 
+ * Responsible for the database connection for all activity related storing. 
  */
 public class ActivityDatabaseManager extends DatabaseManager implements IActivityDatabaseManager {
 
@@ -41,17 +41,22 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 	}
 	
 	@Override
-	public List<User> getUsers() throws SQLException {
+	public List<User> getUsers(Activity activity) throws SQLException {
 		List<User> list = new ArrayList<User>();
 		String SQL = "SELECT Activities.*, Employees.*, Projects.* FROM WorksOn " +
 						"INNER JOIN Employees ON WorksOn.EmployeeID=Employees.EmployeeID " +
 						"INNER JOIN Activities ON WorksOn.ActivityID=Activities.ActivityID " +
 						"INNER JOIN Projects ON Activities.ProjectID=Projects.ProjectID " +
-						"WHERE WorksOn.EmployeeID=1;";
+						"WHERE WorksOn.ActivityID=" + activity.getID() + ";";
 		resultSet = executeQuery(SQL);
 		
 		while (resultSet.next()) {
-			
+			String firstname = resultSet.getString("Firstname");
+			String lastname = resultSet.getString("Lastname");
+			String username = resultSet.getString("Username");
+			String password = resultSet.getString("Password");
+			int ID = resultSet.getInt("EmployeeID");
+			list.add(new Employee(username, password, firstname, lastname, ID));
 		}
 		
 		

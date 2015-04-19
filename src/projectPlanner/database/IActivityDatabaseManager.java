@@ -21,5 +21,5 @@ public interface IActivityDatabaseManager {
 	 * @return All the users working on this activity
 	 * @throws SQLException
 	 */
-	public List<User> getUsers() throws SQLException;
+	public List<User> getUsers(Activity activity) throws SQLException;
 }
