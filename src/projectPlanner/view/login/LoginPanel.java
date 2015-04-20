@@ -139,5 +139,9 @@ public class LoginPanel extends JPanel {
 		}
 		return false;
 	}
+	public void flush(){
+		passwordTxtField.setText("");
+		logInDialog.getStatusUpdatePnl().updateMessage("");
+	}
 
 }
