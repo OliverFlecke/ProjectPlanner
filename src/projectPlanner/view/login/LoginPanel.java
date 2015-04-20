@@ -103,6 +103,7 @@ public class LoginPanel extends JPanel {
 		try{
 			if(isEmpty()){
 				logInDialog.getStatusUpdatePnl().updateMessage("Please fill out both fields");
+				return false;
 			}
 			logInDialog.setCursor(hourglassCursor);
 			boolean returnValue = projectPlanner.login(usernameTxtField.getText(), passwordTxtField.getText());
