@@ -5,10 +5,11 @@ import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
-import projectPlanner.view.acivitiesPane.ActivityHolder;
-import projectPlanner.view.activitiesPane.Activity;
+import projectPlanner.view.activityPanel.Activity;
+import projectPlanner.view.activityPanel.ActivityHolder;
 
 
 public class CalendarTab extends JPanel{
@@ -20,15 +21,18 @@ public class CalendarTab extends JPanel{
 	
 	private JPanel leftPane;
 	private JPanel rightPane;
+	private JScrollPane leftSideScrollPane;
 	
 	public CalendarTab () {
 	    leftPane = new ActivityHolder();
 	    rightPane = new CalendarDay();
 	    rightPane.setLayout(new GridLayout(0,7));
+	    leftSideScrollPane = new JScrollPane(leftPane);
 	    
-	    JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPane, rightPane);
+	    JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftSideScrollPane, rightPane);
+	    
 	    splitPane.setOneTouchExpandable(true);
-	    splitPane.setDividerLocation(300);
+	    splitPane.setDividerLocation(400);
 	    this.setLayout(new GridLayout(1,0));
 	    this.add(splitPane);
 	    

@@ -70,7 +70,6 @@ public class CalendarDay extends JPanel {
 				}
 			} else {
 				dayLbl.setText(" ");
-				dayPane.setBackground(Color.WHITE);
 			}
 			dayPane.add(dayLbl);
 			this.add(dayPane);
@@ -82,7 +81,6 @@ public class CalendarDay extends JPanel {
 			JPanel dayPane = new JPanel();
 			dayPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			JLabel dayLbl = new JLabel(" ");
-			dayPane.setBackground(Color.WHITE);
 			dayPane.add(dayLbl);
 			this.add(dayPane);
 		}
