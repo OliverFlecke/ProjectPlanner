@@ -1,16 +1,21 @@
 package projectPlanner.view.login;
 
+import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 import projectPlanner.ProjectPlanner;
 import projectPlanner.users.UserLoginException;
@@ -18,7 +23,7 @@ import projectPlanner.view.mainView.View;
 
 public class LoginPanel extends JPanel {
 
-
+	private Cursor hourglassCursor;
 	private JTextField usernameTxtField;
 	private JPasswordField passwordTxtField;
 	private JButton loginBtn;
@@ -26,11 +31,17 @@ public class LoginPanel extends JPanel {
 	private JLabel passwordLbl;
 	private ProjectPlanner projectPlanner;
 	private LogInDialog logInDialog;
+	private Cursor normalCursor;
 
 	public LoginPanel(LogInDialog logInDialog) {
+		//add wait cursors
+		hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
+		normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+
 		//reference to logInDialog
 		this.logInDialog = logInDialog;
-		
+		this.projectPlanner = new ProjectPlanner();
+
 
 		//Setting up the layout for the panel.
 		this.setLayout(new GridBagLayout());
@@ -68,43 +79,65 @@ public class LoginPanel extends JPanel {
 		lp.gridwidth = 2;
 		this.add(loginBtn, lp);
 
-		//Chek login on button click
+		//Check login on button click
 		loginBtn.addActionListener( new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				if(verifyLogin()){
-					View view = new View();
+					View view = new View(logInDialog);
 					logInDialog.setVisible(false);
 
 				}
 			}
 		});
 
+		//Makes enter button login
+		logInDialog.getRootPane().setDefaultButton(loginBtn);
+
 	}
 
 	@SuppressWarnings("deprecation")
 	private boolean verifyLogin(){
 		try{
-			return projectPlanner.login(usernameTxtField.getText(), passwordTxtField.getText());
+			if(isEmpty()){
+				logInDialog.getStatusUpdatePnl().updateMessage("Please fill out both fields");
+			}
+			logInDialog.setCursor(hourglassCursor);
+			boolean returnValue = projectPlanner.login(usernameTxtField.getText(), passwordTxtField.getText());
+			logInDialog.setCursor(normalCursor);
+			return returnValue;
 		}
 		catch(NullPointerException nullEx){
+			logInDialog.setCursor(normalCursor);
 			logInDialog.getStatusUpdatePnl().updateMessage("Please fill out both fields");
+			nullEx.printStackTrace();
 			return false;
 		}
 		catch(UserLoginException userEx) {
+			logInDialog.setCursor(normalCursor);
 			logInDialog.getStatusUpdatePnl().updateMessage("Wrong username or password");
 			return false;
 		}
 		catch(SQLException sQLEx) {
+			logInDialog.setCursor(normalCursor);
 			logInDialog.getStatusUpdatePnl().updateMessage("No connection to server");
 			return false;
 		}
 		catch(Exception e) {
+			logInDialog.setCursor(normalCursor);
 			logInDialog.getStatusUpdatePnl().updateMessage("No connection to server");
 			return false;
 		}
+
+		
+	}
+	private boolean isEmpty(){
+		if(usernameTxtField.getText().length()==0 || passwordTxtField.getText().length()==0){
+			return true;
+		}
+		return false;
 	}
 
 }
