@@ -7,6 +7,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -19,14 +21,20 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import projectPlanner.view.listOfEmployees;
 import projectPlanner.view.calendarPanel.CalendarTab;
+import projectPlanner.view.login.LogInDialog;
 
 public class View extends JFrame {
+	
+	private LogInDialog logInDialog;
 
 	ImageIcon icon;
 	/**
@@ -34,9 +42,10 @@ public class View extends JFrame {
 	 */
 	private static final long serialVersionUID = 1669099048319235705L;
 
-	public View() {
+	public View(LogInDialog logInDialog) {
 		super("Project Planner");
-
+		this.logInDialog = logInDialog;
+		initMenuBar();
 		JTabbedPane tabbedPane = new JTabbedPane();
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		try {
@@ -82,6 +91,24 @@ public class View extends JFrame {
 		this.setVisible(true);
 	}
 	
+
+	private void initMenuBar() {
+		JMenuBar menuBar = new JMenuBar();
+		JMenuItem logOut = new JMenuItem("Log Out");
+		
+		
+		menuBar.add(logOut);
+		this.setJMenuBar(menuBar);
+		logOut.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				dispose();
+				logInDialog.setVisible(true);
+			}
+		});
+		
+	}
+
 
 	protected JComponent makeTextPanel(String text) {
 		JPanel panel = new JPanel(false);
