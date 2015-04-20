@@ -13,15 +13,21 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 
+
+
+
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 import projectPlanner.view.calendarPanel.CalendarTab;
 import projectPlanner.view.login.LogInDialog;
@@ -88,20 +94,35 @@ public class View extends JFrame {
 
 	private void initMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
-		JMenuItem logOut = new JMenuItem("Log Out");
+		JMenu logOut = new JMenu("Log Out");
 		
 		menuBar.add(logOut);
 		this.setJMenuBar(menuBar);
 		
-		logOut.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT); 
+		menuBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT); 
 		
 		
-		logOut.addActionListener(new ActionListener(){
+		logOut.addMenuListener(new MenuListener(){
 			@Override
-			public void actionPerformed(ActionEvent event) {
+			public void menuCanceled(MenuEvent arg0) {
 				dispose();
 				logInDialog.loginPnl().flush();
 				logInDialog.setVisible(true);
+			}
+
+			@Override
+			public void menuDeselected(MenuEvent arg0) {
+				dispose();
+				logInDialog.loginPnl().flush();
+				logInDialog.setVisible(true);
+			}
+
+			@Override
+			public void menuSelected(MenuEvent arg0) {
+				dispose();
+				logInDialog.loginPnl().flush();
+				logInDialog.setVisible(true);
+				
 			}
 		});
 		
