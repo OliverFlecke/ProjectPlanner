@@ -1,10 +1,13 @@
 package projectPlanner;
 
+import java.sql.SQLException;
+
 import org.junit.*;
 import org.junit.experimental.categories.Category;
 
 import projectPlanner.*;
 import projectPlanner.testCategories.*;
+import projectPlanner.users.UserLoginException;
 /**
  * @author Oliver Fleckenstein
  *
@@ -18,21 +21,18 @@ public class ProjectPlannerTest {
 		projectPlanner = new ProjectPlanner();
 	}
 	
-	@Test
-	@Category(FastTest.class)
-	public void loginWithUsernameAndPassword_Succes() {
-		boolean state = false;
-		try {
-			state = projectPlanner.login("Oliver", "1234");
-		} catch (Exception e) {
-			Assert.fail("Should login just fine");
-		}
-		
-		Assert.assertTrue(state);
-	}
-	
 	@After
 	public void tearDown() {
 		
 	}
+
+	@Test
+	@Category(FastTest.class)
+	public void loginWithUsernameAndPassword_Succes() throws UserLoginException, SQLException, Exception {
+		boolean state = false;
+		state = projectPlanner.login("Oliver", "1234");
+
+		Assert.assertTrue(state);
+	}
+
 }

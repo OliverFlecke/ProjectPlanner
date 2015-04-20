@@ -28,7 +28,7 @@ public interface IActivityDatabaseManager {
 	 * Add an employee to the activity
 	 * @param employee to add to the activity
 	 */
-	public void addEmployee(Employee employee, Activity activity) throws SQLException;
+	public void addEmployee(User employee, Activity activity) throws SQLException;
 
 	/**
 	 * Update the data about the passed activity
@@ -43,4 +43,18 @@ public interface IActivityDatabaseManager {
 	 * @throws SQLException
 	 */
 	public void saveActivity(Activity activity) throws SQLException;
+
+	/**
+	 * Get all the activities related to the passed employee
+	 * @param employee to get the related activities from
+	 * @return A list of activities related to the employee
+	 */
+	public List<Activity> getActivitiesByEmployee(Employee employee) throws SQLException;
+
+	/**
+	 * Get all the activities related to the passed project
+	 * @param project to get the related activities for
+	 * @return A list of related acticities
+	 */
+	public List<Activity> getActivitiesByProject(Project project) throws SQLException;
 }

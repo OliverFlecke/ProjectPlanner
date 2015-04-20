@@ -62,18 +62,37 @@ public class Project implements Comparable<Project> {
 		this.createProject(name, allottedTime);
 	}
 	
+	/**
+	 * Create a project with everything but an end date
+	 * @param name of the project
+	 * @param allottedTime to the project
+	 * @param projectLeaderID of the project leader of this project
+	 * @param startDate
+	 * @param endDate
+	 * @throws SQLException
+	 */
 	public Project(String name, double allottedTime, User projectLeader, Calendar startDate) throws SQLException{
 		this.projectLeader = projectLeader;
 		this.startDate = startDate;
 		this.createProject(name, allottedTime);
 	}
 	
+	/**
+	 * Create a project with all the needed data
+	 * @param name of the project
+	 * @param allottedTime to the project
+	 * @param projectLeaderID of the project leader of this project
+	 * @param startDate
+	 * @param endDate
+	 * @throws SQLException
+	 */
 	public Project(String name, double allottedTime, User projectLeader, Calendar startDate, Calendar endDate) throws SQLException{
 		this.endDate = endDate;
 		this.startDate = startDate;
 		this.projectLeader = projectLeader;
 		this.createProject(name, allottedTime);
 	}
+
 	
 	/**
 	 * Save the project
@@ -185,6 +204,7 @@ public class Project implements Comparable<Project> {
 	
 	/**
 	 * @return The leader of this project
+	 * @throws SQLException 
 	 */
 	public User getProjectLeader() {
 		return this.projectLeader;

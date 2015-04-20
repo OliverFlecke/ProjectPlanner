@@ -1,26 +1,25 @@
 package projectPlanner.users;
 
 import java.sql.SQLException;
-
 import org.junit.*;
+import projectPlanner.database.*;
 
-import projectPlanner.database.TestDatabaseManager;
-import projectPlanner.users.Admin;
-import projectPlanner.users.User;
+import org.mockito.Mock;
+import static org.mockito.Mockito.*;
 /**
  * 
  */
 public class AdminTest {
 	Admin admin;
 	
+	@Mock
+	IUserDataManager dm;
+	
 	@Before
-	public void setup() {
-		User.setDataManager(new TestDatabaseManager());
-		try {
-			admin = new Admin();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void setup() throws Exception {
+		dm = mock(IUserDataManager.class);
+		User.setDataManager(dm);
+		admin = new Admin();
 	}
 	
 	@Test

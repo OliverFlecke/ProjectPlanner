@@ -156,12 +156,15 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 	public List<Activity> getActivities(User user) throws SQLException {
 		// Create the list and the SQL statment
 		List<Activity> list = new ArrayList<Activity>();
-		String SQL = "SELECT * FROM WorksOn WHERE EmployeeID=" + user.getID();
+		String SQL = "SELECT WorksOn.*, Employees.*, Activities.* FROM WorksOn "
+				+ "INNER JOIN Employees ON Employees.EmployeeID = WorksOn.EmployeeID "
+				+ "INNER JOIN Activities ON Activities.ActivityID = WorksOn.ActivityID "
+				+ "WHERE Employees.EmployeeID=" + user.getID();
 		
 		resultSet = executeQuery(SQL);
 		// Iterate though the results and get all the activities
 		while (resultSet.next()) {
-			list.add(ActivityDatabaseManager.getCurrentActivity(resultSet));
+			list.add(ActivityDatabaseManager.getCurrentActivity(resultSet, false));
 		}	
 		closeConnections();
 		return list;
@@ -174,7 +177,7 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 				"', Lastname='" + user.getLastname() + 
 				"', Username='" + user.getUsername() + 
 				"', Password='" + password + 
-				"' WHERE EmployeeID=" + user.getID();
+				"' WHERE Employees.EmployeeID=" + user.getID();
 		
 		UserDatabaseManager.executeUpdate(SQL);
 	}

@@ -1,9 +1,9 @@
 package projectPlanner.database;
 
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
-import projectPlanner.ActionNotAllowedException;
+import projectPlanner.*;
 import projectPlanner.users.*;
 import projectPlanner.testCategories.*;
 
@@ -23,18 +23,18 @@ import org.junit.experimental.categories.Category;
 public class UserDatabaseManagerTests {
 	// Field for the database manager to test
 	private UserDatabaseManager dataManager;
+	private User user;
 	
 	@Before 
 	public void setup() {
 		dataManager = new UserDatabaseManager();
+		// Create a copy of the user in the database
+		user = new Employee("Oliver", "1234", "Oliver", "Fleckenstein", 2);
 	}
 	
 	@Test
 	@Category({DatabaseTest.class, SlowTest.class})
 	public void getUserByID() throws SQLException {
-		// Create a copy of the user in the database
-		User user = new Employee("Oliver", "1234", "Oliver", "Fleckenstein", 2);
-		
 		// Get the actual user from the database
 		User userFromDB = dataManager.getEmployee(2);
 		
@@ -70,14 +70,6 @@ public class UserDatabaseManagerTests {
 	}
 	
 	@Test
-	@Category(DatabaseTest.class)
-	public void getActivities() throws SQLException {
-		User user = dataManager.getEmployee(1);
-		
-		
-	}
-	
-	@Test
 	@Category(DatabaseTest.class) 
 	public void updateUser_UpdatesEachElementInSteps() throws SQLException, ActionNotAllowedException {
 		// Get the user with id = 1 from the database
@@ -99,5 +91,12 @@ public class UserDatabaseManagerTests {
 		// Updates the password 
 		user.updatePassword("1234", "1234");
 		Assert.assertTrue(user.checkPassword("1234"));
+	}
+	
+	@Test
+	@Category(DatabaseTest.class) 
+	public void getAllActivitiesFromAUser() throws SQLException {
+		List<Activity> activities = dataManager.getActivities(user);
+		Assert.assertTrue(activities.size() > 0);
 	}
 }

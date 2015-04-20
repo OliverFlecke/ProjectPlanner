@@ -11,7 +11,7 @@ import projectPlanner.database.*;
  */
 public abstract class User implements Comparable<User> {
 	// Will manage the saving and retriving of user objects 
-	protected static IUserDataManager dataManager;
+	protected static IUserDataManager dataManager = new UserDatabaseManager();
 	
 	// Username and password for the user
 	private String username;
@@ -248,4 +248,16 @@ public abstract class User implements Comparable<User> {
 	public static List<User> getAllUsers() throws SQLException {
 		return dataManager.getAllEmployees();
 	}
+
+	/**
+	 * Get all the related activities for a user
+	 * @param user to get the activities from
+	 * @return A list of activities this user is working on
+	 * @throws SQLException 
+	 */
+	public static List<Activity> getActivities(User user) throws SQLException {
+		return dataManager.getActivities(user);
+	}
+	
+	
 }

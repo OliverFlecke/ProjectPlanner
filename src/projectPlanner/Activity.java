@@ -9,15 +9,16 @@ import projectPlanner.users.*;
 /**
  * Defines an activity in a project. 
  */
-public class Activity {
+public class Activity implements Comparable<Activity> {
 
 	// Data manager for the activity
 	private static IActivityDatabaseManager dataManager;
 	
 	private String title;							// Title of the project
-	private int id;									// ID of the project
-	private final Project project;					// Project which the activity is linked to
-	private int hoursAccumulated;					// Time accumulated in this activity
+	private int id;									// ID of the activity
+	private Project project;						// Project which the activity is linked to
+	private int projectID;							// ID of the parrent project 
+	private double hoursAccumulated;					// Time accumulated in this activity
 	private boolean isActive;
 
 	/**
@@ -44,12 +45,17 @@ public class Activity {
 	 * @param project parent of this activity
 	 * @param hours spend on the activity
 	 */
-	public Activity(int id, String title, Project project, int hours, boolean isActive) {
+	public Activity(int id, String title, Project project, double hours, boolean isActive) {
 		this.id = id;
 		this.title = title;
 		this.project = project;
 		this.hoursAccumulated = hours;
 		this.isActive = isActive;
+	}
+	
+	public Activity(int id, String title, int projectID, double hours, boolean isActive) {
+		this(id, title, null, hours, isActive);
+		this.projectID = projectID;
 	}
 	
 	/**
@@ -70,7 +76,7 @@ public class Activity {
 	/**
 	 * @return The time accumulated in this activity
 	 */
-	public int getTimeAccumulated() {
+	public double getTimeAccumulated() {
 		return this.hoursAccumulated;
 	}
 
@@ -101,8 +107,23 @@ public class Activity {
 	 * @return The ID of the project, linked to this activity
 	 */
 	public int getProjectID() {
-		return this.project.getID();
+		if (this.project == null)
+			return this.projectID;
+		else 
+			return this.project.getID();
 	}	
+	
+	/**
+	 * Get the project attached to this activity
+	 * @return The project which this activity is attached to
+	 * @throws SQLException
+	 */
+	public Project getAttachedProject() throws SQLException {
+		if (this.project == null) 
+			return Project.getProject(this.projectID);
+		else 
+			return this.project;
+	}
 	
 	/**
 	 * @return If the activity is active or not
@@ -119,5 +140,50 @@ public class Activity {
 	public void setActive(boolean status) throws SQLException {
 		this.isActive = status;
 		dataManager.updateActivity(this);
+	}
+
+	@Override
+	public String toString() {
+		return this.title;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		Activity other;
+		if (o instanceof Activity) 
+			other = (Activity) o;
+		else 
+			return false;
+		
+		if (this.getID() == other.getID() &&
+				this.getTitle().equals(other.getTitle()) &&
+				this.isActive() == other.isActive() &&
+				this.getTimeAccumulated() == other.getTimeAccumulated())
+			return true;
+		else 
+			return false;
+	}
+	
+	@Override
+	public int compareTo(Activity other) {
+		return Integer.compare(this.id, other.getID());
+	}
+
+	/**
+	 * Get all the activities related to the passed employee
+	 * @param employee to get the related activites to
+	 * @return A list of related activities
+	 * @throws SQLException
+	 */
+	public static List<Activity> getActivities(Employee employee) throws SQLException {
+		return dataManager.getActivitiesByEmployee(employee);
+	}
+
+	/**
+	 * @param project to get the related activities to
+	 * @return A list of related activities
+	 */
+	public static List<Activity> getActivities(Project project) throws SQLException {
+		return dataManager.getActivitiesByProject(project);
 	}
 }

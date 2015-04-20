@@ -40,25 +40,6 @@ public class UserEmployeeTest {
 	
 	@Test
 	@Category({UserTest.class, FastTest.class})
-	public void CreateNewEmployeeIDCheck() throws SQLException {
-		// Create the two mock methods and send it to the user class
-		try {
-			when(dataManager.getNewID()).thenReturn(1);
-			when(dataManager.getNumberOfUsers()).thenReturn(1);
-
-			User.setDataManager(dataManager);
-			
-			employee = new Employee("Ole42", password, "Ole", "Jensen");
-		} catch (Exception e) {
-			Assert.fail("No exception should be thrown");
-			e.printStackTrace();
-		}
-		// Assert that the new user have 1 as ID which is the same number of users. 
-		Assert.assertEquals(User.getNumberOfUsers(), employee.getID());
-	}
-	
-	@Test
-	@Category({UserTest.class, FastTest.class})
 	public void UsernameIsCorrect() {
 		Assert.assertEquals("Ole42", employee.getUsername());
 	}
@@ -89,7 +70,7 @@ public class UserEmployeeTest {
 	
 	@Test 
 	@Category({UserTest.class, FastTest.class})
-	public void UpdatePassword() {
+	public void UpdatePassword() throws SQLException {
 		String newPassword = "Zxcv!234";
 		try {		
 			employee.updatePassword(password, newPassword);
@@ -101,7 +82,7 @@ public class UserEmployeeTest {
 	
 	@Test
 	@Category({UserTest.class, FastTest.class})
-	public void UpdatePassword_OldPasswordIsWrong() {
+	public void UpdatePassword_OldPasswordIsWrong() throws SQLException {
 		String newPassword = "Zxcv!234";
 		try {		
 			employee.updatePassword("This should be the wrong password", newPassword);
@@ -113,7 +94,7 @@ public class UserEmployeeTest {
 	}
 	
 	@Test
-	public void ChangeUsername() {
+	public void ChangeUsername() throws SQLException {
 		String newUsername = "Ole43";
 		try {
 			employee.updateUsername(newUsername, password);
@@ -125,7 +106,7 @@ public class UserEmployeeTest {
 	
 	@Test 
 	@Category({UserTest.class, FastTest.class})
-	public void ChangeUsername_PasswordIsWrong() {
+	public void ChangeUsername_PasswordIsWrong() throws SQLException {
 		String newUsername = "Ole43";
 		try {
 			employee.updateUsername(newUsername, "Old password is wrong");
@@ -138,7 +119,7 @@ public class UserEmployeeTest {
 	}
 	
 	@Test 
-	public void SetNameOfTheUser() {
+	public void SetNameOfTheUser() throws SQLException {
 		String newName = "Ole Hansen";
 		try {		
 			employee.updateFirstname(newName, password);
@@ -150,7 +131,7 @@ public class UserEmployeeTest {
 	
 	@Test
 	@Category({UserTest.class, FastTest.class})
-	public void SetNameOfUser_PasswordIsWrong() {
+	public void SetNameOfUser_PasswordIsWrong() throws SQLException {
 		String newName = "Ole Hansen";
 		try {
 			employee.updateFirstname(newName, "Wrong password");

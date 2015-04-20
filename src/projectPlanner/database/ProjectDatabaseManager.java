@@ -28,12 +28,32 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 		return new Project(id, title, time, projectLeader, startDate, endDate);
 	}
 	
+//	/**
+//	 * Create a project from the data in the result set, without getting the user
+//	 * @param resultSet to get the data from
+//	 * @param projectLeaderID the ID of the project leader
+//	 * @return The project which is currently in the result set
+//	 * @throws SQLException
+//	 */
+//	public static Project getCurrentProject(ResultSet resultSet, int projectLeaderID) throws SQLException {
+//		int id = resultSet.getInt("ProjectID");
+//		String title = resultSet.getString("Title");
+//		double time = resultSet.getFloat("AlottedTime");
+//		
+//		Calendar startDate = Calendar.getInstance();
+//		Calendar endDate = Calendar.getInstance();
+//		startDate.setTime(resultSet.getDate("StartDate"));
+//		endDate.setTime(resultSet.getDate("EndDate"));
+//		
+//		return new Project(id, title, time, projectLeaderID, startDate, endDate);
+//	}
+	
 	@Override
 	public Project getProject(int id) throws SQLException {
-		String SQL = "SELECT Project.*, Employees.* FROM Project " +
+		String SQL = "SELECT Projects.*, Employees.* FROM Projects " +
 				"INNER JOIN Employees " +  
-				"ON Project.ProjectLeader = Employees.EmployeeID " +
-				"WHERE Project.ProjectID = " + id;
+				"ON Projects.ProjectLeader = Employees.EmployeeID " +
+				"WHERE Projects.ProjectID = " + id;
 		resultSet = executeQuery(SQL);
 		
 		if (resultSet.next()) 
@@ -44,10 +64,10 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 
 	@Override
 	public Project getProject(String title) throws SQLException {
-		String SQL = "SELECT Project.*, Employees.* FROM Project " +
+		String SQL = "SELECT Projects.*, Employees.* FROM Projects " +
 				"INNER JOIN Employees " +  
-				"ON Project.ProjectLeader = Employees.EmployeeID " +
-				"WHERE Project.Title = '" + title + "'";
+				"ON Projects.ProjectLeader = Employees.EmployeeID " +
+				"WHERE Projects.Title = '" + title + "'";
 		resultSet = executeQuery(SQL);
 		
 		if (resultSet.next()) 
@@ -58,8 +78,8 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 
 	@Override
 	public List<Project> getAllProjects() throws SQLException {
-		String SQL = "SELECT * FROM Project INNER JOIN Employees " + 
-				"ON Project.ProjectLeader = Employees.EmployeeID";
+		String SQL = "SELECT * FROM Projects INNER JOIN Employees " + 
+				"ON Projects.ProjectLeader = Employees.EmployeeID";
 		resultSet = executeQuery(SQL);
 		
 		List<Project> list = new ArrayList<Project>();
@@ -72,7 +92,7 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 
 	@Override
 	public void saveProject(Project project) throws SQLException {
-		String SQL = "INSERT INTO Project (Title, StartDate, EndDate, IsActive, AlottedTime, ProjectLeader)"
+		String SQL = "INSERT INTO Projects (Title, StartDate, EndDate, IsActive, AlottedTime, ProjectLeader)"
 				+ " Values(?, ?, ?, ?, ?, ?)";		
 		// Create the connection and prepare the statement
 		connection = DriverManager.getConnection(connectionString);
@@ -90,10 +110,12 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 
 	@Override
 	public void updateProject(Project project) throws SQLException {
-		String SQL = "UPDATE Project "
+		String SQL = "UPDATE Projects "
 				+ "SET Title = ?, StartDate = ?, EndDate = ?, IsActive = ?, "
 				+ "AlottedTime = ?, ProjectLeader = ? "
 				+ "WHERE ProjectID = " + project.getID() + ";";
+		
+		// Insert the data into the statement and execute it
 		connection = DriverManager.getConnection(connectionString);
 		preStatement = connection.prepareStatement(SQL);
 		preStatement.setString(1, project.getTitle());
@@ -108,9 +130,9 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 	@Override
 	public List<Project> getActiveProjects() throws SQLException {
 		List<Project> projects = new ArrayList<Project>();
-		String SQL = "SELECT Project.*, Employees.* FROM Project "
-				+ "INNER JOIN Employees ON Project.ProjectLeader = Employees.EmployeeID "
-				+ "WHERE Project.IsActive = 1;";
+		String SQL = "SELECT * FROM Projects "
+				+ "INNER JOIN Employees ON Projects.ProjectLeader = Employees.EmployeeID "
+				+ "WHERE Projects.IsActive = 1;";
 		resultSet = executeQuery(SQL);
 		
 		// Get all the project from the result
@@ -123,9 +145,9 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 	@Override
 	public List<Project> getProjectsByProjectLeader(User user) throws SQLException {
 		List<Project> projects = new ArrayList<Project>();
-		String SQL = "SELECT Project.*, Employees.* FROM Project "
-				+ "INNER JOIN Employees ON Project.ProjectLeader = Employees.EmployeeID "
-				+ "WHERE Project.ProjectLeader = " + user.getID();		
+		String SQL = "SELECT * FROM Projects "
+				+ "INNER JOIN Employees ON Projects.ProjectLeader = Employees.EmployeeID "
+				+ "WHERE Projects.ProjectLeader = " + user.getID();		
 		resultSet = executeQuery(SQL);
 		
 		// Add the results from the respond to a list
