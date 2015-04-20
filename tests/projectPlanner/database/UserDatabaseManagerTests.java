@@ -33,10 +33,10 @@ public class UserDatabaseManagerTests {
 	@Category({DatabaseTest.class, SlowTest.class})
 	public void getUserByID() throws SQLException {
 		// Create a copy of the user in the database
-		User user = new Employee("Oliver", "1234", "Oliver", "Fleckenstein", 1);
+		User user = new Employee("Oliver", "1234", "Oliver", "Fleckenstein", 2);
 		
 		// Get the actual user from the database
-		User userFromDB = dataManager.getEmployee(1);
+		User userFromDB = dataManager.getEmployee(2);
 		
 		// Assert the two user objects to check if they are equal. 
 		Assert.assertEquals(user, userFromDB);
@@ -81,7 +81,7 @@ public class UserDatabaseManagerTests {
 	@Category(DatabaseTest.class) 
 	public void updateUser_UpdatesEachElementInSteps() throws SQLException, ActionNotAllowedException {
 		// Get the user with id = 1 from the database
-		User user = dataManager.getEmployee(1);
+		User user = dataManager.getEmployee(2);
 		User.setDataManager(dataManager);
 		
 		// Updates its firstname to Oliver
