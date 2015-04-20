@@ -24,7 +24,7 @@ public class LogInDialog extends JFrame {
 
 
 	public LogInDialog() {
-		super("Log In Window");
+		super("Please Login");
 
 		//Setting up new JPanels
 		statusUpdatePnl = new UpdatePanel();
