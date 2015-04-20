@@ -1,8 +1,11 @@
 package projectPlanner.view.activityPanel;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,7 +18,6 @@ public class ActivityHolder extends JPanel {
 	private JLabel myActivitiesLbl = new JLabel("My Activities");
 	private String[] listOfActivties = {"UI PROGRAMMING", "PROCRASTINATING", "DATABASE PROGRAMMING", "MODELLING", "RENDERING", "DESIGN"};
 	
-	
 	public ActivityHolder() {
 		
 		//Set font on JLabel
@@ -25,16 +27,19 @@ public class ActivityHolder extends JPanel {
 		
 		
 		//Adding layout and setting up scrollbar
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.add(myActivitiesLbl);
 		addActivities(listOfActivties);
+		this.add(Box.createVerticalGlue());
 
 	}
 
 
 	private void addActivities(String[] listOfActivties2) {
 		for (String activity: listOfActivties) {
-			this.add(new Activity(activity));		
+			Activity newActivity = new Activity(activity);
+			newActivity.setMaximumSize(new Dimension(2400, newActivity.height().height));
+			this.add(newActivity);		
 	}
 		
 	}

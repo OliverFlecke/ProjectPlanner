@@ -7,7 +7,9 @@ public class PpDriver {
 	
 	public static void main(String[] args) {
 		
-		LogInDialog loginDialog = new LogInDialog();
+		View view = new View();
+		//LogInDialog loginDialog = new LogInDialog();
+		
 	}
 
 }
