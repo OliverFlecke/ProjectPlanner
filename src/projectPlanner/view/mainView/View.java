@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import projectPlanner.view.listOfEmployees;
+import projectPlanner.view.calendarPanel.CalendarTab;
 
 public class View extends JFrame {
 
@@ -35,7 +36,7 @@ public class View extends JFrame {
 		try {
 			icon = new ImageIcon(getClass().getResource("images/icon.png"));
 		} catch (Exception e) {	}
-		JComponent panel1 = makeTextPanel("Panel #1");
+		CalendarTab panel1 = new CalendarTab();
 		tabbedPane.addTab("Calendar", icon, panel1, "this weeks calendar" );
 		
 		JComponent panel2 = makeTextPanel("Panel #2");
