@@ -84,26 +84,26 @@ public class LoginPanel extends JPanel {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	private boolean verifyLogin(){
 		try{
-			return projectPlanner.login(usernameTxtField.getText(), passwordTxtField.getPassword().toString());
+			return projectPlanner.login(usernameTxtField.getText(), passwordTxtField.getText());
 		}
 		catch(NullPointerException nullEx){
-			logInDialog.getStatusUpdatePnl().updateMessage("Please fill out all fields");
+			logInDialog.getStatusUpdatePnl().updateMessage("Please fill out both fields");
 			return false;
 		}
 		catch(UserLoginException userEx) {
 			logInDialog.getStatusUpdatePnl().updateMessage("Wrong username or password");
 			return false;
 		}
-		catch(SQLException userEx) {
+		catch(SQLException sQLEx) {
 			logInDialog.getStatusUpdatePnl().updateMessage("No connection to server");
 			return false;
 		}
-		catch(Exception userEx) {
+		catch(Exception e) {
 			logInDialog.getStatusUpdatePnl().updateMessage("No connection to server");
 			return false;
-
 		}
 	}
 

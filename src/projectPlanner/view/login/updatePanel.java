@@ -1,8 +1,12 @@
 package projectPlanner.view.login;
 
+import java.awt.Color;
+import java.awt.Font;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class UpdatePanel extends JPanel {
 	
@@ -15,7 +19,12 @@ public class UpdatePanel extends JPanel {
 	private JLabel marginLbl;
 	
 	public UpdatePanel() {		
-		statusLbl = new JLabel(" ");
+		statusLbl = new JLabel(" ",SwingConstants.CENTER);
+		statusLbl.setForeground(Color.red);
+		Font font = statusLbl.getFont();
+		// same font but bold
+		Font boldFont = new Font(font.getFontName(), Font.BOLD, 14);
+		statusLbl.setFont(boldFont);
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
 		this.add(statusLbl);
