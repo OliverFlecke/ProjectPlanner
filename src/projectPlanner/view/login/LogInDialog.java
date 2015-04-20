@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 public class LogInDialog extends JFrame {
 
 	private JPanel loginPnl;
-	private JPanel statusUpdatePnl;
+	private UpdatePanel statusUpdatePnl;
 
 	/**
 	 * 
@@ -27,12 +27,12 @@ public class LogInDialog extends JFrame {
 		super("Log In Window");
 
 		//Setting up new JPanels
-		JPanel loginPnl = new LoginPanel();
-		JPanel statusUpdatePnl = new updatePanel();
+		statusUpdatePnl = new UpdatePanel();
+		loginPnl = new LoginPanel(this);
 		loginPnl.setSize(500, 100);
 		statusUpdatePnl.setSize(500, 100);
 
-		//making a layout and adding panles.
+		//making a layout and adding panels.
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
 		this.add(loginPnl);
 		this.add(statusUpdatePnl);
@@ -43,8 +43,16 @@ public class LogInDialog extends JFrame {
 		//Centers window on screen
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-
+		
+		//close window when exiting
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//display frame
 		setVisible(true);
+	}
+
+
+	public UpdatePanel getStatusUpdatePnl() {
+		return statusUpdatePnl;
 	}
 }

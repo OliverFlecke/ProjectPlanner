@@ -4,7 +4,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class updatePanel extends JPanel {
+public class UpdatePanel extends JPanel {
 	
 	/**
 	 * 
@@ -14,16 +14,16 @@ public class updatePanel extends JPanel {
 	private JLabel statusLbl;
 	private JLabel marginLbl;
 	
-	public updatePanel() {
-		
-		
-		statusUpdateLbl = new JLabel("Status:");
-		statusLbl = new JLabel("connected.");
+	public UpdatePanel() {		
+		statusLbl = new JLabel(" ");
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
-		this.add(statusUpdateLbl);
 		this.add(statusLbl);
 		this.add(marginLbl = new JLabel(" "));
+	}
+	
+	public void updateMessage(String string){
+		statusLbl.setText(string);
 	}
 
 }
