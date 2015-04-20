@@ -4,7 +4,9 @@ package projectPlanner.view.mainView;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.net.URL;
 
 import javax.swing.DefaultListModel;
@@ -32,7 +34,7 @@ public class View extends JFrame {
 		super("Project Planner");
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		try {
 			icon = new ImageIcon(getClass().getResource("images/icon.png"));
 		} catch (Exception e) {	}
@@ -54,9 +56,11 @@ public class View extends JFrame {
 		this.add(tabbedPane, BorderLayout.CENTER);
 		setSize(1200,800);
 		
+		//Centers window on screen
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setVisible(true);
 		
 	}
