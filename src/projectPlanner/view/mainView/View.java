@@ -14,6 +14,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.net.URL;
 
+import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -96,7 +97,7 @@ public class View extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		JMenuItem logOut = new JMenuItem("Log Out");
 		
-		
+		menuBar.add(Box.createHorizontalGlue());
 		menuBar.add(logOut);
 		this.setJMenuBar(menuBar);
 		logOut.addActionListener(new ActionListener(){
