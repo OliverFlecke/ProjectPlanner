@@ -29,10 +29,26 @@ public class ProjectPlannerTest {
 	@Test
 	@Category(FastTest.class)
 	public void loginWithUsernameAndPassword_Succes() throws UserLoginException, SQLException, Exception {
-		boolean state = false;
-		state = projectPlanner.login("Oliver", "1234");
-
-		Assert.assertTrue(state);
+		Assert.assertTrue(projectPlanner.login("Oliver", "1234"));
 	}
-
+	
+	@Test 
+	@Category(FastTest.class) 
+	public void login_WithWrongPassword_Fail() throws Exception {
+		try {
+			Assert.assertFalse(projectPlanner.login("Oliver", "WRONG PASSWORD"));
+		} catch (UserLoginException ex) {
+			Assert.assertEquals("Invalid password. Please try again or contact your admin", ex.getMessage());
+		}
+	}
+	
+	@Test
+	@Category(FastTest.class) 
+	public void login_UsernameNotFound() throws Exception {
+		try {
+			Assert.assertFalse(projectPlanner.login("Username not found", "Not relevant"));
+		} catch (UserLoginException ex) {
+			Assert.assertEquals("Username is not registed in the system.", ex.getMessage());
+		}
+	}
 }

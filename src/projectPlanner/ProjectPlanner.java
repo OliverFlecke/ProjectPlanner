@@ -99,5 +99,17 @@ public class ProjectPlanner {
 		}
 		return allEmployees;
 	}
+	
+	/**
+	 * Create a new user with the passed username and password
+	 * @param username to the new user
+	 * @param password to the new password
+	 * @param firstname of the user
+	 * @param lastname of the user
+	 * @throws Exception 
+	 */
+	public User createNewUser(String username, String password, String firstname, String lastname) throws Exception {
+		return new Employee(username, password, firstname, lastname);
+	}
 }
 

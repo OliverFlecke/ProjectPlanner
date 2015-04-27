@@ -110,6 +110,10 @@ public class Project implements Comparable<Project> {
 		dataManager.saveProject(this);
 	}
 	
+	static void setDataManager	(IProjectDatabaseManager db) {
+		dataManager = db;
+	}
+	
 	/**
 	 * @return The ID of this project
 	 */
