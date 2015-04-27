@@ -16,6 +16,7 @@ import java.awt.event.WindowListener;
 
 
 
+
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -31,6 +32,7 @@ import javax.swing.event.MenuListener;
 
 import projectPlanner.view.calendarPanel.CalendarTab;
 import projectPlanner.view.login.LogInDialog;
+import projectPlanner.view.personalInfo.PersonalInfoTab;
 
 public class View extends JFrame {
 	
@@ -54,7 +56,7 @@ public class View extends JFrame {
 		CalendarTab panel1 = new CalendarTab();
 		tabbedPane.addTab("Calendar", icon, panel1, "this weeks calendar" );
 
-		JComponent panel2 = makeTextPanel("Panel #2");
+		PersonalInfoTab panel2 = new PersonalInfoTab();
 		tabbedPane.addTab("Personal Information", icon, panel2, "Information about you" );
 
 		JComponent panel3 = makeTextPanel("Panel #3");
@@ -104,21 +106,21 @@ public class View extends JFrame {
 		
 		logOut.addMenuListener(new MenuListener(){
 			@Override
-			public void menuCanceled(MenuEvent arg0) {
+			public void menuCanceled(MenuEvent e) {
 				dispose();
 				logInDialog.loginPnl().flush();
 				logInDialog.setVisible(true);
 			}
 
 			@Override
-			public void menuDeselected(MenuEvent arg0) {
+			public void menuDeselected(MenuEvent e) {
 				dispose();
 				logInDialog.loginPnl().flush();
 				logInDialog.setVisible(true);
 			}
 
 			@Override
-			public void menuSelected(MenuEvent arg0) {
+			public void menuSelected(MenuEvent e) {
 				dispose();
 				logInDialog.loginPnl().flush();
 				logInDialog.setVisible(true);
