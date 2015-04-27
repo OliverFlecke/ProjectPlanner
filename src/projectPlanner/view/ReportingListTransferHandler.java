@@ -18,7 +18,7 @@ public class ReportingListTransferHandler extends TransferHandler {
 	String localArrayListType = DataFlavor.javaJVMLocalObjectMimeType + ";class=java.utilArrayList";
 	
 	JList source = null;
-	int[] indices = null:
+	int[] indices = null;
 		int addIndex = -1; //position to add item at.
 	int addCount = 0;  //Number of items to add.
 	
@@ -80,7 +80,7 @@ public class ReportingListTransferHandler extends TransferHandler {
 		//This is interpreted as dropping the same data on itself
 		//and has no effect.
 		if (source.equals(target)) {
-			if (indices != null && index >= indices[0] - 1 && index <= indices[indices.length -1] {
+			if (indices != null && index >= indices[0] - 1 && index <= indices[indices.length -1]) {
 				indices = null;
 				return true;	
 			}

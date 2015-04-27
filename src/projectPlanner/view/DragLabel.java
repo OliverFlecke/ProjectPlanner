@@ -20,7 +20,7 @@ public class DragLabel extends JLabel {
 	private DragSourceListener dsListener;
 
 	public DragLabel(String s) {
-		this.DragSource = DragSource.getDefaultDragSource();
+		this.dragSource = DragSource.getDefaultDragSource();
 		this.dgListener = new DGListener();
 		this.dsListener = new DSListener();
 		

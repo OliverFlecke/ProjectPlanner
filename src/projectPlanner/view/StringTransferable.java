@@ -1,8 +1,11 @@
 package projectPlanner.view;
 
+import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +28,19 @@ public synchronized DataFlavor[] getTransferDataFlavors(){
 
 public boolean isDataFlavorSupported(DataFlavor flavor) {
 	return (flavorList.contains(flavor));
+}
+
+@Override
+public void lostOwnership(Clipboard arg0, Transferable arg1) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public Object getTransferData(DataFlavor arg0)
+		throws UnsupportedFlavorException, IOException {
+	// TODO Auto-generated method stub
+	return null;
 }
 
 }
