@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="external_Libraries/jinq-jpa-1.6.2-sources.jar"/>
 	<classpathentry kind="lib" path="external_Libraries/mockito-all-1.9.5.jar"/>
 	<classpathentry kind="lib" path="external_Libraries/sqljdbc4-2.0.jar"/>
+	<classpathentry kind="lib" path="external_Libraries/pdfbox-app-1.8.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
