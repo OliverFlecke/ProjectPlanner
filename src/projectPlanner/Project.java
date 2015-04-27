@@ -11,7 +11,7 @@ import projectPlanner.users.*;
  */
 public class Project implements Comparable<Project> {
 	// DataManager
-	private static IProjectDatabaseManager dataManager;
+	private static IProjectDatabaseManager dataManager = new ProjectDatabaseManager();
 	
 	private double allottedTime;			// Time expected to use on the project
 	private String title;					// Of the project
@@ -258,7 +258,7 @@ public class Project implements Comparable<Project> {
 	 */
 	public void removeActivity(Activity activity) throws SQLException {
 		activities.remove(activity);
-		dataManager.removeActivityToProjcet(this, activity);
+		dataManager.removeActivityFromProjcet(this, activity);
 	}
 	
 	/**
@@ -323,10 +323,9 @@ public class Project implements Comparable<Project> {
 	 * @throws SQLException
 	 */
 	public List<Activity> getActivities() throws SQLException {
-		if (this.activities == null || this.activities.isEmpty()) {
-			return dataManager.getActivitiesInProject(this);
-		} else {
-			return this.activities;
-		}
+		if (this.activities == null || this.activities.isEmpty())
+			this.activities = dataManager.getActivitiesInProject(this);
+	
+		return this.activities;
 	}
 }

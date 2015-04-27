@@ -12,7 +12,7 @@ import projectPlanner.users.*;
 public class Activity implements Comparable<Activity> {
 
 	// Data manager for the activity
-	private static IActivityDatabaseManager dataManager;
+	private static IActivityDatabaseManager dataManager = new ActivityDatabaseManager();
 	
 	private String title;							// Title of the project
 	private int id;									// ID of the activity

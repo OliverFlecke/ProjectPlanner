@@ -86,12 +86,30 @@ public class ProjectDatabaseManagerTests {
 		Assert.assertTrue(projects.size() == 2);
 	}
 	
+	@Test
+	@Category(DatabaseTest.class) 
+	public void getAllActivitiesInAProject() throws SQLException {
+		List<Activity> activities = db.getActivitiesInProject(expProject);
+		Assert.assertTrue(activities.size() > 0);
+	}
+	
 	@Test 
 	@Category(DatabaseTest.class) 
-	public void addActivityToProject() throws SQLException {
+	public void addActivityToProject_ThenRemoveTheActivity() throws SQLException {
 		// This test can not be run each time. This will test if we can link the activity to a project in the database
 		// This will only test for the exceptions getting thrown. Will throw error now, because the data is already in database
 //		Activity activity = new Activity(1, "test activity", expProject, 10, true);
-//		db.addActivityToProject(expProject, activity);
+		List<Activity> activitiesList;
+		Activity activity = db.getActivitiesInProject(expProject).get(0);
+		
+		// First remove the activity from the project list 
+		db.removeActivityFromProjcet(expProject, activity);
+		activitiesList = db.getActivitiesInProject(expProject);
+		Assert.assertFalse(activitiesList.contains(activity));
+		
+		// Add the activity to the project, and check the new list
+		db.addActivityToProject(expProject, activity);
+		activitiesList = db.getActivitiesInProject(expProject);
+		Assert.assertTrue(activitiesList.contains(activity));	
 	}
 }

@@ -165,15 +165,26 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 	}
 
 	@Override
-	public void removeActivityToProjcet(Project project, Activity activity) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void removeActivityFromProjcet(Project project, Activity activity) throws SQLException {
+		String SQL = "DELETE FROM MemberOfProject Where ActivityID = " + activity.getID();
+		executeUpdate(SQL);		
 	}
 
 	@Override
 	public List<Activity> getActivitiesInProject(Project project) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Activity> activities = new ArrayList<Activity>();
+		String SQL = "SELECT * FROM MemberOfProject "
+				+ "INNER JOIN Projects ON MemberOfProject.ProjectID = Projects.ProjectID "
+				+ "INNER JOIN Activities ON MemberOfProject.ActivityID = Activities.ActivityID "
+				+ "INNER JOIN Employees ON Projects.ProjectLeader = Employees.EmployeeID "
+				+ "WHERE MemberOfProject.ProjectID = " + project.getID();
+		
+		// Get the result and get the data out
+		resultSet = executeQuery(SQL);
+		while (resultSet.next()) {
+			activities.add(ActivityDatabaseManager.getCurrentActivity(resultSet, true));
+		}
+		return activities;
 	}
 
 

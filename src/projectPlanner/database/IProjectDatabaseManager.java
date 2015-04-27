@@ -73,7 +73,7 @@ public interface IProjectDatabaseManager {
 	 * @param project to remove the project from
 	 * @param activity to remove
 	 */
-	public void removeActivityToProjcet(Project project, Activity activity) throws SQLException;
+	public void removeActivityFromProjcet(Project project, Activity activity) throws SQLException;
 
 	/**
 	 * Get all the activities related to the passed project

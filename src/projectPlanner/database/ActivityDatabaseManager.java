@@ -106,7 +106,10 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 	@Override
 	public List<Activity> getActivitiesByProject(Project project) throws SQLException {
 		List<Activity> activities = new ArrayList<Activity>();
-		String SQL = "";		
+		String SQL = "SELECT * FROM Activities "
+				+ "INNER JOIN Projects ON Projects.ProjectID = Activities.ActivityID "
+				+ "INNER JOIN Employees ON Projects.ProjectLeader = Employees.EmployeeID "
+				+ "WHERE Activities.ProjectID = " + project.getID();		
 		
 		resultSet = executeQuery(SQL);
 		while (resultSet.next()) {
