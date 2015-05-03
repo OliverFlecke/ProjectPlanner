@@ -1,7 +1,10 @@
 package projectPlanner;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
+
+import org.apache.pdfbox.exceptions.COSVisitorException;
 
 import projectPlanner.database.*;
 import projectPlanner.users.*;
@@ -267,10 +270,12 @@ public class Project implements Comparable<Project> {
 	
 	/**
 	 * Create a report of this project
+	 * @throws IOException 
+	 * @throws COSVisitorException 
 	 */
-	public void printProjectReport(){
-		ProjectReport projectReport = new ProjectReport();
-		projectReport.print(this);
+	public void printProjectReport() throws COSVisitorException, IOException{
+		ProjectReport projectReport = new ProjectReport(this);
+		projectReport.print("path");
 	}
 	
 	@Override
