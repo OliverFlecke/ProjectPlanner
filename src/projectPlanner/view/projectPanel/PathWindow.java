@@ -21,6 +21,8 @@ public class PathWindow extends JFileChooser{
 			path = path + ".pdf";
 		}
 		
+		System.out.println(path);
+		
 		}catch(NullPointerException e){
 			throw new UserClosedWindowException("The user closed the save window");
 		}

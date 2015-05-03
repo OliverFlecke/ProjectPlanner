@@ -43,9 +43,15 @@ public class ProjectReport {
 		contentStream.beginText();
 		contentStream.setFont( fontPlain, 12 );
 		contentStream.moveTextPositionByAmount( 100, 700 );
-		contentStream.drawString( project.getTitle() );
+		contentStream.drawString( current.getTitle() + " Time spent:" + current.getTimeAccumulated() );
 		contentStream.endText();
 		}
+		
+		contentStream.beginText();
+		contentStream.setFont( fontBold, 20 );
+		contentStream.moveTextPositionByAmount( 100, 700 );
+		contentStream.drawString("Whats up");
+		contentStream.endText();
 		// Make sure that the content stream is closed:
 		contentStream.close();
 
