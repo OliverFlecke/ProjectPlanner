@@ -52,8 +52,6 @@ public class ProjectReport {
 		// Save the results and ensure that the document is properly closed:
 		document.save(path);
 		document.close();
-		System.out.println("Done deal");
-		System.exit(0);
 	}
 
 }

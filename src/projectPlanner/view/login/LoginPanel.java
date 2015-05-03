@@ -87,10 +87,7 @@ public class LoginPanel extends JPanel {
 			{
 				if(verifyLogin()){
 					View view = new View(logInDialog);
-					System.out.println("foer");
 					logInDialog.setVisible(false);
-					System.out.println("efter");
-
 				}
 			}
 		});

@@ -272,10 +272,11 @@ public class Project implements Comparable<Project> {
 	 * Create a report of this project
 	 * @throws IOException 
 	 * @throws COSVisitorException 
+	 * @throws SQLException 
 	 */
-	public void printProjectReport() throws COSVisitorException, IOException{
+	public void printProjectReport(String path) throws COSVisitorException, IOException, SQLException{
 		ProjectReport projectReport = new ProjectReport(this);
-		projectReport.print("path");
+		projectReport.print(path);
 	}
 	
 	@Override

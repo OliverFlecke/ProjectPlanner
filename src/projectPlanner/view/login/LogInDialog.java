@@ -49,6 +49,8 @@ public class LogInDialog extends JFrame {
 		
 		//display frame
 		setVisible(true);
+		
+		setResizable(false);
 	}
 
 

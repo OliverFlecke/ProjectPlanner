@@ -8,7 +8,6 @@ public class PpDriver {
 	public static void main(String[] args) {
 		
 		new LogInDialog();
-		//new View(new LogInDialog());
 	}
 
 }

@@ -17,6 +17,7 @@ import java.awt.event.WindowListener;
 
 
 
+
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -33,6 +34,7 @@ import javax.swing.event.MenuListener;
 import projectPlanner.view.calendarPanel.CalendarTab;
 import projectPlanner.view.login.LogInDialog;
 import projectPlanner.view.personalInfo.PersonalInfoTab;
+import projectPlanner.view.projectPanel.ProjectTab;
 
 public class View extends JFrame {
 	
@@ -61,8 +63,8 @@ public class View extends JFrame {
 
 		JComponent panel3 = makeTextPanel("Panel #3");
 		tabbedPane.addTab("Activities", icon, panel3, "Activities you are part of" );
-
-		JComponent panel4 = makeTextPanel("Panel #4");
+		
+		ProjectTab panel4 = new ProjectTab();
 		tabbedPane.addTab("Project", icon, panel4, "Project Managers can create new projects" );
 
 		JComponent panel5 = makeTextPanel("Panel #5");
