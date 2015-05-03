@@ -1,6 +1,7 @@
 package projectPlanner.view.projectPanel;
 
 
+import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,8 +33,9 @@ public class ProjectTab extends JPanel{
 	 */
 	private static final long serialVersionUID = 5791566971957234579L;
 
-	JButton printButton;
-
+	private JButton printButton;
+	private Cursor hourglassCursor;
+	private Cursor normalCursor;
 	private JPanel buttonPanel;
 
 	public ProjectTab () {
@@ -42,6 +44,9 @@ public class ProjectTab extends JPanel{
 		buttonPanel.add(printButton);
 		this.setLayout(new GridLayout(1,0));
 		this.add(buttonPanel);
+		hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
+		normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+		
 
 
 		//Listener for printing pdf of currently selected project
@@ -51,7 +56,9 @@ public class ProjectTab extends JPanel{
 			public void actionPerformed(ActionEvent e)
 			{
 					try {
-						currentProject().printProjectReport(choosePath());
+						
+						String path = choosePath();
+						currentProject().printProjectReport(path);
 					} catch (COSVisitorException e1) {
 						new PrintErrorDialog("More than one program is trying to access the file");
 					} catch (IOException e1) {
