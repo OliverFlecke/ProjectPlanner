@@ -55,7 +55,7 @@ public class ProjectTab extends JPanel{
 					} catch (COSVisitorException e1) {
 						new PrintErrorDialog("More than one program is trying to access the file");
 					} catch (IOException e1) {
-						new PrintErrorDialog("There was error saving the project");
+						new PrintErrorDialog("There was an error saving the project");
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

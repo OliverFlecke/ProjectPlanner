@@ -16,8 +16,8 @@ public class PDFTester {
 		mockProject = currentProject();
 		try {
 			mockProject.printProjectReport("C:\\Users\\Sebastian\\Documents\\ole.pdf");
+			System.out.println("all done");
 		} catch (COSVisitorException | IOException | SQLException e) {
-			System.out.println("shit");
 			e.printStackTrace();
 		}
 	}
