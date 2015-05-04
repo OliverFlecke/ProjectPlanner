@@ -21,7 +21,7 @@ public class CalendarTab extends JPanel{
 	private JPanel rightPane;
 	private JScrollPane leftSideScrollPane;
 	
-	public CalendarTab (User user) {
+	public CalendarTab () {
 	    leftPane = new ActivityHolder();
 	    rightPane = new CalendarDay();
 	    rightPane.setLayout(new GridLayout(0,7));
