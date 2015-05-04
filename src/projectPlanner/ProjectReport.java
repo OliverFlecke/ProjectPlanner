@@ -14,7 +14,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDPixelMap;
 
-import projectPlanner.view.projectPanel.PrintErrorDialog;
+import projectPlanner.view.projectPanel.ErrorDialog;
 
 public class ProjectReport {
 	private BufferedImage bIMG;
@@ -167,7 +167,7 @@ public class ProjectReport {
 				File f = new File(path);
 				Desktop.getDesktop().open(f);
 			} catch (IOException ex) {
-				new PrintErrorDialog("You don't have a PDF-Reader installed");
+				new ErrorDialog("You don't have a PDF-Reader installed");
 			}
 		}
 	}
