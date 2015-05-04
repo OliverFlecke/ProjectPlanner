@@ -11,12 +11,12 @@ public class AdminTab extends JPanel{
 	
 	//Fields
 	private UserCreater userCreater;
-	private UserCreater projectCreater;
+	private ProjectCreater projectCreater;
 	private JPanel contentPane;
 	
 	public AdminTab() {
 		this.userCreater = new UserCreater();
-		this.projectCreater = new UserCreater();
+		this.projectCreater = new ProjectCreater();
 		this.contentPane = new JPanel();
 		
 		userCreater.setMaximumSize(new Dimension(600, 800));

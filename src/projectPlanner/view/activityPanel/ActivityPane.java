@@ -15,23 +15,27 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import projectPlanner.Activity;
+import projectPlanner.users.User;
 import projectPlanner.view.StdListPanel;
 
-public class Activity extends JPanel {
+public class ActivityPane extends JPanel {
 	
 	public JLabel activityTitle;
 	public TextPanel hoursSpent;
 	public StdListPanel otherEmps;
 	public TextPanel projectName;
+	public String activityName;
+	
 
 	
-	public Activity(String activityName) {
-		
+	public ActivityPane(Activity activity, User user) throws Exception{
+		activityName = activity.getTitle();
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		activityTitle = new JLabel(activityName);
 		activityTitle.setFont(new Font("Arial Black", Font.BOLD, 20));
-		projectName = new TextPanel("Project Name: ", "ProjectX");
-		hoursSpent = new TextPanel("Hours Spent:  ", "50,5"); 
+		projectName = new TextPanel("Project Name: ", activity.getAttachedProject().getTitle());
+		hoursSpent = new TextPanel("Hours Spent:  ", String.valueOf(user.getTimeSpentOnActivity(user, activity))); 
 		
 		
 		

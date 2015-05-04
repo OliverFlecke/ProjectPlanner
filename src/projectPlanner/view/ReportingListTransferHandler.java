@@ -12,11 +12,13 @@ import javax.swing.JOptionPane;
 import javax.swing.TransferHandler;
 import javax.swing.DefaultListModel;
 
+@SuppressWarnings("serial")
 public class ReportingListTransferHandler extends TransferHandler {
 
 	DataFlavor localArrayListFlavor, serialArrayListFlavor;
 	String localArrayListType = DataFlavor.javaJVMLocalObjectMimeType + ";class=java.utilArrayList";
 	
+	@SuppressWarnings("rawtypes")
 	JList source = null;
 	int[] indices = null;
 		int addIndex = -1; //position to add item at.
@@ -33,6 +35,7 @@ public class ReportingListTransferHandler extends TransferHandler {
 		serialArrayListFlavor = new DataFlavor(ArrayList.class, "ArrayList");
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public boolean importData(JComponent c, Transferable t){
 		JList target = null;
 		ArrayList alist = null;
@@ -105,6 +108,7 @@ public class ReportingListTransferHandler extends TransferHandler {
 		return true;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	protected void exportDone(JComponent c, Transferable data, int action){
 		if ((action == MOVE) && (indices != null)){
 			DefaultListModel model = (DefaultListModel)source.getModel();
@@ -163,7 +167,7 @@ public class ReportingListTransferHandler extends TransferHandler {
 		return false;
 	}
 	
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "rawtypes" })
 	protected Transferable createTransferable(JComponent c) {
 		if ( c instanceof JList) {
 			source = (JList)c;

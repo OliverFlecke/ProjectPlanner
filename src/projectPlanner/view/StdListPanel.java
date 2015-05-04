@@ -1,9 +1,7 @@
 package projectPlanner.view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -13,6 +11,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 
+@SuppressWarnings("serial")
 public class StdListPanel extends JPanel{
 	
 	//fields
@@ -26,7 +25,6 @@ public class StdListPanel extends JPanel{
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
 		this.listForPop = listForPop;
-		
 		
 		this.listHeadderLbl = new JLabel(listLbl);
 		
@@ -63,8 +61,4 @@ public class StdListPanel extends JPanel{
 	public void addTolist(String toAdd) {
 		listForPop.add(toAdd);
 	}
-	
-	
-	
-
 }

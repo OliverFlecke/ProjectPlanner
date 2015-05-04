@@ -21,7 +21,7 @@ import org.apache.pdfbox.exceptions.COSVisitorException;
 
 import projectPlanner.Project;
 import projectPlanner.ProjectReport;
-import projectPlanner.view.activityPanel.Activity;
+import projectPlanner.view.activityPanel.ActivityPane;
 import projectPlanner.view.activityPanel.ActivityHolder;
 import projectPlanner.view.calendarPanel.CalendarDay;
 import projectPlanner.view.mainView.View;

@@ -5,17 +5,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 
-import javax.swing.AbstractAction;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.KeyStroke;
 
 import projectPlanner.ProjectPlanner;
 import projectPlanner.users.UserLoginException;
@@ -23,6 +19,10 @@ import projectPlanner.view.mainView.View;
 
 public class LoginPanel extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2047661947729049615L;
 	private Cursor hourglassCursor;
 	private JTextField usernameTxtField;
 	private JPasswordField passwordTxtField;
@@ -86,7 +86,7 @@ public class LoginPanel extends JPanel {
 			public void actionPerformed(ActionEvent e)
 			{
 				if(verifyLogin()){
-					View view = new View(logInDialog);
+					new View(logInDialog);
 					logInDialog.setVisible(false);
 				}
 			}
@@ -133,6 +133,8 @@ public class LoginPanel extends JPanel {
 
 		
 	}
+	
+	@SuppressWarnings("deprecation")
 	private boolean isEmpty(){
 		if(usernameTxtField.getText().length()==0 || passwordTxtField.getText().length()==0){
 			return true;
