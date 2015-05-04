@@ -13,14 +13,12 @@ public class Activity implements Comparable<Activity> {
 
 	// Data manager for the activity
 	private static IActivityDatabaseManager dataManager = new ActivityDatabaseManager();
-
+	
 	private String title;							// Title of the project
 	private int id;									// ID of the activity
 	private Project project;						// Project which the activity is linked to
 	private int projectID;							// ID of the parrent project 
 	private double hoursAccumulated;				// Time accumulated in this activity
-	private Calendar startDate;				        // Start date of the activity
-	private Calendar endDate;				        // End date of the activity
 	private boolean isActive;
 
 	/**
@@ -34,12 +32,12 @@ public class Activity implements Comparable<Activity> {
 		this.project = project;
 		this.hoursAccumulated = 0;
 		this.isActive = true;
-
+		
 		if (dataManager == null) 
 			dataManager = new ActivityDatabaseManager();
 		dataManager.saveActivity(this);
 	}
-
+	
 	/**
 	 * Create an activity with already excisting information
 	 * @param id of the activity
@@ -54,12 +52,12 @@ public class Activity implements Comparable<Activity> {
 		this.hoursAccumulated = hours;
 		this.isActive = isActive;
 	}
-
+	
 	public Activity(int id, String title, int projectID, double hours, boolean isActive) {
 		this(id, title, null, hours, isActive);
 		this.projectID = projectID;
 	}
-
+	
 	/**
 	 * @return Return the title of the activity
 	 */
@@ -74,7 +72,7 @@ public class Activity implements Comparable<Activity> {
 		this.title = title;
 		dataManager.updateActivity(this);
 	}
-
+	
 	/**
 	 * @return The time accumulated in this activity
 	 */
@@ -89,7 +87,7 @@ public class Activity implements Comparable<Activity> {
 	public List<Employee> getEmployees() throws SQLException {
 		return dataManager.getUsers(this);
 	}
-
+	
 	/**
 	 * @param employee to add to this activity
 	 * @throws SQLException 
@@ -114,7 +112,7 @@ public class Activity implements Comparable<Activity> {
 		else 
 			return this.project.getID();
 	}	
-
+	
 	/**
 	 * Get the project attached to this activity
 	 * @return The project which this activity is attached to
@@ -126,14 +124,14 @@ public class Activity implements Comparable<Activity> {
 		else 
 			return this.project;
 	}
-
+	
 	/**
 	 * @return If the activity is active or not
 	 */
 	public boolean isActive() {
 		return this.isActive;
 	}
-
+	
 	/**
 	 * Set the activity status of this activity
 	 * @param status of the activity
@@ -148,7 +146,7 @@ public class Activity implements Comparable<Activity> {
 	public String toString() {
 		return this.title;
 	}
-
+	
 	@Override
 	public boolean equals(Object o) {
 		Activity other;
@@ -156,7 +154,7 @@ public class Activity implements Comparable<Activity> {
 			other = (Activity) o;
 		else 
 			return false;
-
+		
 		if (this.getID() == other.getID() &&
 				this.getTitle().equals(other.getTitle()) &&
 				this.isActive() == other.isActive() &&
@@ -165,7 +163,7 @@ public class Activity implements Comparable<Activity> {
 		else 
 			return false;
 	}
-
+	
 	@Override
 	public int compareTo(Activity other) {
 		return Integer.compare(this.id, other.getID());
@@ -187,21 +185,5 @@ public class Activity implements Comparable<Activity> {
 	 */
 	public static List<Activity> getActivities(Project project) throws SQLException {
 		return dataManager.getActivitiesByProject(project);
-	}
-
-	public Calendar getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Calendar startDate) {
-		this.startDate = startDate;
-	}
-
-	public Calendar getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Calendar endDate) {
-		this.endDate = endDate;
 	}
 }

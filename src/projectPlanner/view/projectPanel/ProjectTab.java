@@ -1,43 +1,34 @@
 package projectPlanner.view.projectPanel;
 
 
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
-import org.apache.pdfbox.exceptions.COSVisitorException;
-
+import projectPlanner.Activity;
 import projectPlanner.Project;
 import projectPlanner.ProjectPlanner;
-import projectPlanner.ProjectReport;
 import projectPlanner.users.User;
-import projectPlanner.view.StdListPanel;
-import projectPlanner.view.activityPanel.ActivityPane;
-import projectPlanner.view.activityPanel.ActivityHolder;
 import projectPlanner.view.adminTab.TextNDate;
 import projectPlanner.view.adminTab.TextNField;
-import projectPlanner.view.calendarPanel.CalendarDay;
-import projectPlanner.view.mainView.View;
 
 
 public class ProjectTab extends JPanel{
@@ -48,8 +39,15 @@ public class ProjectTab extends JPanel{
 	private static final long serialVersionUID = 5791566971957234579L;
 	private String path;
 	private List<Project> projectsList;
-	private JList selectList;
+	private JList<String> selectList;
+	private JList<String> selectActivityList;
 	private User currentUser;
+	private JPanel panel;
+	private JPanel panel1;
+	private JPanel panel2;
+	private Font boldFont;
+	private JLabel actListHeader;
+	private DefaultListModel<String> listModel;
 
 	public ProjectTab () {
 		//gets current user
@@ -61,13 +59,13 @@ public class ProjectTab extends JPanel{
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
 		//create first panel/column
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
 		//add header in leftmost column
 		JLabel projectHeader = new JLabel("Please select the project you want to manage:");
 		Font font = projectHeader.getFont();
-		Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize()+3);
+		boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize()+3);
 		projectHeader.setFont(boldFont);
 		panel.add(projectHeader);
 
@@ -75,7 +73,11 @@ public class ProjectTab extends JPanel{
 		panel.add(Box.createRigidArea(new Dimension(5,5)));
 
 		//add scrollable list of project names, for selection
-		selectList = new JList(getProjectNames().toArray());
+		DefaultListModel<String> listMdl = new DefaultListModel<String>();
+		for(String current : getProjectNames()){
+			listMdl.addElement(current);
+		}
+		selectList = new JList<String>(listMdl);
 		selectList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		selectList.setSelectedIndex(0);
 		selectList.setVisibleRowCount(-1);
@@ -84,7 +86,7 @@ public class ProjectTab extends JPanel{
 		panel.add(selectList);
 
 		//add another main column
-		JPanel panel1 = new JPanel();
+		panel1 = new JPanel();
 		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 
 		//add print button
@@ -92,14 +94,14 @@ public class ProjectTab extends JPanel{
 		panel1.add(printButton);
 
 		//add activity adding area
-		JPanel panel2 = new JPanel();
-		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
+		panel2 = new JPanel();
+		panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
 
-		//add header in leftmost column
+		//add header in rightmost column
 		JLabel activityHeader = new JLabel("Add an activity to the selected project");
 		projectHeader.setFont(boldFont);
 		panel2.add(activityHeader);
-		
+
 		//add input fields
 		TextNField name = new TextNField("Name");
 		panel2.add(name);
@@ -111,25 +113,95 @@ public class ProjectTab extends JPanel{
 		panel2.add(endDate);
 		JButton createActivity = new JButton("Create Activity");
 		panel2.add(createActivity);
-		
+
+		//actionlistener for button that submits activity and updates activity list
 		createActivity.addActionListener( new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e){
-				Activity addAct = new Activity();
-				currentSelectedProject()
+				try {
+					Activity addAct = new Activity(name.getTxt(),getCurrentSelectedProject());
+					name.setTxt("");
+					alottedTime.setTxt("");
+					startDate.setDate(Calendar.getInstance());
+					endDate.setDate(Calendar.getInstance());
+					refreshActivitiesList();
+				} catch (SQLException e1) {
+					new ErrorDialog("There was a problem in connecting to the server");
+				}
+
 			}
 		});
-		
-		
+
+		//add header in leftmost column for activities belonging to selected project
+		actListHeader = new JLabel("Activities for project:" + getCurrentSelectedProject().getTitle());
+		actListHeader.setFont(boldFont);
+		panel.add(actListHeader);
+
+		//add scrollable list of projects activities
+		listModel = new DefaultListModel<String>();
+		try {
+			for(String current : getActivityNames()){
+				listModel.addElement(current);
+			}
+		} catch (SQLException e1) {
+			new ErrorDialog("There was an error in connecting to the server");
+		}
+		selectActivityList = new JList<String>(listModel);
+
+		selectActivityList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		selectActivityList.setSelectedIndex(0);
+		selectActivityList.setVisibleRowCount(-1);
+		JScrollPane listScroller2 = new JScrollPane(selectActivityList);
+		listScroller2.setPreferredSize(new Dimension(250, 80));
+		panel.add(selectActivityList);
+
+
+		//Listener for changes in project selection for refreshing activities
+		selectList.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent lse) {
+				if (lse.getValueIsAdjusting()){
+					return;
+				}
+				refreshActivitiesList();
+			}
+		});
+
+
+
+
 
 		//adding columns
 		this.add(panel);
 		this.add(panel1);
 		this.add(panel2);
-		
+
 		printButtonListener(printButton);
 
+	}
+
+
+	private void refreshActivitiesList() {
+		//refresh header
+		actListHeader.setText("Activities for project:" + getCurrentSelectedProject().getTitle());
+		//refresh list
+		listModel.removeAllElements();
+		try {
+			for(String current : getActivityNames()){
+				listModel.addElement(current);
+			}
+		} catch (SQLException e) {
+			new ErrorDialog("there was an error in connecting to the server");
+		}
+	}
+
+
+	private List<String> getActivityNames() throws SQLException {
+		List<String> activityNames = new ArrayList<String>(); 
+		for(Activity current : getCurrentSelectedProject().getActivities()){
+			activityNames.add(current.getTitle());
+		}
+		return activityNames;
 	}
 
 
@@ -146,7 +218,7 @@ public class ProjectTab extends JPanel{
 					return;
 				}
 				try {
-					currentSelectedProject().printProjectReport(path);
+					getCurrentSelectedProject().printProjectReport(path);
 
 				} catch (IOException e1) {
 					new ErrorDialog("There was an error in writing the file");
@@ -180,7 +252,7 @@ public class ProjectTab extends JPanel{
 		return projectNames;
 	}
 
-	private Project currentSelectedProject(){
+	private Project getCurrentSelectedProject(){
 		return projectsList.get(selectList.getSelectedIndex());
 	}
 }
