@@ -117,7 +117,11 @@ public abstract class User implements Comparable<User> {
 	 * @return Will return true, if the user is an admin
 	 */
 	public boolean isAdmin() {
-		return false;
+		if (this.firstname.equalsIgnoreCase("Admin") &&
+				this.lastname.equalsIgnoreCase("Admin")) 
+			return true;
+		else 
+			return false;
 	}
 	
 	/**
@@ -259,5 +263,13 @@ public abstract class User implements Comparable<User> {
 		return dataManager.getActivities(user);
 	}
 	
-	
+	/**
+	 * Get the time the passed user has spend on the passed activity
+	 * @param user to check for
+	 * @param Activity which the user have spend time on
+	 * @return The amount of time the user have spend on the given activity
+	 */
+	public static double getTimeSpendOnActivity(User user, Activity activity) throws SQLException {
+		return dataManager.getTimeSpendOnActivity(user, activity);
+	}
 }

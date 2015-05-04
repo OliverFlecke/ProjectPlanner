@@ -31,7 +31,6 @@ public class Employee extends User {
 		this.activities = new ArrayList<Activity>();
 	}
 
-
 	public static List<Employee> getEmployees(Activity activity) {
 		// TODO Auto-generated method stub
 		return null;
