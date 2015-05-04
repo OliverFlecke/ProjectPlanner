@@ -9,7 +9,7 @@
 	<classpathentry kind="lib" path="external_Libraries/mockito-all-1.9.5.jar"/>
 	<classpathentry kind="lib" path="external_Libraries/sqljdbc4-2.0.jar"/>
 	<classpathentry kind="lib" path="external_Libraries/pdfbox-app-1.8.9.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sebastian/Documents/DTU/software enginering 1/Projekt/ProjectPlanner/external_Libraries/jfreechart-1.0.19.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sebastian/Documents/DTU/software enginering 1/Projekt/ProjectPlanner/external_Libraries/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="external_Libraries/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="external_Libraries/jfreechart-1.0.19.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
