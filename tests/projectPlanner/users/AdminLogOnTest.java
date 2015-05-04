@@ -46,7 +46,7 @@ public class AdminLogOnTest {
 		// Step 2) Check that the method returned true and check that admin is logged in.
 		assertTrue(login);
 		assertTrue(planner.getIsLoggedIn());
-		assertTrue(planner.getCurrentUser().isAdmin());
+		assertTrue(ProjectPlanner.getCurrentUser().isAdmin());
 	}
 
 	/** 
@@ -77,7 +77,7 @@ public class AdminLogOnTest {
 		// Step 2) Check that the method returned true and check that admin is logged in.
 		assertFalse(login);
 		assertFalse(planner.getIsLoggedIn());
-		assertFalse(planner.getCurrentUser().isAdmin());
+		assertFalse(ProjectPlanner.getCurrentUser().isAdmin());
 	}	
 
 /** 

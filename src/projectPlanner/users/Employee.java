@@ -9,6 +9,7 @@ import projectPlanner.*;
  */
 public class Employee extends User {
 
+	@SuppressWarnings("unused")
 	private List<Activity> activities;
 	
 	/**
