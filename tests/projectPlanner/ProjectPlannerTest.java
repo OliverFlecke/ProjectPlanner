@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import org.junit.*;
 import org.junit.experimental.categories.Category;
 
-import projectPlanner.*;
 import projectPlanner.testCategories.*;
 import projectPlanner.users.UserLoginException;
 /**

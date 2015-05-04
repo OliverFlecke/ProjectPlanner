@@ -49,6 +49,13 @@ public class ProjectPlanner {
 	}
 	
 	/**
+	 * @return The user currently logged in to the system.
+	 */
+	public User getCurrentUser() {
+		return this.currentUser;
+	}
+	
+	/**
 	 * @return A list of activity 
 	 * @throws SQLException 
 	 */
