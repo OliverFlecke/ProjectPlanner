@@ -41,8 +41,7 @@ public class AdminLogOnTest {
 		assertFalse(planner.getIsLoggedIn());
 		
 		// Step 1)
-		
-		boolean login = planner.login("admin", "admin");
+		boolean login = planner.login("Admin", "Admin");
 		
 		// Step 2) Check that the method returned true and check that admin is logged in.
 		assertTrue(login);

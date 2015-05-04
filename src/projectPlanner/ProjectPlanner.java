@@ -10,11 +10,15 @@ import projectPlanner.users.*;
  */
 public class ProjectPlanner {
 
-	private User currentUser;				// User logged in to the system
+	private static User currentUser;				// User logged in to the system
 	private boolean isLoggedIn;				// State to indicate if the user is logged in or not
 
 	public boolean login(String username, String password) throws UserLoginException, SQLException, Exception {
-		currentUser = User.getUser(username);
+		if (username.toCharArray().equals("admin"))
+			currentUser = (Admin) User.getUser(username);
+		else 
+			currentUser = User.getUser(username);
+		
 		if (currentUser == null) {
 			throw new UserLoginException("Username is not registed in the system.");
 		} else if (!currentUser.checkPassword(password)){
@@ -29,7 +33,7 @@ public class ProjectPlanner {
 	 * Log out of the system
 	 */
 	public void logout() {
-		this.currentUser = null;
+		currentUser = null;
 		setIsLoggedIn(false);
 	}
 	
@@ -51,8 +55,8 @@ public class ProjectPlanner {
 	/**
 	 * @return The user currently logged in to the system.
 	 */
-	public User getCurrentUser() {
-		return this.currentUser;
+	public static User getCurrentUser() {
+		return currentUser;
 	}
 	
 	/**
