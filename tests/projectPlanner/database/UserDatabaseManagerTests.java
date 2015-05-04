@@ -105,4 +105,11 @@ public class UserDatabaseManagerTests {
 	public void getTimeUserSpendOnActivities() throws SQLException {
 //		User.getTimeSpendOnActivity(user, new Activity(, null, 0, 0, false));
 	}
+	
+	@Test 
+	@Category(DatabaseTest.class) 
+	public void getLoggedTime() throws SQLException {
+		List<LoggedTime> list = user.getLoggedTime();
+		Assert.assertTrue(list.size() > 0);
+	}
 }

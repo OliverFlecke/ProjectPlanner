@@ -39,7 +39,7 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 	 */
 	public static LoggedTime getCurrentLoggedTime(ResultSet resultSet) throws SQLException {
 		int activityID = resultSet.getInt("ActivityID");
-		int userID = resultSet.getInt("UserID");
+		int userID = resultSet.getInt("EmployeeID");
 		double time = resultSet.getDouble("TimeSpend");
 		Calendar date = Calendar.getInstance();
 		date.setTime(resultSet.getDate("Date"));
