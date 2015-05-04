@@ -1,6 +1,6 @@
 package projectPlanner.database;
 
-import projectPlanner.Activity;
+import projectPlanner.*;
 import projectPlanner.users.*;
 
 import java.sql.*;
@@ -29,6 +29,22 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		String password = resultSet.getString("Password");
 		int databaseID = resultSet.getInt("EmployeeID");
 		return new Employee(username, password, firstname, lastname, databaseID);
+	}
+	
+	/**
+	 * Get the current logged time object from the result set
+	 * @param resultSet to the the data from
+	 * @return The current logged time object
+	 * @throws SQLException
+	 */
+	public static LoggedTime getCurrentLoggedTime(ResultSet resultSet) throws SQLException {
+		int activityID = resultSet.getInt("ActivityID");
+		int userID = resultSet.getInt("UserID");
+		double time = resultSet.getDouble("TimeSpend");
+		Calendar date = Calendar.getInstance();
+		date.setTime(resultSet.getDate("Date"));
+		
+		return new LoggedTime(activityID, userID, time, date);
 	}
 	
 	/**
@@ -180,5 +196,38 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 				"' WHERE Employees.EmployeeID=" + user.getID();
 		
 		UserDatabaseManager.executeUpdate(SQL);
+	}
+	
+	@Override 
+	public double getTimeSpendOnActivity(User user, Activity activity) throws SQLException {
+		String SQL = "SELECT TimeSpend FROM SpendHoursOn "
+				+ "WHERE ActivityID = " + activity.getID() + " AND "
+						+ "EmployeeID = " + user.getID();
+		if (resultSet.next()) 
+			return resultSet.getDouble("TimeSpend");
+		else 
+			return 0;
+	}
+	
+	@Override
+	public double getTimeSpendOnAllActivities(User user) throws SQLException {
+		double result = 0;
+		List<LoggedTime> list = new ArrayList<LoggedTime>();
+		
+		String SQL = "SELECT * FROM SpendHoursOn "
+				+ "WHERE EmployeeID = " + user.getID();
+		
+		// Execute the query and get the list of time objects
+		resultSet = UserDatabaseManager.executeQuery(SQL);
+		while (resultSet.next()) {
+			list.add(UserDatabaseManager.getCurrentLoggedTime(resultSet));
+		}
+		
+		// Calculate the time
+		for (LoggedTime current : list) {
+			result += current.getTime();
+		}
+		
+		return result;
 	}
 }

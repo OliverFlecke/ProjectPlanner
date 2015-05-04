@@ -99,4 +99,10 @@ public class UserDatabaseManagerTests {
 		List<Activity> activities = dataManager.getActivities(user);
 		Assert.assertTrue(activities.size() > 0);
 	}
+	
+	@Test 
+	@Category(DatabaseTest.class) 
+	public void getTimeUserSpendOnActivities() throws SQLException {
+		User.getTimeSpendOnActivity(user, new Activity());
+	}
 }

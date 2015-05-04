@@ -77,4 +77,19 @@ public interface IUserDataManager {
 	 * @throws SQLException
 	 */
 	public List<Activity> getActivities(User user) throws SQLException;
+	
+	/**
+	 * Get the time the passed user has spend on the passed activity
+	 * @param user to check for
+	 * @param Activity which the user have spend time on
+	 * @return The amount of time the user have spend on the given activity
+	 */
+	public double getTimeSpendOnActivity(User user, Activity activity) throws SQLException;
+	
+	/**
+	 * Get the time the passed user has spend on the passed activity
+	 * @param user to check for
+	 * @return The amount of time the user have spend on the given activity
+	 */
+	public double getTimeSpendOnAllActivities(User user) throws SQLException;
 }

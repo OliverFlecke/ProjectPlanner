@@ -186,7 +186,4 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 		}
 		return activities;
 	}
-
-
-
 }

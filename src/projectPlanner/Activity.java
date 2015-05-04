@@ -18,7 +18,7 @@ public class Activity implements Comparable<Activity> {
 	private int id;									// ID of the activity
 	private Project project;						// Project which the activity is linked to
 	private int projectID;							// ID of the parrent project 
-	private double hoursAccumulated;					// Time accumulated in this activity
+	private double hoursAccumulated;				// Time accumulated in this activity
 	private boolean isActive;
 
 	/**

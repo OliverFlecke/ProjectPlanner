@@ -13,12 +13,17 @@ public class ProjectPlanner {
 	private static User currentUser;				// User logged in to the system
 	private boolean isLoggedIn;				// State to indicate if the user is logged in or not
 
+	/**
+	 * Login to the system with a username and a password
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws UserLoginException
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public boolean login(String username, String password) throws UserLoginException, SQLException, Exception {
-		if (username.toCharArray().equals("admin"))
-			currentUser = (Admin) User.getUser(username);
-		else 
-			currentUser = User.getUser(username);
-		
+		currentUser = User.getUser(username);
 		if (currentUser == null) {
 			throw new UserLoginException("Username is not registed in the system.");
 		} else if (!currentUser.checkPassword(password)){
