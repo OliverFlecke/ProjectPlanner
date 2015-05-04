@@ -48,9 +48,13 @@ public class ActivityHolder extends JPanel {
 
 	private void addActivities() {
 		for (Activity activity: listOfActivties) {
-			ActivityPane newActivity = new ActivityPane(activity.getTitle());
-			newActivity.setMaximumSize(new Dimension(2400, newActivity.height().height));
-			this.add(newActivity);		
+			try {
+				ActivityPane newActivity = new ActivityPane(activity, user);
+				newActivity.setMaximumSize(new Dimension(2400, newActivity.height().height));
+				this.add(newActivity);	
+			} catch (Exception e) {
+				
+			}
 	}
 		
 	}
