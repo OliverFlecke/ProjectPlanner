@@ -1,19 +1,19 @@
 package projectPlanner.view.activityPanel;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
 
 public class ActivityHolder extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2287647052888581135L;
 	//fields
 	private JLabel myActivitiesLbl = new JLabel("My Activities");
 	private String[] listOfActivties = {"UI PROGRAMMING", "PROCRASTINATING", "DATABASE PROGRAMMING", "MODELLING", "RENDERING", "DESIGN"};

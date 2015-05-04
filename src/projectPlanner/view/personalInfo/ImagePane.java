@@ -8,6 +8,10 @@ import javax.swing.JPanel;
 
 public class ImagePane extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4030752740965199017L;
 	private JLabel imgLbl = new JLabel();
 	private NameObject name;
 	private NameObject position;
@@ -27,14 +31,11 @@ public class ImagePane extends JPanel{
 		namePane.add(new NameObject("position: CODE-GIMP", 14));
 		namePane.add(Box.createVerticalGlue());
 		
-		
-		
-		
+
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		this.add(Box.createVerticalGlue());
 		this.add(namePane);
 		this.add(Box.createHorizontalStrut(5));		
 		this.add(imgPane);
 	}
-
 }

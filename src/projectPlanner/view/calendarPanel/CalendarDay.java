@@ -1,7 +1,6 @@
 package projectPlanner.view.calendarPanel;
 
 import java.awt.Color;
-import java.awt.GridLayout;
 import java.util.Calendar;
 
 import javax.swing.BorderFactory;
@@ -10,6 +9,10 @@ import javax.swing.JPanel;
 
 public class CalendarDay extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7812662961508165890L;
 	private Calendar today = Calendar.getInstance();
 	private Calendar calendar = Calendar.getInstance();
 	
@@ -22,6 +25,7 @@ public class CalendarDay extends JPanel {
 	private int month = 3;
 	private int year = 2015;
 	
+	@SuppressWarnings("unused")
 	private String[] monthNames = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 	private String[] dayNames = { "Sunday", "Monday", "Tuesday", "Wedensday", "Thursday", "Friday", "Saturday"};
 	private int count = 0;
@@ -83,9 +87,6 @@ public class CalendarDay extends JPanel {
 			JLabel dayLbl = new JLabel(" ");
 			dayPane.add(dayLbl);
 			this.add(dayPane);
-		}
-		
-		
+		}	
 	}
-
 }

@@ -4,13 +4,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+@SuppressWarnings("serial")
 public class PersonalInfoPane extends JPanel {
 	
 	private NameObject namePane;
@@ -33,15 +32,8 @@ public class PersonalInfoPane extends JPanel {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		this.add(namePane);
-		this.add(aboutTxtScrollPane);
-		
-		
-		
-		
-		
-		
+		this.add(aboutTxtScrollPane);		
 	}
-
 
 	private String setAbout() {
 		return "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,"
@@ -58,5 +50,4 @@ public class PersonalInfoPane extends JPanel {
 				+ "the headline of Alphabet Village and the subline of her own road, the Line Lane. "
 				+ "Pityful a rethoric question ran over her cheek, then ";
 	}
-
 }

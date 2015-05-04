@@ -1,16 +1,12 @@
 package projectPlanner.view.personalInfo;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+@SuppressWarnings("serial")
 public class PersonalInfoTab extends JPanel{
 	
 	
@@ -37,9 +33,6 @@ public class PersonalInfoTab extends JPanel{
 		this.add(imagePanel);
 		this.add(Box.createVerticalStrut(5));
 		this.add(personalInfo);
-		this.add(Box.createVerticalGlue());
-
-		
+		this.add(Box.createVerticalGlue());	
 	}
-
 }

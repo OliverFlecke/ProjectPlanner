@@ -3,14 +3,11 @@ package projectPlanner.view.calendarPanel;
 
 import java.awt.GridLayout;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
-import projectPlanner.view.activityPanel.Activity;
-import projectPlanner.view.activityPanel.ActivityHolder;
-
+import projectPlanner.view.activityPanel.*;
 
 public class CalendarTab extends JPanel{
 	

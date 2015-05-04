@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ReportingListTransferable implements Transferable {
+	@SuppressWarnings("rawtypes")
 	ArrayList data;
 	DataFlavor localArrayListFlavor;
 	DataFlavor serialArrayListFlavor;
 	
+	@SuppressWarnings("rawtypes")
 	public ReportingListTransferable(ArrayList alist, DataFlavor localArrayListFlavor, DataFlavor serialArrayListFlavor) {
 		data = alist;
 		this.localArrayListFlavor = localArrayListFlavor;

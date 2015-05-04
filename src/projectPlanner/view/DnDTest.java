@@ -10,7 +10,9 @@ import javax.swing.JList;
 
 public class DnDTest extends JFrame {
 	
+	@SuppressWarnings("rawtypes")
 	public JList dragToList;
+	@SuppressWarnings("rawtypes")
 	public JList dragFromList;
 	public DefaultListModel<String> employees;
 
