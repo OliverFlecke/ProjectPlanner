@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 
 import projectPlanner.view.StdListPanel;
 
-public class Activity extends JPanel {
+public class ActivityPane extends JPanel {
 	
 	public JLabel activityTitle;
 	public TextPanel hoursSpent;
@@ -25,7 +25,7 @@ public class Activity extends JPanel {
 	public TextPanel projectName;
 
 	
-	public Activity(String activityName) {
+	public ActivityPane(String activityName) {
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		activityTitle = new JLabel(activityName);

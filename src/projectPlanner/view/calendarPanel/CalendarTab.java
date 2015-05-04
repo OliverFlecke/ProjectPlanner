@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
+import projectPlanner.users.User;
 import projectPlanner.view.activityPanel.*;
 
 public class CalendarTab extends JPanel{
@@ -20,7 +21,7 @@ public class CalendarTab extends JPanel{
 	private JPanel rightPane;
 	private JScrollPane leftSideScrollPane;
 	
-	public CalendarTab () {
+	public CalendarTab (User user) {
 	    leftPane = new ActivityHolder();
 	    rightPane = new CalendarDay();
 	    rightPane.setLayout(new GridLayout(0,7));
