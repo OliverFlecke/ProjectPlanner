@@ -231,4 +231,18 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		
 		return result;
 	}
+	
+	@Override
+	public List<LoggedTime> getTimeSpendOnEachActivity(User user) throws SQLException {
+		List<LoggedTime> list = new ArrayList<LoggedTime>();
+		String SQL = "SELECT * FROM SpendHoursOn "
+				+ "WHERE EmployeeID = " + user.getID();
+		
+		resultSet = executeQuery(SQL);
+		while (resultSet.next()) {
+			list.add(getCurrentLoggedTime(resultSet));
+		}
+		
+		return list;
+	}
 }

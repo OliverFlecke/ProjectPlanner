@@ -2,8 +2,10 @@ package projectPlanner.database;
 
 import java.sql.*;
 import java.util.List;
+import java.util.Map;
 
 import projectPlanner.Activity;
+import projectPlanner.LoggedTime;
 import projectPlanner.users.*;
 
 /**
@@ -92,4 +94,12 @@ public interface IUserDataManager {
 	 * @return The amount of time the user have spend on the given activity
 	 */
 	public double getTimeSpendOnAllActivities(User user) throws SQLException;
+	
+	/**
+	 * Get a map of each activity the passed user is linked to
+	 * @param user to get linked activities to
+	 * @return A map of activities and logged time objects 
+	 * @throws SQLException
+	 */
+	public List<LoggedTime> getTimeSpendOnEachActivity(User user) throws SQLException;
 }

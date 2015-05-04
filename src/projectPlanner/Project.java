@@ -349,4 +349,14 @@ public class Project implements Comparable<Project> {
 		return spentTime;
 		
 	}
+	
+	/**
+	 * Get project by a project leader
+	 * @param user to get related project from
+	 * @return a list of project
+	 * @throws SQLException
+	 */
+	public static List<Project> getProjectByProjectLeader(User user) throws SQLException {
+		return dataManager.getProjectsByProjectLeader(user);
+	}
 }

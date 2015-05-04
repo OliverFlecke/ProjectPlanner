@@ -103,6 +103,6 @@ public class UserDatabaseManagerTests {
 	@Test 
 	@Category(DatabaseTest.class) 
 	public void getTimeUserSpendOnActivities() throws SQLException {
-		User.getTimeSpendOnActivity(user, new Activity(, null, 0, 0, false));
+//		User.getTimeSpendOnActivity(user, new Activity(, null, 0, 0, false));
 	}
 }
