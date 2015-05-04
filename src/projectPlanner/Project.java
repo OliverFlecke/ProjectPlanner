@@ -40,7 +40,7 @@ public class Project implements Comparable<Project> {
 		this.allottedTime = allottedTime;
 		this.projectLeader = projectLeader;
 		this.startDate = startDate;
-		this.setEndDate(endDate);
+		this.endDate = endDate;
 	}
 	
 	/**
@@ -90,7 +90,7 @@ public class Project implements Comparable<Project> {
 	 * @throws SQLException
 	 */
 	public Project(String name, double allottedTime, User projectLeader, Calendar startDate, Calendar endDate) throws SQLException{
-		this.setEndDate(endDate);
+		this.endDate = endDate;
 		this.startDate = startDate;
 		this.projectLeader = projectLeader;
 		this.createProject(name, allottedTime);
