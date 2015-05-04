@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.concurrent.CountDownLatch;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -37,6 +38,8 @@ public class ProjectTab extends JPanel{
 	private Cursor hourglassCursor;
 	private Cursor normalCursor;
 	private JPanel buttonPanel;
+	private final CountDownLatch pDFDone = new CountDownLatch(1);
+	String path;
 
 	public ProjectTab () {
 		buttonPanel = new JPanel();
@@ -44,31 +47,58 @@ public class ProjectTab extends JPanel{
 		buttonPanel.add(printButton);
 		this.setLayout(new GridLayout(1,0));
 		this.add(buttonPanel);
-		hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
-		normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
-		
+
+
+
+
+
+
 
 
 		//Listener for printing pdf of currently selected project
 		printButton.addActionListener( new ActionListener()
 		{
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-					try {
-						
-						String path = choosePath();
-						currentProject().printProjectReport(path);
-					} catch (COSVisitorException e1) {
-						new PrintErrorDialog("More than one program is trying to access the file");
-					} catch (IOException e1) {
-						new PrintErrorDialog("There was an error saving the project");
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (UserClosedWindowException e1) {
-					}
+			public void actionPerformed(ActionEvent e){
+				try {
+					path = choosePath();
+				} catch (UserClosedWindowException e1) {
+					return;
+				}
 
+				new Thread() {
+					@Override
+					public void run() {
+
+						try {
+							currentProject().printProjectReport(path);
+
+						} catch (IOException e) {
+							pDFDone.countDown();
+							new PrintErrorDialog("There was an error in writing the file");
+//							e.printStackTrace();
+						}
+//						catch (COSVisitorException e) {
+//							pDFDone.countDown();
+//							new PrintErrorDialog("More than one program is trying to access the file");
+//							e.printStackTrace();
+//						} 
+						catch (SQLException e) {
+							pDFDone.countDown();
+							new PrintErrorDialog("There was an error in connecting to the server");
+//							e.printStackTrace();
+						} finally {
+							pDFDone.countDown();
+						}
+					}
+				}.start();
+				System.out.println("waiting");
+				try {
+					pDFDone.await();
+				} catch (InterruptedException ex) {
+					ex.printStackTrace();
+				}
+				System.out.println("Done");
 			}
 
 			public String choosePath() throws UserClosedWindowException{
@@ -85,7 +115,7 @@ public class ProjectTab extends JPanel{
 					System.out.println("Can\'t reach server");
 				}
 				return null;
-				
+
 			}
 		});
 
