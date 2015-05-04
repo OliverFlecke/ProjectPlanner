@@ -31,6 +31,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
+import projectPlanner.view.adminTab.AdminTab;
 import projectPlanner.view.calendarPanel.CalendarTab;
 import projectPlanner.view.login.LogInDialog;
 import projectPlanner.view.personalInfo.PersonalInfoTab;
@@ -67,7 +68,7 @@ public class View extends JFrame {
 		ProjectTab panel4 = new ProjectTab();
 		tabbedPane.addTab("Project", icon, panel4, "Project Managers can create new projects" );
 
-		JComponent panel5 = makeTextPanel("Panel #5");
+		AdminTab panel5 = new AdminTab();
 		tabbedPane.addTab("adminTab", icon, panel5, "Super secret tab for admins only" );
 
 		this.add(tabbedPane, BorderLayout.CENTER);
