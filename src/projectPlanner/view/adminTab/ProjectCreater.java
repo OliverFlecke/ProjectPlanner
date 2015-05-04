@@ -18,8 +18,8 @@ public class ProjectCreater extends JPanel {
 	
 	private NameObject title;
 	private TextNField projectName;
-	private TextNField deadLineFld;
-	private TextNField startDateFld;
+	private TextNDate deadLineFld;
+	private TextNDate startDateFld;
 	private StdListPanel lisOfemployees;
 	private TextNField projectLeader;
 	private JButton createProject;
@@ -28,8 +28,8 @@ public class ProjectCreater extends JPanel {
 	public ProjectCreater() {
 		title = new NameObject("Create Project");
 		projectName = new TextNField("Project Name: ");
-		deadLineFld = new TextNField("DeadLine: ");
-		startDateFld = new TextNField("Username: ");
+		deadLineFld = new TextNDate("DeadLine: ");
+		startDateFld = new TextNDate("Username: ");
 		lisOfemployees = new StdListPanel(getEmps(), "Available Employees");
 		projectLeader = new TextNField("Project Leader");
 		createProject = new JButton("Create Project");
@@ -40,8 +40,8 @@ public class ProjectCreater extends JPanel {
 		
 		this.add(title);
 		this.add(projectName);
-		this.add(deadLineFld);
 		this.add(startDateFld);
+		this.add(deadLineFld);
 		this.add(lisOfemployees);
 		this.add(projectLeader);
 		this.add(createProject);
