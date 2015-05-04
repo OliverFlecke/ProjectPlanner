@@ -16,7 +16,7 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 	 */
 	public static Project getCurrentProject(ResultSet resultSet) throws SQLException {
 		int id = resultSet.getInt("ProjectID");
-		String title = resultSet.getString("Title");
+		String title = resultSet.getString("ProjectTitle");
 		double time = resultSet.getFloat("AlottedTime");
 		
 		Calendar startDate = Calendar.getInstance();
@@ -67,7 +67,7 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 		String SQL = "SELECT Projects.*, Employees.* FROM Projects " +
 				"INNER JOIN Employees " +  
 				"ON Projects.ProjectLeader = Employees.EmployeeID " +
-				"WHERE Projects.Title = '" + title + "'";
+				"WHERE Projects.ProjectTitle = '" + title + "'";
 		resultSet = executeQuery(SQL);
 		
 		if (resultSet.next()) 
@@ -92,7 +92,7 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 
 	@Override
 	public void saveProject(Project project) throws SQLException {
-		String SQL = "INSERT INTO Projects (Title, StartDate, EndDate, IsActive, AlottedTime, ProjectLeader)"
+		String SQL = "INSERT INTO Projects (ProjectTitle, StartDate, EndDate, IsActive, AlottedTime, ProjectLeader)"
 				+ " Values(?, ?, ?, ?, ?, ?)";		
 		// Create the connection and prepare the statement
 		connection = DriverManager.getConnection(connectionString);
@@ -111,7 +111,7 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 	@Override
 	public void updateProject(Project project) throws SQLException {
 		String SQL = "UPDATE Projects "
-				+ "SET Title = ?, StartDate = ?, EndDate = ?, IsActive = ?, "
+				+ "SET ProjectTitle = ?, StartDate = ?, EndDate = ?, IsActive = ?, "
 				+ "AlottedTime = ?, ProjectLeader = ? "
 				+ "WHERE ProjectID = " + project.getID() + ";";
 		
