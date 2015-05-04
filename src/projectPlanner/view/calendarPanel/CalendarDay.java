@@ -2,10 +2,13 @@ package projectPlanner.view.calendarPanel;
 
 import java.awt.Color;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import projectPlanner.Project;
 
 public class CalendarDay extends JPanel {
 	
@@ -22,17 +25,17 @@ public class CalendarDay extends JPanel {
 	private int thisYear  = today.get(Calendar.YEAR);
 	
 	//Month to display
-	private int month = 3;
+	private int month = 4;
 	private int year = 2015;
 	
-	@SuppressWarnings("unused")
+	
 	private String[] monthNames = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 	private String[] dayNames = { "Sunday", "Monday", "Tuesday", "Wedensday", "Thursday", "Friday", "Saturday"};
 	private int count = 0;
 	private int limit = dayNames.length*5;
 
 	
-	public CalendarDay(){
+	public CalendarDay() {
 		this.setBackground(Color.WHITE);
 		
 		

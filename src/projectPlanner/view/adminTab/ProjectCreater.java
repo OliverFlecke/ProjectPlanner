@@ -28,8 +28,8 @@ public class ProjectCreater extends JPanel {
 	public ProjectCreater() {
 		title = new NameObject("Create Project");
 		projectName = new TextNField("Project Name: ");
-		deadLineFld = new TextNDate("DeadLine: ");
-		startDateFld = new TextNDate("Username: ");
+		deadLineFld = new TextNDate("EndDate: ");
+		startDateFld = new TextNDate("StartDate: ");
 		lisOfemployees = new StdListPanel(getEmps(), "Available Employees");
 		projectLeader = new TextNField("Project Leader");
 		createProject = new JButton("Create Project");
