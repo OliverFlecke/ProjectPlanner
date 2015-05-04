@@ -123,10 +123,11 @@ public class ProjectReport {
 			contentStream.beginText();
 			contentStream.setFont( fontPlain, 9 );
 			contentStream.moveTextPositionByAmount( indent, spacing );
+			System.out.println(current.getTitle());
 			contentStream.drawString("Activity: " + current.getTitle() + "   Time spent: " + current.getTimeAccumulated() + " Hours" );
 			contentStream.endText();
 			if(!(spacing>48)){
-				contentStream.close();
+ 				contentStream.close();
 				PDPage loopPage = new PDPage();
 				document.addPage( loopPage );
 				contentStream = new PDPageContentStream(document, loopPage);

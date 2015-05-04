@@ -35,18 +35,18 @@ public class ProjectTab extends JPanel{
 	private static final long serialVersionUID = 5791566971957234579L;
 
 	private JButton printButton;
-	private Cursor hourglassCursor;
-	private Cursor normalCursor;
-	private JPanel buttonPanel;
+	private JPanel panel;
 	private final CountDownLatch pDFDone = new CountDownLatch(1);
-	String path;
+	private String path;
+	private WaitWindow wait;
 
-	public ProjectTab () {
-		buttonPanel = new JPanel();
+	public ProjectTab () {		
+		//creates panel
+		panel = new JPanel();
 		printButton = new PrintButton();
-		buttonPanel.add(printButton);
+		panel.add(printButton);
 		this.setLayout(new GridLayout(1,0));
-		this.add(buttonPanel);
+		this.add(panel);
 
 
 
@@ -65,40 +65,23 @@ public class ProjectTab extends JPanel{
 				} catch (UserClosedWindowException e1) {
 					return;
 				}
-
-				new Thread() {
-					@Override
-					public void run() {
-
-						try {
-							currentProject().printProjectReport(path);
-
-						} catch (IOException e) {
-							pDFDone.countDown();
-							new PrintErrorDialog("There was an error in writing the file");
-//							e.printStackTrace();
-						}
-//						catch (COSVisitorException e) {
-//							pDFDone.countDown();
-//							new PrintErrorDialog("More than one program is trying to access the file");
-//							e.printStackTrace();
-//						} 
-						catch (SQLException e) {
-							pDFDone.countDown();
-							new PrintErrorDialog("There was an error in connecting to the server");
-//							e.printStackTrace();
-						} finally {
-							pDFDone.countDown();
-						}
-					}
-				}.start();
-				System.out.println("waiting");
+				//show new thread generating pdf is ongoing
+				wait = new WaitWindow();
+				wait.setVisible(true);
 				try {
-					pDFDone.await();
-				} catch (InterruptedException ex) {
-					ex.printStackTrace();
+					currentProject().printProjectReport(path);
+
+				} catch (IOException e1) {
+					pDFDone.countDown();
+					new PrintErrorDialog("There was an error in writing the file");
 				}
-				System.out.println("Done");
+
+				catch (SQLException e1) {
+					pDFDone.countDown();
+					new PrintErrorDialog("There was an error in connecting to the server");
+				}		
+
+				wait.dispose();
 			}
 
 			public String choosePath() throws UserClosedWindowException{
@@ -112,6 +95,7 @@ public class ProjectTab extends JPanel{
 					Project mockProject = Project.getProject(1); 
 					return mockProject;
 				} catch (SQLException e) {
+					e.printStackTrace();
 					System.out.println("Can\'t reach server");
 				}
 				return null;
