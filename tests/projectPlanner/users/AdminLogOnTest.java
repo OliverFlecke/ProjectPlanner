@@ -5,8 +5,7 @@ package projectPlanner.users;
  *
  */
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 
@@ -71,11 +70,14 @@ public class AdminLogOnTest {
 		assertFalse(planner.getIsLoggedIn());
 		
 		// Step 1)
-		
-		boolean login = planner.login("admin", "admin");
+		try {
+			planner.login("admin", "admin");
+			fail("Exception should be thrown");
+		} catch (UserLoginException e) {
+			assertEquals("Invalid password. Please try again or contact your admin", e.getMessage());
+		}
 		
 		// Step 2) Check that the method returned true and check that admin is logged in.
-		assertFalse(login);
 		assertFalse(planner.getIsLoggedIn());
 		assertFalse(ProjectPlanner.getCurrentUser().isAdmin());
 	}	

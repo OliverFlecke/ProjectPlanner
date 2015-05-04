@@ -172,7 +172,7 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 	public List<Activity> getActivities(User user) throws SQLException {
 		// Create the list and the SQL statment
 		List<Activity> list = new ArrayList<Activity>();
-		String SQL = "SELECT WorksOn.*, Employees.*, Activities.* FROM WorksOn "
+		String SQL = "SELECT * FROM WorksOn "
 				+ "INNER JOIN Employees ON Employees.EmployeeID = WorksOn.EmployeeID "
 				+ "INNER JOIN Activities ON Activities.ActivityID = WorksOn.ActivityID "
 				+ "WHERE Employees.EmployeeID=" + user.getID();
@@ -203,6 +203,7 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		String SQL = "SELECT TimeSpend FROM SpendHoursOn "
 				+ "WHERE ActivityID = " + activity.getID() + " AND "
 						+ "EmployeeID = " + user.getID();
+		resultSet = executeQuery(SQL);
 		if (resultSet.next()) 
 			return resultSet.getDouble("TimeSpend");
 		else 

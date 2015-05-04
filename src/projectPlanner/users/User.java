@@ -272,4 +272,13 @@ public abstract class User implements Comparable<User> {
 	public static double getTimeSpendOnActivity(User user, Activity activity) throws SQLException {
 		return dataManager.getTimeSpendOnActivity(user, activity);
 	}
+	
+	/**
+	 * Get the time this user has spend on all his related activities
+	 * @return The time the user has spend
+	 * @throws SQLException
+	 */
+	public double getTimeSpendOnAllActivities() throws SQLException {
+		return dataManager.getTimeSpendOnAllActivities(this);
+	}
 }
