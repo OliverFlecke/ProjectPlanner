@@ -2,6 +2,7 @@ package projectPlanner.view.adminTab;
 
 import java.awt.FlowLayout;
 import java.util.Calendar;
+import java.util.Properties;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,11 +28,14 @@ public class TextNDate extends JPanel{
 		fieldLbl = new JLabel("Date");
 		
 		dateModel = new UtilDateModel();
-		Properties 
-		datePanel = new JDatePanelImpl(dateModel, null);
-		datePicker = new JDatePickerImpl(datePanel, null);
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		datePanel = new JDatePanelImpl(dateModel, p);
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 		
-		setDate(Calendar.getInstance());
+		//setDate(Calendar.getInstance());
 		
 		this.setOpaque(false);
 		this.setLayout(new FlowLayout());

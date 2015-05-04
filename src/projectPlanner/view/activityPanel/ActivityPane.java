@@ -35,7 +35,7 @@ public class ActivityPane extends JPanel {
 		activityTitle = new JLabel(activityName);
 		activityTitle.setFont(new Font("Arial Black", Font.BOLD, 20));
 		projectName = new TextPanel("Project Name: ", activity.getAttachedProject().getTitle());
-		hoursSpent = new TextPanel("Hours Spent:  ", String.valueOf(user.getTimeSpendOnActivity(user, activity))); 
+		hoursSpent = new TextPanel("Hours Spent:  ", String.valueOf(User.getTimeSpendOnActivity(user, activity))); 
 		
 		
 		
