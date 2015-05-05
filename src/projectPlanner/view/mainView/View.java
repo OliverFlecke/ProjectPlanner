@@ -3,33 +3,36 @@ package projectPlanner.view.mainView;
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
+import projectPlanner.users.User;
 import projectPlanner.view.adminTab.AdminTab;
-import projectPlanner.view.calendarPanel.CalendarTab;
+import projectPlanner.view.calendarTab.CalendarTab;
 import projectPlanner.view.login.LogInDialog;
 import projectPlanner.view.personalInfo.PersonalInfoTab;
 import projectPlanner.view.projectPanel.ProjectTab;
+import projectPlanner.view.activityTab.ActivityTab;
+import projectPlanner.Activity;
+import projectPlanner.ProjectPlanner;
 
 public class View extends JFrame {
 	
 	private LogInDialog logInDialog;
+	private List<Activity> listOfActivities;
 
 	ImageIcon icon;
 	/**
@@ -39,6 +42,12 @@ public class View extends JFrame {
 
 	public View(LogInDialog logInDialog) {
 		super("Project Planner");
+		
+		try {
+			listOfActivities = User.getActivities(ProjectPlanner.getCurrentUser());
+		} catch (Exception e){
+			
+		}
 		this.logInDialog = logInDialog;
 		initMenuBar();
 		JTabbedPane tabbedPane = new JTabbedPane();
@@ -46,17 +55,17 @@ public class View extends JFrame {
 		try {
 			icon = new ImageIcon(getClass().getResource("images/icon.png"));
 		} catch (Exception e) {	}
-		CalendarTab panel1 = new CalendarTab();
+		CalendarTab panel1 = new CalendarTab(listOfActivities);
 		tabbedPane.addTab("Calendar", icon, panel1, "this weeks calendar" );
 
 		PersonalInfoTab panel2 = new PersonalInfoTab();
 		tabbedPane.addTab("Personal Information", icon, panel2, "Information about you" );
 
-		JComponent panel3 = makeTextPanel("Panel #3");
+		JComponent panel3 = new ActivityTab(listOfActivities);
 		tabbedPane.addTab("Activities", icon, panel3, "Activities you are part of" );
 		
 		ProjectTab panel4 = new ProjectTab();
-		tabbedPane.addTab("Project", icon, panel4, "Project Managers can create new projects" );
+		tabbedPane.addTab("Project", icon, panel4, "Project Managers can create new and manage projects" );
 
 		AdminTab panel5 = new AdminTab();
 		tabbedPane.addTab("adminTab", icon, panel5, "Super secret tab for admins only" );
@@ -121,16 +130,6 @@ public class View extends JFrame {
 			}
 		});
 		
-	}
-
-
-	protected JComponent makeTextPanel(String text) {
-		JPanel panel = new JPanel(false);
-		JLabel filler = new JLabel(text);
-		filler.setHorizontalAlignment(JLabel.CENTER);
-		panel.setLayout(new GridLayout(1, 1));
-		panel.add(filler);
-		return panel;
 	}
 	
 }

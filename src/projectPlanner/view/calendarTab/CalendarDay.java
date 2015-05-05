@@ -1,4 +1,4 @@
-package projectPlanner.view.calendarPanel;
+package projectPlanner.view.calendarTab;
 
 import java.awt.Color;
 import java.util.Calendar;

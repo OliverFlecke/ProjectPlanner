@@ -15,11 +15,11 @@ import javax.swing.ListSelectionModel;
 public class StdListPanel extends JPanel{
 	
 	//fields
-	public List<String> listForPop;
-	public JList<String> listToPop;
-	public JLabel listHeadderLbl;
+	private List<String> listForPop;
+	private JList<String> listToPop;
+	private JLabel listHeadderLbl;
 
-	public StdListPanel(List<String> listForPop, String listLbl){
+	public StdListPanel(List<String> listForPop, String listLbl) {
 		
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -27,6 +27,7 @@ public class StdListPanel extends JPanel{
 		this.listForPop = listForPop;
 		
 		this.listHeadderLbl = new JLabel(listLbl);
+		listHeadderLbl.setFont(new Font("Arial Bold", Font.BOLD, 16));
 		
 		
 		listToPop = new JList<String>(populateList());
@@ -46,6 +47,20 @@ public class StdListPanel extends JPanel{
 		this.add(listToPop);
 		
 		populateList();
+		
+	}
+	
+	public JList<String> getListToPop() {
+		return listToPop;
+	}
+
+	public void setListForPop(List<String> listForPop) {
+		this.listForPop = listForPop;
+	}
+
+	public StdListPanel(List<String> listForPop, String listLbl, int lblFontSize) {
+		this(listForPop, listLbl);
+		listHeadderLbl.setFont(new Font("Arial Bold", Font.BOLD, lblFontSize));
 		
 	}
 	
