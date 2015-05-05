@@ -121,13 +121,17 @@ public class ListPanel extends JPanel{
 		}
 	}
 
-	private List<Activity> fetchActivitiesList() {
+	private List<Activity> fetchActivitiesList() throws SQLException {
+		List<Activity> returnList = new ArrayList<Activity>();
 		try {
-			return getCurrentSelectedProject().getActivities();
+			returnList = getCurrentSelectedProject().getActivities();			
 		} catch (SQLException e2) {
 			new ErrorDialog("There was an error in connecting to the server");
 		}
-		return null;
+		if(returnList.size()==0){
+			returnList.add(new Activity("There are no activities", getCurrentSelectedProject()));
+		}
+		return returnList;
 	}
 
 	private List<String> getProjectNames() {
@@ -174,7 +178,13 @@ public class ListPanel extends JPanel{
 	}
 
 	public Activity getCurrentSelectedActivity(){
-		return fetchActivitiesList().get(selectActivityList.getSelectedIndex());
+		try {
+			return fetchActivitiesList().get(selectActivityList.getSelectedIndex());
+		} catch (SQLException e) {
+			new ErrorDialog("There was a problem in connecting to the server");
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public JList<String> getSelectActivityList(){
