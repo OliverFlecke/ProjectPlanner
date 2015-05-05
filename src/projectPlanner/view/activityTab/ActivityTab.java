@@ -11,7 +11,7 @@ import projectPlanner.Activity;
 
 
 
-public class ActivityTab extends JPanel{
+public class ActivityTab extends JPanel {
 	
 	/**
 	 * 
