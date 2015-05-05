@@ -25,7 +25,7 @@ public class ActivityTab extends JPanel {
 
 	public ActivityTab (List<Activity> listOfActivities) {
 	    
-	    rightPane = new ActivityModificationPane();
+	    rightPane = new ActivityModificationPane(listOfActivities);
 	    leftPane = new ActivityListPane(listOfActivities, rightPane);
 		rightPane.setLayout(new GridLayout(0,7));
 	    leftSideScrollPane = new JScrollPane(leftPane);

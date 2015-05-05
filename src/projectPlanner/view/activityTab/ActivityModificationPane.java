@@ -13,9 +13,13 @@ public class ActivityModificationPane extends JPanel {
 	private AddEmployeeToProjectPanel addEmpPane;
 	private AddTimeToActivityPane timeToActivityPane;
 	private List<Activity> listOfActivities;
+	private JPanel uiFormatPanel;
 	
 	public ActivityModificationPane(List<Activity> listOfActivities) {
 		this.listOfActivities = listOfActivities;
+		
+		uiFormatPanel = new JPanel();
+		uiFormatPanel.setLayout(new BoxLayout(uiFormatPanel, BoxLayout.LINE_AXIS));
 		
 		
 		

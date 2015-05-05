@@ -21,10 +21,9 @@ public class ActivityHolder extends JPanel {
 	private static final long serialVersionUID = -2287647052888581135L;
 	//fields
 	private JLabel myActivitiesLbl = new JLabel("My Activities");
-	private List<Activity> listOfActivties;
 	private User user;
 	
-	public ActivityHolder() {
+	public ActivityHolder(List<Activity> listOfActivties) {
 		this.user = ProjectPlanner.getCurrentUser();
 		try {
 		listOfActivties = User.getActivities(user);
@@ -40,13 +39,13 @@ public class ActivityHolder extends JPanel {
 		//Adding layout and setting up scrollbar
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.add(myActivitiesLbl);
-		addActivities();
+		addActivities(listOfActivties);
 		this.add(Box.createVerticalGlue());
 
 	}
 
 
-	private void addActivities() {
+	private void addActivities(List<Activity> listOfActivties) {
 		for (Activity activity: listOfActivties) {
 			try {
 				ActivityPane newActivity = new ActivityPane(activity, user);

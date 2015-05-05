@@ -32,7 +32,7 @@ public class ActivityListPane extends JPanel {
 				if (lse.getValueIsAdjusting()){
 					return;
 				}
-				activityModificationPane.repaintPanel();
+				activityModificationPane.repaintPanel(activitiesJList.getSelectedIndex());
 			}
 		});
 		
