@@ -64,7 +64,7 @@ public class ManageActivityPanel extends JPanel{
 		add(createActivity);
 
 		//Listener for changes in project selection for refreshing activities
-		listPanel.getSelectProjectList().addListSelectionListener(new ListSelectionListener() {
+		listPanel.getSelectActivityList().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent lse) {
 				if (lse.getValueIsAdjusting()){
 					return;
