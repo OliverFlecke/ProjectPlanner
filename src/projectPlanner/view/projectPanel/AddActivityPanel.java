@@ -1,11 +1,13 @@
 package projectPlanner.view.projectPanel;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.Calendar;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,7 +23,9 @@ public class AddActivityPanel extends JPanel{
 	 */
 	private static final long serialVersionUID = 7357419115600518517L;
 	public AddActivityPanel(ListPanel listPanel){
-		
+		//temp border until visuals are improved
+		this.setBorder(BorderFactory.createLineBorder(Color.black));
+
 		//add activity adding area
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -51,7 +55,7 @@ public class AddActivityPanel extends JPanel{
 			public void actionPerformed(ActionEvent e){
 				try {
 					@SuppressWarnings("unused")
-					Activity addAct = new Activity(name.getTxt(),listPanel.getCurrentSelectedProject());
+					Activity addAct = new Activity(name.getTxt(),listPanel.getCurrentSelectedProject(),startDate.getDate(),endDate.getDate());
 					name.setTxt("");
 					alottedTime.setTxt("");
 					startDate.setDate(Calendar.getInstance());

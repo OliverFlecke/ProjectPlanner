@@ -1,11 +1,13 @@
 package projectPlanner.view.projectPanel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -36,6 +38,9 @@ public class ListPanel extends JPanel{
 	private boolean refreshingActivities;
 
 	public ListPanel(){		
+		//temp border until visuals are improved
+		this.setBorder(BorderFactory.createLineBorder(Color.black));
+		
 		//get list of projects  associated with current user
 		fetchProjectsList();
 
@@ -139,14 +144,18 @@ public class ListPanel extends JPanel{
 		//refresh list
 		activityListModel.removeAllElements();
 		try {
-			for(String current : getActivityNames()){
-				activityListModel.addElement(current);
-			}
-			SwingUtilities.invokeLater(() -> refreshingActivities = false);
-			selectActivityList.setSelectedIndex(0);
+			refreshActivityNames();
 		} catch (SQLException e) {
 			new ErrorDialog("There was an error in connecting to the server");
 		}
+	}
+
+	private void refreshActivityNames() throws SQLException {
+		for(String current : getActivityNames()){
+			activityListModel.addElement(current);
+		}
+		SwingUtilities.invokeLater(() -> refreshingActivities = false);
+		selectActivityList.setSelectedIndex(0);
 	}
 
 
