@@ -2,6 +2,7 @@ package projectPlanner.view.activityTab;
 
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,13 +35,19 @@ public class ActivityModificationPane extends JPanel {
 	public void repaintPanel(int activityIndex) {
 		Activity activity = listOfActivities.get(activityIndex);
 		removeAllObjects();
-		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+		uiFormatPanel.removeAll();
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		try {
 			timeToActivityPane = new AddTimeToActivityPane(activity);
+			addEmpPane = new AddEmployeeToProjectPanel(activity);
 		} catch (Exception e) {
 			
 		}
-		this.add(timeToActivityPane);
+		uiFormatPanel.add(timeToActivityPane);
+		uiFormatPanel.add(addEmpPane);
+		uiFormatPanel.add(Box.createHorizontalGlue());
+		this.add(uiFormatPanel);
+		this.add(Box.createVerticalGlue());
 		this.revalidate();
 		this.repaint();
 	}

@@ -49,6 +49,21 @@ public class StdListPanel extends JPanel{
 		populateList();
 		
 	}
+	public StdListPanel(List<String> listForPop, String listLbl, int lblFontSize) {
+		
+		this(listForPop, listLbl);
+		
+		listHeadderLbl.setFont(new Font("Arial Bold", Font.BOLD, lblFontSize));
+		
+	}
+	
+	public StdListPanel(List<String> listForPop, String listLbl, int lblFontSize, Color color) {
+		
+		this(listForPop, listLbl, lblFontSize);
+		
+		listToPop.setBackground(color);
+		
+	}
 	
 	public JList<String> getListToPop() {
 		return listToPop;
@@ -58,11 +73,6 @@ public class StdListPanel extends JPanel{
 		this.listForPop = listForPop;
 	}
 
-	public StdListPanel(List<String> listForPop, String listLbl, int lblFontSize) {
-		this(listForPop, listLbl);
-		listHeadderLbl.setFont(new Font("Arial Bold", Font.BOLD, lblFontSize));
-		
-	}
 	
 	private DefaultListModel<String> populateList() {
 		DefaultListModel<String> listModel = new DefaultListModel<String>();

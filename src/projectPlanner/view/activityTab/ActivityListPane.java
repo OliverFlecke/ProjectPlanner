@@ -21,7 +21,7 @@ public class ActivityListPane extends JPanel {
 	
 	public ActivityListPane (List<Activity> listOfActivities, ActivityModificationPane activityModificationPane) {
 		activityNames = getActivityNames(listOfActivities);
-		activitiesList = new StdListPanel(activityNames, "List of your Activities");
+		activitiesList = new StdListPanel(activityNames, "List of your Activities", 25);
 		activitiesJList = activitiesList.getListToPop();
 		
 		
