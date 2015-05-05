@@ -31,7 +31,7 @@ public class ProjectTest {
 		admin = mock(Admin.class);
 		Mockito.when(admin.isAdmin()).thenReturn(true);
 		
-		activity = new Activity(1, "Database setup", 1, 20.5, true);
+		activity = new Activity(1, "Database setup", 1, 20.5, true, null, null);
 		employee = new Employee("Oliver", "1234", "Oliver", "Fleckenstein", 2);
 		project = new Project(1, "project_name", 10.0, employee, null, null);
 	}

@@ -70,17 +70,36 @@ public class Activity implements Comparable<Activity> {
 	 * @param project parent of this activity
 	 * @param hours spend on the activity
 	 */
-	public Activity(int id, String title, Project project, double hours, boolean isActive) {
+	public Activity(int id, String title, Project project, double hours, boolean isActive, Calendar startDate, Calendar endDate) {
 		this.id = id;
 		this.title = title;
 		this.project = project;
 		this.hoursAccumulated = hours;
 		this.isActive = isActive;
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
 	
-	public Activity(int id, String title, int projectID, double hours, boolean isActive) {
-		this(id, title, null, hours, isActive);
+	public Activity(int id, String title, int projectID, double hours, boolean isActive, Calendar startDate, Calendar endDate) {
+		this(id, title, null, hours, isActive, startDate, endDate);
 		this.projectID = projectID;
+	}
+	
+	/**
+	 * Update the activity
+	 * @throws SQLException
+	 */
+	public void update(String title, Project project, double hoursAccumulated, double hoursAllotted, 
+			boolean isActive, Calendar startDate, Calendar endDate) throws SQLException {
+		this.title = title;
+		this.project = project;
+		this.hoursAccumulated = hoursAccumulated;
+		this.hoursAllotted = hoursAllotted;
+		this.isActive = isActive;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		
+		dataManager.updateActivity(this);
 	}
 	
 	/**
@@ -213,10 +232,30 @@ public class Activity implements Comparable<Activity> {
 	}
 
 	/**
+	 * Set the start date
+	 * @param startDate
+	 * @throws SQLException
+	 */
+	public void setStartDate(Calendar startDate) throws SQLException {
+		this.startDate = startDate;
+		dataManager.updateActivity(this);
+	}
+	
+	/**
 	 * @return Get the start date
 	 */
 	public Calendar getStartDate() {
 		return this.startDate;
+	}
+	
+	/**
+	 * Set the end date of the activity
+	 * @param endDate
+	 * @throws SQLException
+	 */
+	public void setEndDate(Calendar endDate) throws SQLException {
+		this.endDate = endDate;
+		dataManager.updateActivity(this);
 	}
 	
 	/**

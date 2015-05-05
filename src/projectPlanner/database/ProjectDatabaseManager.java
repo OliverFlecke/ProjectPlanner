@@ -2,6 +2,7 @@ package projectPlanner.database;
 
 import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 import projectPlanner.*;
 import projectPlanner.users.*;
@@ -19,10 +20,20 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 		String title = resultSet.getString("ProjectTitle");
 		double time = resultSet.getFloat("AlottedTime");
 		
-		Calendar startDate = Calendar.getInstance();
-		Calendar endDate = Calendar.getInstance();
-		startDate.setTime(resultSet.getDate("StartDate"));
-		endDate.setTime(resultSet.getDate("EndDate"));
+		// Avoid null pointers
+		Calendar startDate = null;
+		Calendar endDate = null;
+		Date start = resultSet.getDate("StartDate");
+		if (start != null) {
+			startDate = Calendar.getInstance();
+			startDate.setTime(start);
+		}
+		Date end = resultSet.getDate("EndDate");
+		if (end != null) {
+			 endDate = Calendar.getInstance();
+			 endDate.setTime(end);
+		}
+		
 		User projectLeader = UserDatabaseManager.getUserFromResultSet(resultSet);
 		
 		return new Project(id, title, time, projectLeader, startDate, endDate);
