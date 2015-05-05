@@ -59,6 +59,7 @@ public class AddActivityPanel extends JPanel{
 					listPanel.refreshActivitiesList();
 				} catch (SQLException e1) {
 					new ErrorDialog("There was a problem in connecting to the server");
+					e1.printStackTrace();
 				}
 
 			}

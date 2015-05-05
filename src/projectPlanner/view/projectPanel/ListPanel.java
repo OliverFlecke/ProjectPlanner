@@ -30,6 +30,7 @@ public class ListPanel extends JPanel{
 	private DefaultListModel<String> activityListModel;
 	private JList<String> selectActivityList;
 	private List<Project> projectsList;
+	private boolean refreshingActivities;
 
 	public ListPanel(){		
 		//get list of projects  associated with current user
@@ -98,6 +99,14 @@ public class ListPanel extends JPanel{
 				refreshActivitiesList();
 			}
 		});
+	}
+
+	public boolean isRefreshingActivities() {
+		return refreshingActivities;
+	}
+
+	public void setRefreshingActivities(boolean refreshingActivities) {
+		this.refreshingActivities = refreshingActivities;
 	}
 
 	private void fetchProjectsList() {
