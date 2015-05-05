@@ -43,6 +43,20 @@ public class ActivityDatabaseManagerTests {
 	}
 	
 	@Test
+	@Category(DatabaseTest.class)
+	public void getActivityFromTitle() throws SQLException {
+		Activity fromDB = db.getActivity("Database setup");
+		
+		// Compare all the 
+		Assert.assertEquals(expActivity.getID(), fromDB.getID());
+		Assert.assertEquals(expActivity.getTitle(), fromDB.getTitle());
+		Assert.assertEquals(expActivity.getTimeAccumulated(), fromDB.getTimeAccumulated(), 0);
+		Assert.assertEquals(expActivity.isActive(), fromDB.isActive());
+		Assert.assertEquals(expActivity.getProjectID(), fromDB.getProjectID());
+		Assert.assertEquals(expActivity, fromDB);
+	}
+	
+	@Test
 	@Category(DatabaseTest.class) 
 	public void saveActivityToDatabase() throws SQLException {
 		// This test can not be run each time. This will try to save the activity to the database

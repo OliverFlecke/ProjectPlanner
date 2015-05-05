@@ -16,6 +16,14 @@ public interface IActivityDatabaseManager {
 	 * @throws SQLException
 	 */
 	public Activity getActivity(int ID) throws SQLException;
+	
+	/**
+	 * Get an activity with the passed title
+	 * @param title
+	 * @return An activity with the given title
+	 * @throws SQLException
+	 */
+	public Activity getActivity(String title) throws SQLException;
 
 	/**
 	 * Get all the users on the relevant 

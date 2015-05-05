@@ -33,15 +33,23 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 	
 	@Override
 	public void saveActivity(Activity activity) throws SQLException {
-		String SQL = "INSERT INTO Activities (Title, AccumulatedHours, ProjectID) " +
+		String SQL = "INSERT INTO Activities (Title, AccumulatedHours, ProjectID, "
+				+ "StartDateForActivity, EndDateForActivity) " +
 				"VALUES('" + activity.getTitle() + "', " +
 				activity.getTimeAccumulated() + ", " +
-				activity.getProjectID() + ");";
+				activity.getProjectID() + ","
+				+ activity.getStartDate() + ", "
+				+ activity.getEndDate() + ");";
 		executeUpdate(SQL);
+		
+		System.out.println("Activity saved");
+		int id = this.getActivity(activity.getTitle()).getID();
+		System.out.println("ID is " + id);
 		
 		// Register the link between the project and the activity
 		SQL = "INSERT INTO MemberOfProject (ProjectID, ActivityID) "
-				+ "VALUES(" + activity.getProjectID() + ", " + activity.getID() + ");";
+				+ "VALUES(" + activity.getProjectID() + ", " + id + ");";
+		System.out.println(SQL);
 		executeUpdate(SQL);
 	}
 	
@@ -59,6 +67,22 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		
 		return activity;
 	}
+	
+	@Override
+	public Activity getActivity(String title) throws SQLException {
+		String SQL = "SELECT * FROM Activities "
+				+ "INNER JOIN Projects ON Projects.ProjectID = Activities.ProjectID "
+				+ "INNER JOIN Employees ON Projects.ProjectLeader = Employees.EmployeeID "
+				+ "WHERE Activities.Title = '" + title + "';";
+		resultSet = executeQuery(SQL);
+		
+		Activity activity = null;
+		if (resultSet.next()) 
+			activity = getCurrentActivity(resultSet, true);
+		
+		return activity;
+	}
+	
 	
 	@Override
 	public List<Employee> getUsers(Activity activity) throws SQLException {

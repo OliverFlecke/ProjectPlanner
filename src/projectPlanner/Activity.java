@@ -31,18 +31,34 @@ public class Activity implements Comparable<Activity> {
 	 * @throws SQLException 
 	 */
 	public Activity(String title, Project project) throws SQLException {
+		createActivity(title, project, null, null);
+	}
+	
+	/**
+	 * Create an activity with a start and an enddate 
+	 * @param title of the activity 
+	 * @param project parent to this activity
+	 * @param startDate of the activiyt
+	 * @throws SQLException
+	 */
+	public Activity(String title, Project project, Calendar startDate, Calendar endDate) throws SQLException {
+		createActivity(title, project, startDate, endDate);
+	}
+	
+	/**
+	 * Create a new activity 
+	 */
+	private void createActivity(String title, Project project, Calendar startDate, Calendar endDate) throws SQLException {
 		this.title = title;
 		this.project = project;
 		this.hoursAccumulated = 0;
 		this.isActive = true;
+		this.startDate = startDate;
+		this.endDate = endDate;
 		
 		if (dataManager == null) 
 			dataManager = new ActivityDatabaseManager();
 		dataManager.saveActivity(this);
-	}
-	
-	public Activity(String title, Project project, Calendar startDate) throws SQLException {
-		
 	}
 	
 	/**
@@ -193,4 +209,18 @@ public class Activity implements Comparable<Activity> {
 	public static List<Activity> getActivities(Project project) throws SQLException {
 		return dataManager.getActivitiesByProject(project);
 	}
+
+	/**
+	 * @return Get the start date
+	 */
+	public Calendar getStartDate() {
+		return this.startDate;
+	}
+	
+	/**
+	 * @return Get the end date of the activity
+	 */
+	public Calendar getEndDate() {
+		return this.endDate;
+	}	
 }
