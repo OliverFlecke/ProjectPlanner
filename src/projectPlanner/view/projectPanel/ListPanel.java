@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -13,8 +14,10 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
 import projectPlanner.Activity;
 import projectPlanner.Project;
 import projectPlanner.ProjectPlanner;
@@ -93,9 +96,9 @@ public class ListPanel extends JPanel{
 		//Listener for changes in project selection for refreshing activities
 		selectProjectList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent lse) {
-				if (lse.getValueIsAdjusting()){
-					return;
-				}
+//				if (lse.getValueIsAdjusting()){
+//					return;
+//				}
 				refreshActivitiesList();
 			}
 		});
@@ -103,10 +106,6 @@ public class ListPanel extends JPanel{
 
 	public boolean isRefreshingActivities() {
 		return refreshingActivities;
-	}
-
-	public void setRefreshingActivities(boolean refreshingActivities) {
-		this.refreshingActivities = refreshingActivities;
 	}
 
 	private void fetchProjectsList() {
@@ -134,6 +133,7 @@ public class ListPanel extends JPanel{
 		return projectNames;
 	}
 	public void refreshActivitiesList() {
+		refreshingActivities = true;
 		//refresh header
 		actListHeader.setText("Activities for project:" + getCurrentSelectedProject().getTitle());
 		//refresh list
@@ -146,6 +146,7 @@ public class ListPanel extends JPanel{
 				activityListModel.addElement(current);
 			}
 			System.out.println(3);
+			SwingUtilities.invokeLater(() -> refreshingActivities = false);
 			selectActivityList.setSelectedIndex(0);
 			System.out.println(4);
 		} catch (SQLException e) {
