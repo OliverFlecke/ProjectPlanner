@@ -6,6 +6,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import projectPlanner.ProjectPlanner;
+
 @SuppressWarnings("serial")
 public class PersonalInfoTab extends JPanel{
 	
@@ -17,7 +19,7 @@ public class PersonalInfoTab extends JPanel{
 	
 	
 	public PersonalInfoTab () {
-		this.name = "Oliver Frankenstein";
+		this.name = ProjectPlanner.getCurrentUser().getFirstname() + " " + ProjectPlanner.getCurrentUser().getLastname();
 		this.personalInfo = new PersonalInfoPane(name);
 		
 		//personalInfo.setMaximumSize(new Dimension(500, 200));
