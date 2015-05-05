@@ -123,12 +123,12 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 	@Override 
 	public void updateActivity(Activity activity) throws SQLException {
 		String SQL = "UPDATE Activities " +
-				"SET Title = '" + 			activity.getTitle() + "'," +
-				"AccumulatedHours = " + 	activity.getTimeAccumulated() + ", " +
-				"ProjectID = " + 			activity.getProjectID() + ", " 
-				+ "StartDate = " +			activity.getStartDate() + ", "
-				+ "EndDate = " + 			activity.getEndDate() + ", "
-				+ "WHERE ActivityID = " + 	activity.getID();
+				"SET Title = '" + 				activity.getTitle() + "'," +
+				"AccumulatedHours = " + 		activity.getTimeAccumulated() + ", " +
+				"ProjectID = " + 				activity.getProjectID() + ", " 
+				+ "StartDateForActivity = " +	activity.getStartDate() + ", "
+				+ "EndDateForActivity = " + 		activity.getEndDate() + " "
+				+ "WHERE ActivityID = " + 		activity.getID();
 		executeUpdate(SQL);
 	}
 	
