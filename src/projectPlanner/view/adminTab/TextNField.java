@@ -10,9 +10,29 @@ import java.awt.FlowLayout;
 public class TextNField extends JPanel {
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3711888023598228029L;
 	//Create txtField
 	public JTextField txtField = new JTextField(10);
 	
+	public JTextField getTxtField() {
+		return txtField;
+	}
+
+	public void setTxtField(JTextField txtField) {
+		this.txtField = txtField;
+	}
+
+	public JLabel getFieldLbl() {
+		return fieldLbl;
+	}
+
+	public void setFieldLbl(JLabel fieldLbl) {
+		this.fieldLbl = fieldLbl;
+	}
+
 	//Create Lbl
 	public JLabel fieldLbl = new JLabel();
 	
