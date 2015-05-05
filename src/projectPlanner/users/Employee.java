@@ -1,5 +1,6 @@
 package projectPlanner.users;
 
+import java.sql.SQLException;
 import java.util.*;
 
 import projectPlanner.*;
@@ -31,8 +32,8 @@ public class Employee extends User {
 		this.activities = new ArrayList<Activity>();
 	}
 
-	public static List<Employee> getEmployees(Activity activity) {
-		// TODO Auto-generated method stub
-		return null;
+	public static List<Employee> getEmployees(Activity activity) throws SQLException {
+//		List<Employee> list = new ArrayList<Employee>();
+		return dataManager.getEmployees(activity);
 	}
 }

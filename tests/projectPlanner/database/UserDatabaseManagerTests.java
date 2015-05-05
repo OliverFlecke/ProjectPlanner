@@ -112,4 +112,13 @@ public class UserDatabaseManagerTests {
 		List<LoggedTime> list = user.getLoggedTime();
 		Assert.assertTrue(list.size() > 0);
 	}
+	
+	@Test
+	@Category(DatabaseTest.class)
+	public void getUsersByActiviy() throws SQLException {
+		Activity activity = new Activity(1, "Database setup", 1, 20.5, true, null, null);
+		List<Employee> list = dataManager.getEmployees(activity);
+		
+		Assert.assertTrue(list.size() >= 1);
+	}
 }

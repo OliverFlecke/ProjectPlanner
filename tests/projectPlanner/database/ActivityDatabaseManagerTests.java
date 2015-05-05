@@ -25,7 +25,7 @@ public class ActivityDatabaseManagerTests {
 	public void setup() {
 		db = new ActivityDatabaseManager();
 		// The first entry in the activity database
-		expActivity = new Activity(1, "Database setup", 1, 20.5, true);
+		expActivity = new Activity(1, "Database setup", 1, 20.5, true, null, null);
 		user = new Employee("Oliver", "1234", "Oliver", "Fleckenstein", 2);
 		project = new Project(1, "Database setup", 0, null, null, null);
 	}
@@ -63,7 +63,7 @@ public class ActivityDatabaseManagerTests {
 	public void saveActivityToDatabase() throws SQLException {
 		// This test can not be run each time. This will try to save the activity to the database
 		// We primary look for exceptions
-		Activity activity = new Activity("Test activity 2", project);
+//		Activity activity = new Activity("Test activity 2", project);
 		Assert.assertTrue(true);
 	}
 	

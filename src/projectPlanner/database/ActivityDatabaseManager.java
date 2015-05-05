@@ -4,6 +4,7 @@ import projectPlanner.*;
 import projectPlanner.users.*;
 
 import java.sql.*;
+import java.util.Date;
 import java.util.*;
 
 /**
@@ -24,11 +25,25 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		int projectID = result.getInt("ProjectID");
 		boolean status = result.getBoolean("IsActive");
 		
+		// Get the dates, if they are there
+		Calendar startDate = null;
+		Calendar endDate = null;
+		Date start = resultSet.getDate("StartDateForActivity");
+		if (start != null) {
+			startDate = Calendar.getInstance();
+			startDate.setTime(start);
+		}
+		Date end = resultSet.getDate("EndDateForActivity");
+		if (end != null) {
+			 endDate = Calendar.getInstance();
+			 endDate.setTime(end);
+		}
+		
 		if (getProject) {
 			Project project = ProjectDatabaseManager.getCurrentProject(result);
-			return new Activity(ID, title, project, hours, status);
+			return new Activity(ID, title, project, hours, status, startDate, endDate);
 		} else 
-			return new Activity(ID, title, projectID, hours, status);
+			return new Activity(ID, title, projectID, hours, status, startDate, endDate);
 	}
 	
 	@Override
@@ -108,10 +123,12 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 	@Override 
 	public void updateActivity(Activity activity) throws SQLException {
 		String SQL = "UPDATE Activities " +
-				"SET Title = '" + 			activity.getTitle() + "'," +
-				"AccumulatedHours = " + 	activity.getTimeAccumulated() + ", " +
-				"ProjectID = " + 			activity.getProjectID() +
-				"WHERE ActivityID = " + 	activity.getID();
+				"SET Title = '" + 				activity.getTitle() + "'," +
+				"AccumulatedHours = " + 		activity.getTimeAccumulated() + ", " +
+				"ProjectID = " + 				activity.getProjectID() + ", " 
+				+ "StartDateForActivity = " +	activity.getStartDate() + ", "
+				+ "EndDateForActivity = " + 		activity.getEndDate() + " "
+				+ "WHERE ActivityID = " + 		activity.getID();
 		executeUpdate(SQL);
 	}
 	
