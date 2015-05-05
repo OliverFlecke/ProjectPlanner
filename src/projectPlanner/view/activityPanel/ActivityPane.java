@@ -9,6 +9,7 @@ import java.awt.Font;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -16,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import projectPlanner.Activity;
+import projectPlanner.ProjectPlanner;
+import projectPlanner.users.Employee;
 import projectPlanner.users.User;
 import projectPlanner.view.StdListPanel;
 
@@ -42,7 +45,7 @@ public class ActivityPane extends JPanel {
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		
-		this.otherEmps = new StdListPanel(new ArrayList<String>(Arrays.asList("Sebastian", "Oliver", "Mark","Ben", "Peter", "Mathias", "Anders", "Alexander","Sebastian", "Oliver", "Mark","Ben", "Peter", "Mathias", "Anders", "Alexander")), "Colleagues attached to activity:");
+		this.otherEmps = new StdListPanel(getEmployeesOnActivity(activity), "Colleagues attached to activity:");
 		
 		
 		
@@ -61,5 +64,14 @@ public class ActivityPane extends JPanel {
 
 	public Dimension height() {
 		return this.getPreferredSize();
+	}
+	
+	private List<String> getEmployeesOnActivity(Activity activity) throws Exception {
+		List<Employee> employees = ProjectPlanner.getEmployeesByActivity(activity);
+		List<String> employeeNames = new ArrayList<String>();
+		for (Employee employee: employees) {
+			employeeNames.add(employee.getFirstname() + employee.getLastname());
+		}
+		return employeeNames;
 	}
 }
