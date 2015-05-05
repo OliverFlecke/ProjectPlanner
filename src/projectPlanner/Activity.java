@@ -56,11 +56,11 @@ public class Activity implements Comparable<Activity> {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		
-		project.addActivity(this);
-		
 		if (dataManager == null) 
 			dataManager = new ActivityDatabaseManager();
 		dataManager.saveActivity(this);
+		
+		project.addActivity(this);
 	}
 	
 	/**

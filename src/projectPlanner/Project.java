@@ -254,7 +254,12 @@ public class Project implements Comparable<Project> {
 	 * @throws SQLException  
 	 */
 	public void addActivity(Activity activity) throws SQLException {
-		activities.add(activity);
+		if (activities != null)
+			activities.add(activity);
+		else {
+			activities = new ArrayList<Activity>();
+			activities.add(activity);
+		}
 		dataManager.addActivityToProject(this, activity);
 	}
 	
