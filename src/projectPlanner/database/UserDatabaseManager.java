@@ -246,4 +246,18 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		
 		return list;
 	}
+	
+	@Override
+	public List<Employee> getEmployees(Activity activity) throws SQLException {
+		List<Employee> list = new ArrayList<Employee>();
+		String SQL = "SELECT * FROM WorksOn "
+				+ "INNER JOIN Employees ON Employees.EmployeeID = WorksOn.EmployeeID "
+				+ "WHERE WorksOn.ActivityID = " + activity.getID();
+		
+		resultSet = executeQuery(SQL);
+		while (resultSet.next()) {
+			list.add(getUserFromResultSet(resultSet));
+		}
+		return list;
+	}
 }

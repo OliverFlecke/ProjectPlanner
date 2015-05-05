@@ -96,8 +96,9 @@ public class ProjectPlanner {
 	 * 
 	 * @param activity
 	 * @return
+	 * @throws SQLException 
 	 */
-	public List<Employee> getEmployeesByActivity(Activity activity) {
+	public List<Employee> getEmployeesByActivity(Activity activity) throws SQLException {
 		return Employee.getEmployees(activity);
 	}
 	

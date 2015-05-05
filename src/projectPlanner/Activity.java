@@ -94,7 +94,7 @@ public class Activity implements Comparable<Activity> {
 		this.title = title;
 		this.project = project;
 		this.hoursAccumulated = hoursAccumulated;
-		this.hoursAllotted = hoursAllotted;
+		this.setHoursAllotted(hoursAllotted);
 		this.isActive = isActive;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -271,5 +271,29 @@ public class Activity implements Comparable<Activity> {
 	 */
 	public void setID(int id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the hoursAllotted
+	 */
+	public double getHoursAllotted() {
+		return hoursAllotted;
+	}
+
+	/**
+	 * @param hoursAllotted the hoursAllotted to set
+	 */
+	public void setHoursAllotted(double hoursAllotted) {
+		this.hoursAllotted = hoursAllotted;
 	}	
+	
+	/**
+	 * Get an activity with the given ID
+	 * @param ID to get
+	 * @return An activity with the matching ID
+	 * @throws SQLException
+	 */
+	public static Activity getActivity(int ID) throws SQLException {
+		return dataManager.getActivity(ID);
+	}
 }

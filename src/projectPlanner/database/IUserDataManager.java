@@ -102,4 +102,12 @@ public interface IUserDataManager {
 	 * @throws SQLException
 	 */
 	public List<LoggedTime> getTimeSpendOnEachActivity(User user) throws SQLException;
+	
+	/**
+	 * Get all the employees linked to the passed activity
+	 * @param activity to find employees on
+	 * @return A list of employees working on the given activity
+	 * @throws SQLException
+	 */
+	public List<Employee> getEmployees(Activity activity) throws SQLException;
 }
