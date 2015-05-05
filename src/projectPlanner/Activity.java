@@ -19,8 +19,11 @@ public class Activity implements Comparable<Activity> {
 	private Project project;						// Project which the activity is linked to
 	private int projectID;							// ID of the parrent project 
 	private double hoursAccumulated;				// Time accumulated in this activity
-	private boolean isActive;
-
+	private double hoursAllotted;					// The time allotted to this activity 
+	private boolean isActive;						// state whenether the activity is active
+	private Calendar startDate;						// Start date of the activity
+	private Calendar endDate; 						// End date of the activity
+	
 	/**
 	 * Create a new activity with a title and a linked project
 	 * @param title of the activity
@@ -36,6 +39,10 @@ public class Activity implements Comparable<Activity> {
 		if (dataManager == null) 
 			dataManager = new ActivityDatabaseManager();
 		dataManager.saveActivity(this);
+	}
+	
+	public Activity(String title, Project project, Calendar startDate) throws SQLException {
+		
 	}
 	
 	/**

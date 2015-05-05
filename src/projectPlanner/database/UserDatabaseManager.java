@@ -175,7 +175,7 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		String SQL = "SELECT * FROM WorksOn "
 				+ "INNER JOIN Employees ON Employees.EmployeeID = WorksOn.EmployeeID "
 				+ "INNER JOIN Activities ON Activities.ActivityID = WorksOn.ActivityID "
-				+ "INNER JOIN Projects ON Projects.ProjectID = Activity.ProjectID "
+		//		+ "INNER JOIN Projects ON Projects.ProjectID = Activity.ProjectID "
 				+ "WHERE Employees.EmployeeID=" + user.getID();
 		
 		resultSet = executeQuery(SQL);
