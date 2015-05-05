@@ -26,14 +26,15 @@ import javax.swing.event.MenuListener;
 
 import projectPlanner.Project;
 import projectPlanner.ProjectPlanner;
+import projectPlanner.users.User;
 import projectPlanner.view.adminTab.AdminTab;
-import projectPlanner.view.calendarPanel.CalendarTab;
+import projectPlanner.view.calendarTab.CalendarTab;
 import projectPlanner.view.login.LogInDialog;
 import projectPlanner.view.personalInfo.PersonalInfoTab;
 import projectPlanner.view.projectPanel.ErrorDialog;
 import projectPlanner.view.projectPanel.NoProjectsPanel;
 import projectPlanner.view.projectPanel.ProjectTab;
-import projectPlanner.view.ActivityTab.ActivityTab;
+import projectPlanner.view.activityTab.ActivityTab;
 import projectPlanner.Activity;
 import projectPlanner.ProjectPlanner;
 
@@ -64,13 +65,13 @@ public class View extends JFrame {
 		try {
 			icon = new ImageIcon(getClass().getResource("images/icon.png"));
 		} catch (Exception e) {	}
-		CalendarTab panel1 = new CalendarTab();
+		CalendarTab panel1 = new CalendarTab(listOfActivities);
 		tabbedPane.addTab("Calendar", icon, panel1, "this weeks calendar" );
 
 		PersonalInfoTab panel2 = new PersonalInfoTab();
 		tabbedPane.addTab("Personal Information", icon, panel2, "Information about you" );
 
-		ActivityTab panel3 = ActivityTab(listOfActivities);
+		ActivityTab panel3 = new ActivityTab(listOfActivities);
 		tabbedPane.addTab("Activities", icon, panel3, "Activities you are part of" );
 		
 		if(checkIfProjectsExist()){
