@@ -8,6 +8,9 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -21,10 +24,14 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
+import projectPlanner.Project;
+import projectPlanner.ProjectPlanner;
 import projectPlanner.view.adminTab.AdminTab;
 import projectPlanner.view.calendarPanel.CalendarTab;
 import projectPlanner.view.login.LogInDialog;
 import projectPlanner.view.personalInfo.PersonalInfoTab;
+import projectPlanner.view.projectPanel.ErrorDialog;
+import projectPlanner.view.projectPanel.NoProjectsPanel;
 import projectPlanner.view.projectPanel.ProjectTab;
 
 public class View extends JFrame {
@@ -55,8 +62,13 @@ public class View extends JFrame {
 		JComponent panel3 = makeTextPanel("Panel #3");
 		tabbedPane.addTab("Activities", icon, panel3, "Activities you are part of" );
 		
+		if(checkIfProjectsExist()){
 		ProjectTab panel4 = new ProjectTab();
 		tabbedPane.addTab("Project", icon, panel4, "Project Managers can create new projects" );
+		}else{
+			NoProjectsPanel panel4 = new NoProjectsPanel();
+			tabbedPane.addTab("Project", icon, panel4, "There are no projects to manage" );
+		}
 
 		AdminTab panel5 = new AdminTab();
 		tabbedPane.addTab("adminTab", icon, panel5, "Super secret tab for admins only" );
@@ -131,6 +143,20 @@ public class View extends JFrame {
 		panel.setLayout(new GridLayout(1, 1));
 		panel.add(filler);
 		return panel;
+	}
+	
+	public boolean checkIfProjectsExist(){
+		//check if user is a leader off any projects
+		List<Project> projectsList = new ArrayList<Project>();
+				try {
+					projectsList = Project.getProjectByProjectLeader(ProjectPlanner.getCurrentUser());
+				} catch (SQLException e2) {
+					new ErrorDialog("There was an error in connecting to the server");
+				}
+				if(projectsList.size()==0){
+					return false;
+				}
+				return true;
 	}
 	
 }

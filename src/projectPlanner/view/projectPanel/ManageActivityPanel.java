@@ -1,15 +1,26 @@
 package projectPlanner.view.projectPanel;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import projectPlanner.ProjectPlanner;
+import projectPlanner.users.Employee;
+import projectPlanner.users.User;
 import projectPlanner.view.adminTab.TextNDate;
 import projectPlanner.view.adminTab.TextNField;
 
@@ -19,8 +30,12 @@ public class ManageActivityPanel extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 894111141608012138L;
+	private JList<String> currentEmployeeList;
+	private ListPanel listPanel;
+	private JList<String> userList;
 
 	public ManageActivityPanel(ListPanel listPanel){
+		this.listPanel = listPanel;
 		//set layout
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -56,21 +71,50 @@ public class ManageActivityPanel extends JPanel{
 		add(endDate);
 		
 		//remove current employee list
+		DefaultListModel<String> currentEmployeeListModel = new DefaultListModel<String>();
+		try {
+			for(String current : getCurrentEmployeeNames()){
+				currentEmployeeListModel.addElement(current);
+			}
+		} catch (SQLException e1) {
+			new ErrorDialog("There was an error in connecting to the server");
+		}
+		currentEmployeeList = new JList<String>(currentEmployeeListModel);
+
+		currentEmployeeList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		currentEmployeeList.setVisibleRowCount(-1);
+		JScrollPane listScroller = new JScrollPane(currentEmployeeList);
+		listScroller.setPreferredSize(new Dimension(250, 80));
+		add(currentEmployeeList);
 		
 		//add new employee list
+		DefaultListModel<String> userListModel = new DefaultListModel<String>();
+		try {
+			for(String current : getUserNames()){
+				userListModel.addElement(current);
+			}
+		} catch (SQLException e1) {
+			new ErrorDialog("There was an error in connecting to the server");
+		}
+		userList = new JList<String>(userListModel);
+
+		userList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		userList.setVisibleRowCount(-1);
+		JScrollPane listScroller1 = new JScrollPane(userList);
+		listScroller1.setPreferredSize(new Dimension(250, 80));
+		add(userList);
 		
 		//submit changes button
 		JButton createActivity = new JButton("Submit changes");
 		add(createActivity);
 
-		//Listener for changes in project selection for refreshing activities
-		listPanel.getSelectProjectList().addListSelectionListener(new ListSelectionListener() {
+		//Listener for changes in activity selection
+		listPanel.getSelectActivityList().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent lse) {
-//				if (lse.getValueIsAdjusting()){
-//					return;
-//				}
-				if(listPanel.isRefreshingActivities()){
-					System.out.println("activitylistener ting");
+				if (lse.getValueIsAdjusting()){
+					return;
+				}
+				if(!listPanel.isRefreshingActivities()){
 					projectHeader.setText("Manage the selected activity: " + listPanel.getCurrentSelectedActivity());
 					name.setTxt(listPanel.getCurrentSelectedActivity().getTitle());
 					name.getTxtField().setCaretPosition(0);
@@ -78,6 +122,32 @@ public class ManageActivityPanel extends JPanel{
 			}
 		});
 
+	}
+	
+	private List<String> getUserNames() throws SQLException {
+		List<String> returnList = new ArrayList<String>();
+		for(User current : getUsers()){
+			returnList.add(current.getFirstname() + " " + current.getLastname());
+		}
+		return returnList;
+	}
+
+	private List<User> getUsers() throws SQLException {
+		
+		return ProjectPlanner.getEmployeesNotInActivity(listPanel.getCurrentSelectedActivity());
+	}
+
+	private List<String> getCurrentEmployeeNames() throws SQLException {
+		List<String> returnList = new ArrayList<String>();
+		for(User current : getCurrentEmployees()){
+			returnList.add(current.getFirstname() + " " + current.getLastname());
+		}
+		return returnList;
+		
+	}
+
+	private List<Employee> getCurrentEmployees() throws SQLException{
+		return ProjectPlanner.getEmployeesByActivity(listPanel.getCurrentSelectedActivity());
 	}
 
 }

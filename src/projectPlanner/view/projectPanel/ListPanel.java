@@ -96,9 +96,9 @@ public class ListPanel extends JPanel{
 		//Listener for changes in project selection for refreshing activities
 		selectProjectList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent lse) {
-//				if (lse.getValueIsAdjusting()){
-//					return;
-//				}
+				if (lse.getValueIsAdjusting()){
+					return;
+				}
 				refreshActivitiesList();
 			}
 		});
@@ -137,18 +137,13 @@ public class ListPanel extends JPanel{
 		//refresh header
 		actListHeader.setText("Activities for project:" + getCurrentSelectedProject().getTitle());
 		//refresh list
-		System.out.println(1);
 		activityListModel.removeAllElements();
-		System.out.println("1.1");
 		try {
-			System.out.println(2);
 			for(String current : getActivityNames()){
 				activityListModel.addElement(current);
 			}
-			System.out.println(3);
 			SwingUtilities.invokeLater(() -> refreshingActivities = false);
 			selectActivityList.setSelectedIndex(0);
-			System.out.println(4);
 		} catch (SQLException e) {
 			new ErrorDialog("There was an error in connecting to the server");
 		}

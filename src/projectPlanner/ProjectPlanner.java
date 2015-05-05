@@ -97,7 +97,7 @@ public class ProjectPlanner {
 	 * @param activity
 	 * @return
 	 */
-	public List<Employee> getEmployeesByActivity(Activity activity) {
+	public static List<Employee> getEmployeesByActivity(Activity activity) {
 		return Employee.getEmployees(activity);
 	}
 	
@@ -107,7 +107,7 @@ public class ProjectPlanner {
 	 * @return A list of employees not already working on the passed activity
 	 * @throws SQLException 
 	 */
-	public List<User> getEmployeesNotInActivity(Activity activity) throws SQLException {
+	public static List<User> getEmployeesNotInActivity(Activity activity) throws SQLException {
 		List<Employee> activityEmployees = Employee.getEmployees(activity);
 		List<User> allEmployees = User.getAllUsers();
 		for(Employee current : activityEmployees) {
