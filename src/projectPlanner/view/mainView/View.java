@@ -33,10 +33,14 @@ import projectPlanner.view.personalInfo.PersonalInfoTab;
 import projectPlanner.view.projectPanel.ErrorDialog;
 import projectPlanner.view.projectPanel.NoProjectsPanel;
 import projectPlanner.view.projectPanel.ProjectTab;
+import projectPlanner.view.ActivityTab.ActivityTab;
+import projectPlanner.Activity;
+import projectPlanner.ProjectPlanner;
 
 public class View extends JFrame {
 	
 	private LogInDialog logInDialog;
+	private List<Activity> listOfActivities;
 
 	ImageIcon icon;
 	/**
@@ -46,6 +50,13 @@ public class View extends JFrame {
 
 	public View(LogInDialog logInDialog) {
 		super("Project Planner");
+
+		try {
+			listOfActivities = User.getActivities(ProjectPlanner.getCurrentUser());
+		} catch (Exception e){
+			
+		}
+
 		this.logInDialog = logInDialog;
 		initMenuBar();
 		JTabbedPane tabbedPane = new JTabbedPane();
@@ -59,7 +70,7 @@ public class View extends JFrame {
 		PersonalInfoTab panel2 = new PersonalInfoTab();
 		tabbedPane.addTab("Personal Information", icon, panel2, "Information about you" );
 
-		JComponent panel3 = makeTextPanel("Panel #3");
+		ActivityTab panel3 = ActivityTab(listOfActivities);
 		tabbedPane.addTab("Activities", icon, panel3, "Activities you are part of" );
 		
 		if(checkIfProjectsExist()){
@@ -133,16 +144,6 @@ public class View extends JFrame {
 			}
 		});
 		
-	}
-
-
-	protected JComponent makeTextPanel(String text) {
-		JPanel panel = new JPanel(false);
-		JLabel filler = new JLabel(text);
-		filler.setHorizontalAlignment(JLabel.CENTER);
-		panel.setLayout(new GridLayout(1, 1));
-		panel.add(filler);
-		return panel;
 	}
 	
 	public boolean checkIfProjectsExist(){
