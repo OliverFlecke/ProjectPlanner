@@ -55,7 +55,7 @@ public class AddActivityPanel extends JPanel{
 			public void actionPerformed(ActionEvent e){
 				try {
 					@SuppressWarnings("unused")
-					Activity addAct = new Activity(name.getTxt(),listPanel.getCurrentSelectedProject(),startDate.getDate(),endDate.getDate());
+					Activity addAct = new Activity(name.getTxt(),listPanel.getCurrentSelectedProject());
 					name.setTxt("");
 					alottedTime.setTxt("");
 					startDate.setDate(Calendar.getInstance());
