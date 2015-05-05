@@ -56,6 +56,8 @@ public class Activity implements Comparable<Activity> {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		
+		project.addActivity(this);
+		
 		if (dataManager == null) 
 			dataManager = new ActivityDatabaseManager();
 		dataManager.saveActivity(this);
@@ -222,5 +224,13 @@ public class Activity implements Comparable<Activity> {
 	 */
 	public Calendar getEndDate() {
 		return this.endDate;
+	}
+
+	/**
+	 * Update the id of the activity
+	 * @param id
+	 */
+	public void setID(int id) {
+		this.id = id;
 	}	
 }

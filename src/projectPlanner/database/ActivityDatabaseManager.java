@@ -42,12 +42,12 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 				+ activity.getEndDate() + ");";
 		executeUpdate(SQL);
 		
-		int id = this.getActivity(activity.getTitle()).getID();
+		activity.setID(getActivity(activity.getTitle()).getID());
 		
 		// Register the link between the project and the activity
-		SQL = "INSERT INTO MemberOfProject (ProjectID, ActivityID) "
-				+ "VALUES(" + activity.getProjectID() + ", " + id + ");";
-		executeUpdate(SQL);
+//		SQL = "INSERT INTO MemberOfProject (ProjectID, ActivityID) "
+//				+ "VALUES(" + activity.getProjectID() + ", " + id + ");";
+//		executeUpdate(SQL);
 	}
 	
 	@Override
