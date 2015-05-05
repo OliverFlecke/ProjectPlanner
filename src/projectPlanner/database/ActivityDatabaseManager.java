@@ -38,6 +38,11 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 				activity.getTimeAccumulated() + ", " +
 				activity.getProjectID() + ");";
 		executeUpdate(SQL);
+		
+		// Register the link between the project and the activity
+		SQL = "INSERT INTO MemberOfProject (ProjectID, ActivityID) "
+				+ "VALUES(" + activity.getProjectID() + ", " + activity.getID() + ");";
+		executeUpdate(SQL);
 	}
 	
 	@Override
