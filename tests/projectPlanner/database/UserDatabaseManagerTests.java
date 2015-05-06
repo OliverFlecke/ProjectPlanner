@@ -116,7 +116,7 @@ public class UserDatabaseManagerTests {
 	@Test
 	@Category(DatabaseTest.class)
 	public void getUsersByActiviy() throws SQLException {
-		Activity activity = new Activity(1, "Database setup", 1, 20.5, true, null, null);
+		Activity activity = new Activity(1, "Database setup", 1, 20.5, true, null, null, 0);
 		List<Employee> list = dataManager.getEmployees(activity);
 		
 		Assert.assertTrue(list.size() >= 1);

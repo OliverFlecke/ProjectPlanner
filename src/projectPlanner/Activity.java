@@ -31,7 +31,7 @@ public class Activity implements Comparable<Activity> {
 	 * @throws SQLException 
 	 */
 	public Activity(String title, Project project) throws SQLException {
-		createActivity(title, project, null, null);
+		createActivity(title, project, null, null, 0);
 	}
 	
 	/**
@@ -42,16 +42,30 @@ public class Activity implements Comparable<Activity> {
 	 * @throws SQLException
 	 */
 	public Activity(String title, Project project, Calendar startDate, Calendar endDate) throws SQLException {
-		createActivity(title, project, startDate, endDate);
+		createActivity(title, project, startDate, endDate, 0);
+	}
+	
+	/**
+	 * Create a new activity with all the needed data
+	 * @param title of the activity 
+	 * @param project linked to the project
+	 * @param startDate of the activity
+	 * @param endDate of the activity
+	 * @param hoursAllotted to the activity
+	 * @throws SQLException
+	 */
+	public Activity(String title, Project project, Calendar startDate, Calendar endDate, double hoursAllotted) throws SQLException {
+		createActivity(title, project, startDate, endDate, hoursAllotted);
 	}
 	
 	/**
 	 * Create a new activity 
 	 */
-	private void createActivity(String title, Project project, Calendar startDate, Calendar endDate) throws SQLException {
+	private void createActivity(String title, Project project, Calendar startDate, Calendar endDate, double allottedHours) throws SQLException {
 		this.title = title;
 		this.project = project;
 		this.hoursAccumulated = 0;
+		this.hoursAllotted = allottedHours;
 		this.isActive = true;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -70,18 +84,21 @@ public class Activity implements Comparable<Activity> {
 	 * @param project parent of this activity
 	 * @param hours spend on the activity
 	 */
-	public Activity(int id, String title, Project project, double hours, boolean isActive, Calendar startDate, Calendar endDate) {
+	public Activity(int id, String title, Project project, double hours, boolean isActive, 
+			Calendar startDate, Calendar endDate, double allottedHours) {
 		this.id = id;
 		this.title = title;
 		this.project = project;
 		this.hoursAccumulated = hours;
+		this.hoursAllotted = allottedHours;
 		this.isActive = isActive;
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
 	
-	public Activity(int id, String title, int projectID, double hours, boolean isActive, Calendar startDate, Calendar endDate) {
-		this(id, title, null, hours, isActive, startDate, endDate);
+	public Activity(int id, String title, int projectID, double hours, boolean isActive, 
+			Calendar startDate, Calendar endDate, double allottedHours) {
+		this(id, title, null, hours, isActive, startDate, endDate, allottedHours);
 		this.projectID = projectID;
 	}
 	

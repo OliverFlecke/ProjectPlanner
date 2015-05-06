@@ -22,9 +22,10 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		String title = result.getString("Title");
 		int ID = result.getInt("ActivityID");
 		double hours = result.getDouble("AccumulatedHours");
+		double allottedHours = result.getDouble("AllottedHours");
 		int projectID = result.getInt("ProjectID");
 		boolean status = result.getBoolean("IsActive");
-		
+				
 		// Get the dates, if they are there
 		Calendar startDate = null;
 		Calendar endDate = null;
@@ -41,28 +42,24 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		
 		if (getProject) {
 			Project project = ProjectDatabaseManager.getCurrentProject(result);
-			return new Activity(ID, title, project, hours, status, startDate, endDate);
+			return new Activity(ID, title, project, hours, status, startDate, endDate, allottedHours);
 		} else 
-			return new Activity(ID, title, projectID, hours, status, startDate, endDate);
+			return new Activity(ID, title, projectID, hours, status, startDate, endDate, allottedHours);
 	}
 	
 	@Override
 	public void saveActivity(Activity activity) throws SQLException {
 		String SQL = "INSERT INTO Activities (Title, AccumulatedHours, ProjectID, "
-				+ "StartDateForActivity, EndDateForActivity) " +
+				+ "StartDateForActivity, EndDateForActivity, AllottedHours) " +
 				"VALUES('" + activity.getTitle() + "', " +
 				activity.getTimeAccumulated() + ", " +
 				activity.getProjectID() + ","
 				+ activity.getStartDate() + ", "
-				+ activity.getEndDate() + ");";
+				+ activity.getEndDate() + ", "
+				+ activity.getHoursAllotted() + ");";
 		executeUpdate(SQL);
 		
 		activity.setID(getActivity(activity.getTitle()).getID());
-		
-		// Register the link between the project and the activity
-//		SQL = "INSERT INTO MemberOfProject (ProjectID, ActivityID) "
-//				+ "VALUES(" + activity.getProjectID() + ", " + id + ");";
-//		executeUpdate(SQL);
 	}
 	
 	@Override
@@ -124,10 +121,11 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 	public void updateActivity(Activity activity) throws SQLException {
 		String SQL = "UPDATE Activities " +
 				"SET Title = '" + 				activity.getTitle() + "'," +
-				"AccumulatedHours = " + 		activity.getTimeAccumulated() + ", " +
-				"ProjectID = " + 				activity.getProjectID() + ", " 
-				+ "StartDateForActivity = " +	activity.getStartDate() + ", "
-				+ "EndDateForActivity = " + 		activity.getEndDate() + " "
+				"AccumulatedHours = " + 		activity.getTimeAccumulated() 	+ ", " +
+				"ProjectID = " + 				activity.getProjectID() 		+ ", " 
+				+ "StartDateForActivity = " +	activity.getStartDate() 		+ ", "
+				+ "EndDateForActivity = " + 	activity.getEndDate() 			+ ", "
+				+ "AllottedHours = " + 			activity.getHoursAllotted() + " "
 				+ "WHERE ActivityID = " + 		activity.getID();
 		executeUpdate(SQL);
 	}
