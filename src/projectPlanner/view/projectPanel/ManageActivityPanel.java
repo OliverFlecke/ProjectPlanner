@@ -47,7 +47,7 @@ public class ManageActivityPanel extends JPanel{
 	private JLabel activityHeader;
 	private TextNField name;
 	private TextNField accumTime;
-	private TextNField alottedTime;
+	private TextNField allottedTime;
 	private TextNDate startDate;
 	private TextNDate endDate;
 	private DefaultListModel<String> currentEmployeeListModel;
@@ -81,13 +81,14 @@ public class ManageActivityPanel extends JPanel{
 		this.add(activeCheck);
 
 		//allotted time field
-		alottedTime = new TextNField("Alotted Man-Hours");
-		alottedTime.setTxt(Double.toString(listPanel.getCurrentSelectedActivity().getHoursAllotted()));
-		add(alottedTime);
+		allottedTime = new TextNField("Alotted Man-Hours");
+		allottedTime.setTxt(Double.toString(listPanel.getCurrentSelectedActivity().getHoursAllotted()));
+		add(allottedTime);
 
 		//accumulated time
 		accumTime = new TextNField("Accumulated Man-Hours");
 		accumTime.setTxt(Double.toString(listPanel.getCurrentSelectedActivity().getTimeAccumulated()));
+		accumTime.setEnabled(false);
 		add(accumTime);
 
 		//start date
@@ -175,6 +176,24 @@ public class ManageActivityPanel extends JPanel{
 		//submit changes button
 		JButton submitChanges = new JButton("Submit changes");
 		add(submitChanges);
+		
+		//Actionlistener for button that submits changes
+				submitChanges.addActionListener( new ActionListener()
+				{
+					@Override
+					public void actionPerformed(ActionEvent e){
+						try {
+							listPanel.getCurrentSelectedActivity().update(name.getTxt(), listPanel.getCurrentSelectedProject(),
+									Double.parseDouble(accumTime.getTxt()), Double.parseDouble(allottedTime.getTxt()), 
+									activeCheck.isSelected(), startDate.getDate(), endDate.getDate());
+							refreshActivityManagement();
+						} catch (SQLException e1) {
+							new ErrorDialog("There was a problem in connecting to the server");
+							e1.printStackTrace();
+						}
+
+					}
+				});
 
 //		//delete activity button
 		//The delete is time consuming to implement due to sql server issues, perhaps at a later time
@@ -220,7 +239,7 @@ public class ManageActivityPanel extends JPanel{
 		name.setTxt(listPanel.getCurrentSelectedActivity().getTitle());
 		name.getTxtField().setCaretPosition(0);
 		activeCheck.setSelected(listPanel.getCurrentSelectedActivity().isActive());
-		alottedTime.setTxt(Double.toString(listPanel.getCurrentSelectedActivity().getHoursAllotted()));
+		allottedTime.setTxt(Double.toString(listPanel.getCurrentSelectedActivity().getHoursAllotted()));
 		accumTime.setTxt(Double.toString(listPanel.getCurrentSelectedActivity().getTimeAccumulated()));
 		startDate.setDate(listPanel.getCurrentSelectedActivity().getStartDate());
 		endDate.setDate(listPanel.getCurrentSelectedActivity().getStartDate());
