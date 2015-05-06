@@ -59,16 +59,24 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 //				+ activity.getHoursAllotted() + ");";
 		String SQL = "INSERT INTO Activities (Title, AccumulatedHours, ProjectID, "
 				+ "StartDateForActivity, EndDateForActivity, AllottedHours) "
-				+ "VALUES(? ? ? ? ? ?);";
+				+ "VALUES(?, ?, ?, ?, ?, ?);";
 		connection = DriverManager.getConnection(connectionString);
 		preStatement = connection.prepareStatement(SQL);
 		
 		preStatement.setString(1, activity.getTitle());
 		preStatement.setDouble(2, activity.getTimeAccumulated());
 		preStatement.setInt(3, activity.getProjectID());
-		preStatement.setTimestamp(4, new Timestamp(activity.getStartDate().getTimeInMillis()));
-		preStatement.setTimestamp(5, new Timestamp(activity.getEndDate().getTimeInMillis()));
 		preStatement.setDouble(6, activity.getHoursAllotted());
+		
+		// Insert dates
+		if (activity.getStartDate() != null)
+			preStatement.setTimestamp(4, new Timestamp(activity.getStartDate().getTimeInMillis()));
+		else 
+			preStatement.setTimestamp(4, new Timestamp(0));
+		if (activity.getEndDate() != null) 
+			preStatement.setTimestamp(5, new Timestamp(activity.getEndDate().getTimeInMillis()));
+		else 
+			preStatement.setTimestamp(5, new Timestamp(0));
 		
 		preStatement.executeUpdate();
 		
