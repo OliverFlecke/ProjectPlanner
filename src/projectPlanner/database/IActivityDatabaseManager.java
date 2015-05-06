@@ -37,6 +37,14 @@ public interface IActivityDatabaseManager {
 	 * @param employee to add to the activity
 	 */
 	public void addEmployee(User employee, Activity activity) throws SQLException;
+	
+	/**
+	 * Remove an employee from the passed activity
+	 * @param employee to remove
+	 * @param activity to remove the employee from
+	 * @throws SQLException
+	 */
+	public void removeEmployee(User employee, Activity activity) throws SQLException;
 
 	/**
 	 * Update the data about the passed activity

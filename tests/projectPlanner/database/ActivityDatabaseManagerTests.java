@@ -125,4 +125,11 @@ public class ActivityDatabaseManagerTests {
 //		db.deleteActivity(expActivity);
 		Assert.assertTrue(true);
 	}
+	
+	@Test 
+	@Category(DatabaseTest.class)
+	public void removeEmployee() throws SQLException {
+		db.removeEmployee(user, expActivity);
+		db.addEmployee(user, expActivity);
+	}
 }

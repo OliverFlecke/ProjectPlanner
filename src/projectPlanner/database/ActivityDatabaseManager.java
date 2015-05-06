@@ -140,6 +140,14 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		executeUpdate(SQL);
 	}
 	
+	@Override
+	public void removeEmployee(User employee, Activity activity) throws SQLException {
+		String SQL = "DELETE FROM WorksOn "
+				+ "WHERE ActivityID = " + activity.getID()
+				+ " AND EmployeeID = " + employee.getID();
+		executeUpdate(SQL);
+	}
+	
 	@Override 
 	public void updateActivity(Activity activity) throws SQLException {
 //		String SQL = "UPDATE Activities " +

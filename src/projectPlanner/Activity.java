@@ -172,7 +172,16 @@ public class Activity implements Comparable<Activity> {
 	public void addEmployee(Employee employee) throws SQLException {
 		dataManager.addEmployee(employee, this);
 	}
-
+	
+	/**
+	 * Remove an employee from the activity
+	 * @param employee to remove
+	 * @throws SQLException
+	 */
+	public void removeEmployee(Employee employee) throws SQLException {
+		dataManager.removeEmployee(employee, this);
+	}
+	
 	/**
 	 * @return The id of the activity
 	 */
