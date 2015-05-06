@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.AbstractButton;
@@ -27,6 +28,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import projectPlanner.Activity;
 import projectPlanner.ProjectPlanner;
 import projectPlanner.users.Employee;
 import projectPlanner.users.User;
@@ -171,12 +173,26 @@ public class ManageActivityPanel extends JPanel{
 
 
 		//submit changes button
-		JButton createActivity = new JButton("Submit changes");
-		add(createActivity);
+		JButton submitChanges = new JButton("Submit changes");
+		add(submitChanges);
 
-		//submit changes button
+		//delete activity button
 		JButton deleteActivity = new JButton("Delete activity");
 		add(deleteActivity);
+		
+		deleteActivity.addActionListener( new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e){
+				try {
+					Activity.deleteActicity(listPanel.getCurrentSelectedActivity());
+				} catch (SQLException e1) {
+					new ErrorDialog("there was an error in connecting to the server");
+					e1.printStackTrace();
+				}
+				listPanel.refreshActivitiesList();
+			}
+		});
 
 		//Listener for changes in activity selection
 		listPanel.getSelectActivityList().addListSelectionListener(new ListSelectionListener() {
