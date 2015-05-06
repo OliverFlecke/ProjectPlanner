@@ -178,7 +178,7 @@ public class Activity implements Comparable<Activity> {
 	 * @param employee to remove
 	 * @throws SQLException
 	 */
-	public void removeEmployee(Employee employee) throws SQLException {
+	public void removeEmployee(User employee) throws SQLException {
 		dataManager.removeEmployee(employee, this);
 	}
 	
