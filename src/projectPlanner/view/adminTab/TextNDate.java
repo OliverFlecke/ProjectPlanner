@@ -2,6 +2,7 @@ package projectPlanner.view.adminTab;
 
 import java.awt.FlowLayout;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;
 
 import javax.swing.JLabel;
@@ -62,14 +63,24 @@ public class TextNDate extends JPanel{
 	}
 	
 	public Calendar getDate(){
-		return (Calendar) datePicker.getModel().getValue();
+		return DateToCalendar(dateModel.getValue());
 	}
 	
 	public void setDate(Calendar date) {
+		if(date==null){
+			dateModel.setValue(Calendar.getInstance().getTime());
+		}
+		else{
 		dateModel.setValue(date.getTime());
+		}
 //		Update to convert the calendar object to and date, in order to set the dateModel. 
 //		The old way used static members on the calendar object, which would chose the current time, and not the
 //		time saved in the date object
 //		dateModel.setDate(date.YEAR, date.MONTH, date.DAY_OF_MONTH);
 	}
+	public  Calendar DateToCalendar(Date date){ 
+		  Calendar cal = Calendar.getInstance();
+		  cal.setTime(date);
+		  return cal;
+		}
 }

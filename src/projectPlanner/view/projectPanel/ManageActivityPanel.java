@@ -9,9 +9,9 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -21,7 +21,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -88,7 +90,7 @@ public class ManageActivityPanel extends JPanel{
 
 		//start date
 		startDate = new TextNDate("Start Date:");
-		startDate.setDate(Calendar.getInstance());
+		startDate.setDate(listPanel.getCurrentSelectedActivity().getStartDate());
 		add(startDate);
 
 		//end date
@@ -171,7 +173,7 @@ public class ManageActivityPanel extends JPanel{
 		//submit changes button
 		JButton createActivity = new JButton("Submit changes");
 		add(createActivity);
-		
+
 		//submit changes button
 		JButton deleteActivity = new JButton("Delete activity");
 		add(deleteActivity);

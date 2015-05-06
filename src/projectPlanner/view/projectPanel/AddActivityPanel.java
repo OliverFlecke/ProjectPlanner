@@ -39,8 +39,8 @@ public class AddActivityPanel extends JPanel{
 		//add input fields
 		TextNField name = new TextNField("Name");
 		add(name);
-		TextNField alottedTime = new TextNField("Alotted Man-Hours");
-		add(alottedTime);
+		TextNField allottedTime = new TextNField("Alotted Man-Hours");
+		add(allottedTime);
 		TextNDate startDate = new TextNDate("Start Date");
 		add(startDate);
 		TextNDate endDate = new TextNDate("End Date");
@@ -55,9 +55,10 @@ public class AddActivityPanel extends JPanel{
 			public void actionPerformed(ActionEvent e){
 				try {
 					@SuppressWarnings("unused")
-					Activity addAct = new Activity(name.getTxt(),listPanel.getCurrentSelectedProject());
+					Activity addAct = new Activity(name.getTxt(),listPanel.getCurrentSelectedProject(),
+							startDate.getDate(),endDate.getDate(),Double.parseDouble(allottedTime.getTxt()));
 					name.setTxt("");
-					alottedTime.setTxt("");
+					allottedTime.setTxt("");
 					startDate.setDate(Calendar.getInstance());
 					endDate.setDate(Calendar.getInstance());
 					listPanel.refreshActivitiesList();
