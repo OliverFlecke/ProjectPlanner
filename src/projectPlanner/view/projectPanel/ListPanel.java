@@ -105,6 +105,7 @@ public class ListPanel extends JPanel{
 					return;
 				}
 				refreshActivitiesList();
+				
 			}
 		});
 	}
@@ -159,7 +160,8 @@ public class ListPanel extends JPanel{
 			activityListModel.addElement(current);
 		}
 		SwingUtilities.invokeLater(() -> refreshingActivities = false);
-		selectActivityList.setSelectedIndex(0);
+		SwingUtilities.invokeLater(() -> selectActivityList.setSelectedIndex(0));
+		
 	}
 
 

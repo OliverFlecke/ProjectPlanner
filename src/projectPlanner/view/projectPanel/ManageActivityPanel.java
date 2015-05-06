@@ -1,16 +1,22 @@
 package projectPlanner.view.projectPanel;
 
+import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -42,6 +48,7 @@ public class ManageActivityPanel extends JPanel{
 	private TextNDate endDate;
 	private DefaultListModel<String> currentEmployeeListModel;
 	private DefaultListModel<String> userListModel;
+	private JCheckBox activeCheck;
 
 	public ManageActivityPanel(ListPanel listPanel){
 		this.listPanel = listPanel;
@@ -58,14 +65,20 @@ public class ManageActivityPanel extends JPanel{
 		add(activityHeader);
 
 		//add input fields
+		//name
 		name = new TextNField("Name");
 		name.setTxt(listPanel.getCurrentSelectedActivity().getTitle());
 		name.getTxtField().setCaretPosition(0);
 		add(name);
 
+		//checkbox for active
+		activeCheck = new JCheckBox("Checked if activity is of active status");
+		activeCheck.setSelected(listPanel.getCurrentSelectedActivity().isActive());
+		this.add(activeCheck);
+
 		//allotted time field
 		alottedTime = new TextNField("Alotted Man-Hours");
-		alottedTime.setTxt("Mangler function");
+		alottedTime.setTxt(Double.toString(listPanel.getCurrentSelectedActivity().getHoursAllotted()));
 		add(alottedTime);
 
 		//accumulated time
@@ -74,11 +87,13 @@ public class ManageActivityPanel extends JPanel{
 		add(accumTime);
 
 		//start date
-		startDate = new TextNDate("Start Date: mangler");
+		startDate = new TextNDate("Start Date:");
+		startDate.setDate(Calendar.getInstance());
 		add(startDate);
 
 		//end date
-		endDate = new TextNDate("End Date: mangler");
+		endDate = new TextNDate("End Date:");
+		endDate.setDate(listPanel.getCurrentSelectedActivity().getStartDate());
 		add(endDate);
 
 		//add header remove current employee list
@@ -103,6 +118,19 @@ public class ManageActivityPanel extends JPanel{
 		listScroller.setPreferredSize(new Dimension(250, 80));
 		add(currentEmployeeList);
 
+		//deselect button
+		JButton deselctEmployee = new JButton("Deselect choice");
+		this.add(deselctEmployee);
+
+		//listener for deselctbutton
+		deselctEmployee.addActionListener( new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e){
+				currentEmployeeList.clearSelection();
+			}
+		});
+
 		//add header new employeelist
 		JLabel removeEmployeeListHeader = new JLabel("select employee to be added to activity");
 		removeEmployeeListHeader.setFont(boldFont);
@@ -125,9 +153,28 @@ public class ManageActivityPanel extends JPanel{
 		listScroller1.setPreferredSize(new Dimension(250, 80));
 		add(userList);
 
+		//deselect button
+		JButton deselctUser = new JButton("Deselect choice");
+
+		this.add(deselctUser);
+
+		//listener for deselctbutton
+		deselctUser.addActionListener( new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e){
+				userList.clearSelection();
+			}
+		});
+
+
 		//submit changes button
 		JButton createActivity = new JButton("Submit changes");
 		add(createActivity);
+		
+		//submit changes button
+		JButton deleteActivity = new JButton("Delete activity");
+		add(deleteActivity);
 
 		//Listener for changes in activity selection
 		listPanel.getSelectActivityList().addListSelectionListener(new ListSelectionListener() {
@@ -142,7 +189,7 @@ public class ManageActivityPanel extends JPanel{
 						new ErrorDialog("There was an issue in connecting to the server");
 						e.printStackTrace();
 					}
-					
+
 				}
 			}
 		});
@@ -153,9 +200,14 @@ public class ManageActivityPanel extends JPanel{
 		activityHeader.setText("Manage the selected activity: " + listPanel.getCurrentSelectedActivity());
 		name.setTxt(listPanel.getCurrentSelectedActivity().getTitle());
 		name.getTxtField().setCaretPosition(0);
+		activeCheck.setSelected(listPanel.getCurrentSelectedActivity().isActive());
+		alottedTime.setTxt(Double.toString(listPanel.getCurrentSelectedActivity().getHoursAllotted()));
+		accumTime.setTxt(Double.toString(listPanel.getCurrentSelectedActivity().getTimeAccumulated()));
+		startDate.setDate(listPanel.getCurrentSelectedActivity().getStartDate());
+		endDate.setDate(listPanel.getCurrentSelectedActivity().getStartDate());
 		refreshUserNames();
 		refreshActivityNames();
-		
+
 	}
 
 	private void refreshActivityNames() throws SQLException {
@@ -163,7 +215,7 @@ public class ManageActivityPanel extends JPanel{
 		for(String current : getCurrentEmployeeNames()){
 			currentEmployeeListModel.addElement(current);
 		}
-		
+
 	}
 
 	private List<String> getUserNames() throws SQLException {
