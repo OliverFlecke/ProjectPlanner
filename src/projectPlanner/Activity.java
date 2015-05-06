@@ -313,4 +313,13 @@ public class Activity implements Comparable<Activity> {
 	public static Activity getActivity(int ID) throws SQLException {
 		return dataManager.getActivity(ID);
 	}
+	
+	/**
+	 * Delete the passed activity
+	 * @param activity to delete
+	 * @throws SQLException
+	 */
+	public static void deleteActicity(Activity activity) throws SQLException {
+		dataManager.deleteActivity(activity);
+	}
 }

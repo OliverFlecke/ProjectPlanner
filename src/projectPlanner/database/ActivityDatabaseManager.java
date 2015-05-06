@@ -158,4 +158,11 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		}
 		return activities;
 	}
+
+	@Override
+	public void deleteActivity(Activity activity) throws SQLException {
+		String SQL = "DELETE FROM Activities "
+				+ "WHERE ActivityID = " + activity.getID();
+		executeUpdate(SQL);
+	}
 }

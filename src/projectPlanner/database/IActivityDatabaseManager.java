@@ -51,6 +51,13 @@ public interface IActivityDatabaseManager {
 	 * @throws SQLException
 	 */
 	public void saveActivity(Activity activity) throws SQLException;
+	
+	/**
+	 * Delete the passed activity
+	 * @param activity to delete
+	 * @throws SQLException
+	 */
+	public void deleteActivity(Activity activity) throws SQLException;
 
 	/**
 	 * Get all the activities related to the passed employee
