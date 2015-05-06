@@ -63,12 +63,15 @@ public class TextNDate extends JPanel{
 	}
 	
 	public Calendar getDate(){
+		if(dateModel.getValue()==null){
+			return null;
+		}
 		return DateToCalendar(dateModel.getValue());
 	}
 	
 	public void setDate(Calendar date) {
 		if(date==null){
-			dateModel.setValue(Calendar.getInstance().getTime());
+			dateModel.setValue(null);
 		}
 		else{
 		dateModel.setValue(date.getTime());

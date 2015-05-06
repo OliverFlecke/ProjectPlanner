@@ -59,8 +59,8 @@ public class AddActivityPanel extends JPanel{
 							startDate.getDate(),endDate.getDate(),Double.parseDouble(allottedTime.getTxt()));
 					name.setTxt("");
 					allottedTime.setTxt("");
-					startDate.setDate(Calendar.getInstance());
-					endDate.setDate(Calendar.getInstance());
+					startDate.setDate(null);
+					endDate.setDate(null);
 					listPanel.refreshActivitiesList();
 				} catch (SQLException e1) {
 					new ErrorDialog("There was a problem in connecting to the server");

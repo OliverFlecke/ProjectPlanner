@@ -176,23 +176,24 @@ public class ManageActivityPanel extends JPanel{
 		JButton submitChanges = new JButton("Submit changes");
 		add(submitChanges);
 
-		//delete activity button
-		JButton deleteActivity = new JButton("Delete activity");
-		add(deleteActivity);
-		
-		deleteActivity.addActionListener( new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e){
-				try {
-					Activity.deleteActicity(listPanel.getCurrentSelectedActivity());
-				} catch (SQLException e1) {
-					new ErrorDialog("there was an error in connecting to the server");
-					e1.printStackTrace();
-				}
-				listPanel.refreshActivitiesList();
-			}
-		});
+//		//delete activity button
+		//The delete is time consuming to implement due to sql server issues, perhaps at a later time
+//		JButton deleteActivity = new JButton("Delete activity");
+//		add(deleteActivity);
+//		
+//		deleteActivity.addActionListener( new ActionListener()
+//		{
+//			@Override
+//			public void actionPerformed(ActionEvent e){
+//				try {
+//					Activity.deleteActicity(listPanel.getCurrentSelectedActivity());
+//				} catch (SQLException e1) {
+//					new ErrorDialog("there was an error in connecting to the server");
+//					e1.printStackTrace();
+//				}
+//				listPanel.refreshActivitiesList();
+//			}
+//		});
 
 		//Listener for changes in activity selection
 		listPanel.getSelectActivityList().addListSelectionListener(new ListSelectionListener() {
