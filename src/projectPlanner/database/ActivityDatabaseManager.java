@@ -49,17 +49,32 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 	
 	@Override
 	public void saveActivity(Activity activity) throws SQLException {
+//		String SQL = "INSERT INTO Activities (Title, AccumulatedHours, ProjectID, "
+//				+ "StartDateForActivity, EndDateForActivity, AllottedHours) " +
+//				"VALUES('" + activity.getTitle() + "', " +
+//				activity.getTimeAccumulated() + ", " +
+//				activity.getProjectID() + ","
+//				+ activity.getStartDate() + ", "
+//				+ activity.getEndDate() + ", "
+//				+ activity.getHoursAllotted() + ");";
 		String SQL = "INSERT INTO Activities (Title, AccumulatedHours, ProjectID, "
-				+ "StartDateForActivity, EndDateForActivity, AllottedHours) " +
-				"VALUES('" + activity.getTitle() + "', " +
-				activity.getTimeAccumulated() + ", " +
-				activity.getProjectID() + ","
-				+ activity.getStartDate() + ", "
-				+ activity.getEndDate() + ", "
-				+ activity.getHoursAllotted() + ");";
-		executeUpdate(SQL);
+				+ "StartDateForActivity, EndDateForActivity, AllottedHours) "
+				+ "VALUES(? ? ? ? ? ?);";
+		connection = DriverManager.getConnection(connectionString);
+		preStatement = connection.prepareStatement(SQL);
 		
+		preStatement.setString(1, activity.getTitle());
+		preStatement.setDouble(2, activity.getTimeAccumulated());
+		preStatement.setInt(3, activity.getProjectID());
+		preStatement.setTimestamp(4, new Timestamp(activity.getStartDate().getTimeInMillis()));
+		preStatement.setTimestamp(5, new Timestamp(activity.getEndDate().getTimeInMillis()));
+		preStatement.setDouble(6, activity.getHoursAllotted());
+		
+		preStatement.executeUpdate();
+		
+		// Get the generated ID back and set it to the activity
 		activity.setID(getActivity(activity.getTitle()).getID());
+		closeConnections();
 	}
 	
 	@Override
@@ -119,15 +134,42 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 	
 	@Override 
 	public void updateActivity(Activity activity) throws SQLException {
-		String SQL = "UPDATE Activities " +
-				"SET Title = '" + 				activity.getTitle() + "'," +
-				"AccumulatedHours = " + 		activity.getTimeAccumulated() 	+ ", " +
-				"ProjectID = " + 				activity.getProjectID() 		+ ", " 
-				+ "StartDateForActivity = " +	activity.getStartDate() 		+ ", "
-				+ "EndDateForActivity = " + 	activity.getEndDate() 			+ ", "
-				+ "AllottedHours = " + 			activity.getHoursAllotted() + " "
-				+ "WHERE ActivityID = " + 		activity.getID();
-		executeUpdate(SQL);
+//		String SQL = "UPDATE Activities " +
+//				"SET Title = '" + 				activity.getTitle() + "'," +
+//				"AccumulatedHours = " + 		activity.getTimeAccumulated() 	+ ", " +
+//				"ProjectID = " + 				activity.getProjectID() 		+ ", " 
+//				+ "StartDateForActivity = " +	activity.getStartDate() 		+ ", "
+//				+ "EndDateForActivity = " + 	activity.getEndDate() 			+ ", "
+//				+ "AllottedHours = " + 			activity.getHoursAllotted() + " "
+//				+ "WHERE ActivityID = " + 		activity.getID();
+		String SQL = "UPDATE Activities "
+				+ "SET Title = ?, AccumulatedHours = ?, ProjectID = ?, StartDateForActivity = ?, "
+				+ "EndDateForActivity = ?, AllottedHours = ? "
+				+ "WHERE ActivityID = " + activity.getID();
+		
+		// Insert the data into the statement and execute it
+		connection = DriverManager.getConnection(connectionString);
+		preStatement = connection.prepareStatement(SQL);
+		
+		// Insert data
+		preStatement.setString(1, activity.getTitle());
+		preStatement.setDouble(2, activity.getTimeAccumulated());
+		preStatement.setInt(3, activity.getProjectID());
+		preStatement.setDouble(6, activity.getHoursAllotted());
+		
+		// Insert the dates. Check for null pointers
+		if (activity.getStartDate() != null)
+			preStatement.setTimestamp(4, new Timestamp(activity.getStartDate().getTimeInMillis()));
+		else 
+			preStatement.setTimestamp(4, new Timestamp(0));
+			
+		if (activity.getEndDate() != null)	
+			preStatement.setTimestamp(5, new Timestamp(activity.getEndDate().getTimeInMillis()));
+		else 
+			preStatement.setTimestamp(5, new Timestamp(0));
+		
+		// Execute
+		preStatement.executeUpdate();
 	}
 	
 	@Override

@@ -118,4 +118,11 @@ public class ActivityDatabaseManagerTests {
 		
 		Assert.assertTrue(list.size() > 0);		
 	}
+	
+	@Test
+	@Category(DatabaseTest.class) 
+	public void deleteActivity() throws SQLException {
+//		db.deleteActivity(expActivity);
+		Assert.assertTrue(true);
+	}
 }

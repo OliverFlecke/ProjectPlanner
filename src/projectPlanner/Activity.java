@@ -89,13 +89,13 @@ public class Activity implements Comparable<Activity> {
 		this.id = id;
 		this.title = title;
 		this.project = project;
-		this.hoursAccumulated = hours;
+		this.setHoursAccumulated(hours);
 		this.hoursAllotted = allottedHours;
 		this.isActive = isActive;
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
-	
+
 	public Activity(int id, String title, int projectID, double hours, boolean isActive, 
 			Calendar startDate, Calendar endDate, double allottedHours) {
 		this(id, title, null, hours, isActive, startDate, endDate, allottedHours);
@@ -110,7 +110,7 @@ public class Activity implements Comparable<Activity> {
 			boolean isActive, Calendar startDate, Calendar endDate) throws SQLException {
 		this.title = title;
 		this.project = project;
-		this.hoursAccumulated = hoursAccumulated;
+		this.setHoursAccumulated(hoursAccumulated);
 		this.setHoursAllotted(hoursAllotted);
 		this.isActive = isActive;
 		this.startDate = startDate;
@@ -139,6 +139,22 @@ public class Activity implements Comparable<Activity> {
 	 */
 	public double getTimeAccumulated() {
 		return this.hoursAccumulated;
+	}
+	
+	/**
+	 * Set the time accumulated 
+	 * @param hours to set the time to
+	 */
+	public void setHoursAccumulated(double hours) {
+		this.hoursAccumulated = hours;
+	}
+	
+	/**
+	 * Add thye passed time to the accumulated time
+	 * @param hours to add
+	 */
+	public void addAccumulatedHours(double hours) {
+		this.hoursAccumulated += hours;
 	}
 
 	/**
@@ -303,6 +319,7 @@ public class Activity implements Comparable<Activity> {
 	public void setHoursAllotted(double hoursAllotted) {
 		this.hoursAllotted = hoursAllotted;
 	}	
+
 	
 	/**
 	 * Get an activity with the given ID
