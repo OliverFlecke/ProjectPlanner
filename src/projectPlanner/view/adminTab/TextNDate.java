@@ -6,15 +6,17 @@ import java.util.Properties;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
-import org.jdatepicker.JDatePicker;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 public class TextNDate extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8620755133945416455L;
 	//Create DatePicker
 	private UtilDateModel dateModel;
 	private JDatePanelImpl datePanel;
@@ -63,7 +65,11 @@ public class TextNDate extends JPanel{
 		return (Calendar) datePicker.getModel().getValue();
 	}
 	
-	public void setDate(Calendar date){
-		dateModel.setDate(date.YEAR, date.MONTH, date.DAY_OF_MONTH);
+	public void setDate(Calendar date) {
+		dateModel.setValue(date.getTime());
+//		Update to convert the calendar object to and date, in order to set the dateModel. 
+//		The old way used static members on the calendar object, which would chose the current time, and not the
+//		time saved in the date object
+//		dateModel.setDate(date.YEAR, date.MONTH, date.DAY_OF_MONTH);
 	}
 }

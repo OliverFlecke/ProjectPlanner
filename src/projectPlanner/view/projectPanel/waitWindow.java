@@ -1,6 +1,5 @@
 package projectPlanner.view.projectPanel;
 
-import javax.swing.BoxLayout;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

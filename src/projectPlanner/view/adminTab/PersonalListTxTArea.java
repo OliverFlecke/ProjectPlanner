@@ -8,6 +8,10 @@ import javax.swing.JTextArea;
 
 public class PersonalListTxTArea extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6915329041265636204L;
 	private JLabel title;
 	private JTextArea listOfEmployees;
 	private String[] listOfEmps;

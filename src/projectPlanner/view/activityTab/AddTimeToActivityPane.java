@@ -1,24 +1,22 @@
 package projectPlanner.view.activityTab;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.awt.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import projectPlanner.Activity;
-import projectPlanner.ProjectPlanner;
+import projectPlanner.*;
 import projectPlanner.users.User;
-import projectPlanner.view.StdListPanel;
 import projectPlanner.view.activityPanel.TextPanel;
 
 public class AddTimeToActivityPane extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7624424829368549942L;
 	public JLabel activityTitle;
 	public TextPanel hoursSpent;
 	public TextPanel projectName;

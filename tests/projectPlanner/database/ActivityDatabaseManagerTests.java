@@ -18,7 +18,9 @@ import projectPlanner.users.*;
 public class ActivityDatabaseManagerTests {
 	private ActivityDatabaseManager db;
 	private Activity expActivity;
+	@SuppressWarnings("unused")
 	private User user;
+	@SuppressWarnings("unused")
 	private Project project;
 	
 	@Before

@@ -9,7 +9,6 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import projectPlanner.*;
 import projectPlanner.database.*;
 import projectPlanner.testCategories.*;
 import projectPlanner.users.*;
@@ -17,6 +16,7 @@ import projectPlanner.users.*;
 public class ProjectTest {
 	private Project project;
 	private Employee employee;
+	@SuppressWarnings("unused")
 	private Activity activity;
 	
 	@Mock 

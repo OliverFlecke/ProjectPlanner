@@ -12,10 +12,13 @@ import javax.swing.border.EmptyBorder;
 
 import projectPlanner.view.StdListPanel;
 import projectPlanner.view.personalInfo.NameObject;
-import projectPlanner.view.personalInfo.PersonalInfoPane;
 
 public class ProjectCreater extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -890252959284583205L;
 	private NameObject title;
 	private TextNField projectName;
 	private TextNDate deadLineFld;

@@ -3,7 +3,6 @@ package projectPlanner.view.mainView;
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -12,15 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
+import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
@@ -36,7 +27,6 @@ import projectPlanner.view.projectPanel.NoProjectsPanel;
 import projectPlanner.view.projectPanel.ProjectTab;
 import projectPlanner.view.activityTab.ActivityTab;
 import projectPlanner.Activity;
-import projectPlanner.ProjectPlanner;
 
 public class View extends JFrame {
 	

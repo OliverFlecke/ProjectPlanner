@@ -1,15 +1,7 @@
 package projectPlanner.view.projectPanel;
 
-
-import java.sql.SQLException;
-import java.util.List;
-
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-
-import projectPlanner.Project;
-import projectPlanner.ProjectPlanner;
-
 
 public class ProjectTab extends JPanel{
 
@@ -31,7 +23,4 @@ public class ProjectTab extends JPanel{
 		this.add(addActivityPanel);
 
 	}
-
-
-	
 }

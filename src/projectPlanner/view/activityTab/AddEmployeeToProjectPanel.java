@@ -1,9 +1,7 @@
 package projectPlanner.view.activityTab;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -18,6 +16,10 @@ import projectPlanner.ProjectPlanner;
 
 public class AddEmployeeToProjectPanel extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3156631673364831942L;
 	private JLabel projectName;
 	private StdListPanel employeesOnActivity;
 	private StdListPanel employeesNotOnActivity;

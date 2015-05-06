@@ -9,6 +9,10 @@ import javax.swing.JPanel;
 public class AdminTab extends JPanel{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8865050271362348045L;
 	//Fields
 	private UserCreater userCreater;
 	private ProjectCreater projectCreater;

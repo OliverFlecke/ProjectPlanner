@@ -2,7 +2,6 @@ package projectPlanner.database;
 
 import java.sql.*;
 import java.util.List;
-import java.util.Map;
 
 import projectPlanner.Activity;
 import projectPlanner.LoggedTime;

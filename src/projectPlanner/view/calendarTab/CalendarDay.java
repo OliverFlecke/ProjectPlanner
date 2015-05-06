@@ -2,13 +2,9 @@ package projectPlanner.view.calendarTab;
 
 import java.awt.Color;
 import java.util.Calendar;
-import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import projectPlanner.Project;
 
 public class CalendarDay extends JPanel {
 	

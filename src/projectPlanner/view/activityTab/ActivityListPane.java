@@ -15,6 +15,10 @@ import projectPlanner.Activity;
 
 public class ActivityListPane extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4685008498825819041L;
 	private StdListPanel activitiesList;
 	private List<String> activityNames;
 	private JList<String> activitiesJList;

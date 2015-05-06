@@ -4,13 +4,16 @@ import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import projectPlanner.Activity;
 
 public class ActivityModificationPane extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7416316687422673249L;
 	private AddEmployeeToProjectPanel addEmpPane;
 	private AddTimeToActivityPane timeToActivityPane;
 	private List<Activity> listOfActivities;
@@ -20,16 +23,11 @@ public class ActivityModificationPane extends JPanel {
 		this.listOfActivities = listOfActivities;
 		
 		uiFormatPanel = new JPanel();
-		uiFormatPanel.setLayout(new BoxLayout(uiFormatPanel, BoxLayout.LINE_AXIS));
-		
-		
-		
+		uiFormatPanel.setLayout(new BoxLayout(uiFormatPanel, BoxLayout.LINE_AXIS));	
 	}
 	
 	public void removeAllObjects() {
-		
-		this.removeAll();
-		
+		this.removeAll();	
 	}
 	
 	public void repaintPanel(int activityIndex) {

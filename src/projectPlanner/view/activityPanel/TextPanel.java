@@ -7,6 +7,10 @@ import javax.swing.JPanel;
 
 public class TextPanel extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3809910446720538569L;
 	//Initializing the JLabels
 	private JLabel leftLbl = new JLabel();
 	private JLabel rightLbl = new JLabel();

@@ -7,6 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class PathWindow extends JFileChooser{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8603296923970103096L;
 	private String path;
 	public PathWindow() throws UserClosedWindowException{
 		super();

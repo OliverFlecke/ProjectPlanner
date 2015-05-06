@@ -3,8 +3,6 @@ package projectPlanner.view.projectPanel;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import org.apache.pdfbox.exceptions.COSVisitorException;
-
 import projectPlanner.Project;
 
 public class PDFTester {

@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
-import org.apache.pdfbox.exceptions.COSVisitorException;
-
 import projectPlanner.database.*;
 import projectPlanner.users.*;
 

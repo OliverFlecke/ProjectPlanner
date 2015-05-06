@@ -16,6 +16,10 @@ import projectPlanner.view.personalInfo.NameObject;
 
 public class UserCreater extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2348325294702132017L;
 	private NameObject title;
 	private TextNField firstName;
 	private TextNField lastName;

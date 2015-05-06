@@ -9,7 +9,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 import projectPlanner.Activity;
-import projectPlanner.users.User;
 import projectPlanner.view.activityPanel.*;
 
 public class CalendarTab extends JPanel{

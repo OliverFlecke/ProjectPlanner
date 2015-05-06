@@ -8,7 +8,6 @@ import java.awt.Font;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -24,6 +23,10 @@ import projectPlanner.view.StdListPanel;
 
 public class ActivityPane extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5895302587110398862L;
 	public JLabel activityTitle;
 	public TextPanel hoursSpent;
 	public StdListPanel otherEmps;
