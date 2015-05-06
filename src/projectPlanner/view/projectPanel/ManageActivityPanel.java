@@ -88,7 +88,8 @@ public class ManageActivityPanel extends JPanel{
 		//accumulated time
 		accumTime = new TextNField("Accumulated Man-Hours");
 		accumTime.setTxt(Double.toString(listPanel.getCurrentSelectedActivity().getTimeAccumulated()));
-		accumTime.setEnabled(false);
+		accumTime.getTxtField().setEditable(false);
+		accumTime.getTxtField().setBackground(Color.LIGHT_GRAY);
 		add(accumTime);
 
 		//start date
@@ -186,7 +187,7 @@ public class ManageActivityPanel extends JPanel{
 							listPanel.getCurrentSelectedActivity().update(name.getTxt(), listPanel.getCurrentSelectedProject(),
 									Double.parseDouble(accumTime.getTxt()), Double.parseDouble(allottedTime.getTxt()), 
 									activeCheck.isSelected(), startDate.getDate(), endDate.getDate());
-							refreshActivityManagement();
+							listPanel.refreshActivitiesList();
 						} catch (SQLException e1) {
 							new ErrorDialog("There was a problem in connecting to the server");
 							e1.printStackTrace();
@@ -242,7 +243,7 @@ public class ManageActivityPanel extends JPanel{
 		allottedTime.setTxt(Double.toString(listPanel.getCurrentSelectedActivity().getHoursAllotted()));
 		accumTime.setTxt(Double.toString(listPanel.getCurrentSelectedActivity().getTimeAccumulated()));
 		startDate.setDate(listPanel.getCurrentSelectedActivity().getStartDate());
-		endDate.setDate(listPanel.getCurrentSelectedActivity().getStartDate());
+		endDate.setDate(listPanel.getCurrentSelectedActivity().getEndDate());
 		refreshUserNames();
 		refreshActivityNames();
 
