@@ -177,43 +177,65 @@ public class ManageActivityPanel extends JPanel{
 		//submit changes button
 		JButton submitChanges = new JButton("Submit changes");
 		add(submitChanges);
-		
+
 		//Actionlistener for button that submits changes
-				submitChanges.addActionListener( new ActionListener()
-				{
-					@Override
-					public void actionPerformed(ActionEvent e){
-						try {
-							listPanel.getCurrentSelectedActivity().update(name.getTxt(), listPanel.getCurrentSelectedProject(),
-									Double.parseDouble(accumTime.getTxt()), Double.parseDouble(allottedTime.getTxt()), 
-									activeCheck.isSelected(), startDate.getDate(), endDate.getDate());
-							listPanel.refreshActivitiesList();
-						} catch (SQLException e1) {
-							new ErrorDialog("There was a problem in connecting to the server");
-							e1.printStackTrace();
+		submitChanges.addActionListener( new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e){
+				try {
+					//updates other stuff
+					listPanel.getCurrentSelectedActivity().update(name.getTxt(), listPanel.getCurrentSelectedProject(),
+							Double.parseDouble(accumTime.getTxt()), Double.parseDouble(allottedTime.getTxt()), 
+							activeCheck.isSelected(), startDate.getDate(), endDate.getDate());
+
+					//removes and adds employees, the new list are so problems dont occour with updating lists, ruining index locations
+						int tempIndexUser = userList.getSelectedIndex();
+						List<User> tempUserList = new ArrayList<User>();
+						for(User current : getUsers()){
+							tempUserList.add(current);
 						}
-
+						
+						int tempIndexEmployee = currentEmployeeList.getSelectedIndex();
+						List<User> tempEmployeeList = new ArrayList<User>();
+						for(User current : getCurrentEmployees()){
+							tempEmployeeList.add(current);
+						}
+						
+					if(!(tempIndexUser==-1)){
+						listPanel.getCurrentSelectedActivity().addUser(tempUserList.get(tempIndexUser));
 					}
-				});
+					if(!(tempIndexEmployee==-1)){
+						System.out.println(2);
+						listPanel.getCurrentSelectedActivity().removeEmployee(tempEmployeeList.get(tempIndexEmployee));
+					}
+					listPanel.refreshActivitiesList();
+				} catch (SQLException e1) {
+					new ErrorDialog("There was a problem in connecting to the server");
+					e1.printStackTrace();
+				}
 
-//		//delete activity button
+			}
+		});
+
+		//		//delete activity button
 		//The delete is time consuming to implement due to sql server issues, perhaps at a later time
-//		JButton deleteActivity = new JButton("Delete activity");
-//		add(deleteActivity);
-//		
-//		deleteActivity.addActionListener( new ActionListener()
-//		{
-//			@Override
-//			public void actionPerformed(ActionEvent e){
-//				try {
-//					Activity.deleteActicity(listPanel.getCurrentSelectedActivity());
-//				} catch (SQLException e1) {
-//					new ErrorDialog("there was an error in connecting to the server");
-//					e1.printStackTrace();
-//				}
-//				listPanel.refreshActivitiesList();
-//			}
-//		});
+		//		JButton deleteActivity = new JButton("Delete activity");
+		//		add(deleteActivity);
+		//		
+		//		deleteActivity.addActionListener( new ActionListener()
+		//		{
+		//			@Override
+		//			public void actionPerformed(ActionEvent e){
+		//				try {
+		//					Activity.deleteActicity(listPanel.getCurrentSelectedActivity());
+		//				} catch (SQLException e1) {
+		//					new ErrorDialog("there was an error in connecting to the server");
+		//					e1.printStackTrace();
+		//				}
+		//				listPanel.refreshActivitiesList();
+		//			}
+		//		});
 
 		//Listener for changes in activity selection
 		listPanel.getSelectActivityList().addListSelectionListener(new ListSelectionListener() {
