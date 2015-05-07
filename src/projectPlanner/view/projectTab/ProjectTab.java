@@ -29,7 +29,7 @@ public class ProjectTab extends JPanel implements TabUpdate{
 
 	@Override
 	public void updateTab() {
-		listPanel.refres
+		listPanel.refreshActivitiesList();
 		
 	}
 }

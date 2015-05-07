@@ -36,14 +36,13 @@ public class ListPanel extends JPanel{
 	private JList<String> selectActivityList;
 	private List<Project> projectsList;
 	private boolean refreshingActivities;
+	private boolean refreshingProjects;
+	private DefaultListModel<String> projectListModel;
 
 	public ListPanel(){		
 		//temp border until visuals are improved
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		//get list of projects  associated with current user
-		fetchProjectsList();
-
 		//set layout
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
  
@@ -58,9 +57,14 @@ public class ListPanel extends JPanel{
 		add(Box.createRigidArea(new Dimension(5,5)));
 
 		//add scrollable list of project names, for selection
-		DefaultListModel<String> projectListModel = new DefaultListModel<String>();
-		for(String current : getProjectNames()){
-			projectListModel.addElement(current);
+		projectListModel = new DefaultListModel<String>();
+		try {
+			for(String current : getProjectNames()){
+				projectListModel.addElement(current);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			new ErrorDialog("There was an error in connecting to the server");
 		}
 		selectProjectList = new JList<String>(projectListModel);
 		selectProjectList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -82,10 +86,10 @@ public class ListPanel extends JPanel{
 				activityListModel.addElement(current);
 			}
 		} catch (SQLException e1) {
+			e1.printStackTrace();
 			new ErrorDialog("There was an error in connecting to the server");
 		}
 		selectActivityList = new JList<String>(activityListModel);
-
 		selectActivityList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		selectActivityList.setSelectedIndex(0);
 		selectActivityList.setVisibleRowCount(-1);
@@ -104,8 +108,9 @@ public class ListPanel extends JPanel{
 				if (lse.getValueIsAdjusting()){
 					return;
 				}
+				if(!(isRefreshingProjects())){
 				refreshActivitiesList();
-				
+				}
 			}
 		});
 	}
@@ -113,13 +118,21 @@ public class ListPanel extends JPanel{
 	public boolean isRefreshingActivities() {
 		return refreshingActivities;
 	}
+	public boolean isRefreshingProjects() {
+		return refreshingProjects;
+	}
 
-	private void fetchProjectsList() {
+	private List<Project> fetchProjectsList() throws SQLException {
+		List<Project> returnList = new ArrayList<Project>();
 		try {
-			projectsList = Project.getProjectByProjectLeader(ProjectPlanner.getCurrentUser());
+			returnList = Project.getProjectByProjectLeader(ProjectPlanner.getCurrentUser());
 		} catch (SQLException e2) {
 			new ErrorDialog("There was an error in connecting to the server");
 		}
+		if(returnList.size()==0){
+			returnList.add(new Project("There are no Projects", -1));
+		}
+		return returnList;
 	}
 
 	private List<Activity> fetchActivitiesList() throws SQLException {
@@ -135,9 +148,9 @@ public class ListPanel extends JPanel{
 		return returnList;
 	}
 
-	private List<String> getProjectNames() {
+	private List<String> getProjectNames() throws SQLException {
 		List<String> projectNames = new ArrayList<String>();
-		for(Project current : projectsList){
+		for(Project current : fetchProjectsList()){
 			projectNames.add(current.getTitle());
 		}
 		return projectNames;
@@ -153,6 +166,26 @@ public class ListPanel extends JPanel{
 		} catch (SQLException e) {
 			new ErrorDialog("There was an error in connecting to the server");
 		}
+	}
+	public void refreshProjectsList() {
+		refreshingProjects = true;
+		projectListModel.removeAllElements();
+		try {
+			refreshProjectNames();
+		} catch (SQLException e) {
+			new ErrorDialog("There was an error in connecting to the server");
+		}
+	}
+
+
+	private void refreshProjectNames() throws SQLException {
+		for(String current : getProjectNames()){
+			projectListModel.addElement(current);
+		}
+		SwingUtilities.invokeLater(() -> refreshingProjects = false);
+		SwingUtilities.invokeLater(() -> selectProjectList.setSelectedIndex(0));
+		
+		
 	}
 
 	private void refreshActivityNames() throws SQLException {
@@ -176,7 +209,13 @@ public class ListPanel extends JPanel{
 
 
 	public Project getCurrentSelectedProject(){
-		return projectsList.get(selectProjectList.getSelectedIndex());
+		try {
+			return fetchProjectsList().get(selectProjectList.getSelectedIndex());
+		} catch (SQLException e) {
+			new ErrorDialog("There was a problem in connecting to the server");
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public Activity getCurrentSelectedActivity(){
