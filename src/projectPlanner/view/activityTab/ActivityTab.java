@@ -8,10 +8,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 import projectPlanner.Activity;
+import projectPlanner.view.TabUpdate;
 
 
 
-public class ActivityTab extends JPanel {
+public class ActivityTab extends JPanel implements TabUpdate {
 	
 	/**
 	 * 
@@ -37,6 +38,12 @@ public class ActivityTab extends JPanel {
 	    this.setLayout(new GridLayout(1,0));
 	    this.add(splitPane);
 		
+		
+	}
+
+	@Override
+	public void updateTab() {
+		// TODO Auto-generated method stub
 		
 	}
 

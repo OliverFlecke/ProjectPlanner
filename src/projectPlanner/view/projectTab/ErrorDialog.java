@@ -1,4 +1,4 @@
-package projectPlanner.view.projectPanel;
+package projectPlanner.view.projectTab;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;

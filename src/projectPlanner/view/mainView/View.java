@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
@@ -22,14 +24,14 @@ import projectPlanner.view.adminTab.AdminTab;
 import projectPlanner.view.calendarTab.CalendarTab;
 import projectPlanner.view.login.LogInDialog;
 import projectPlanner.view.personalInfo.PersonalInfoTab;
-import projectPlanner.view.projectPanel.ErrorDialog;
-import projectPlanner.view.projectPanel.NoProjectsPanel;
-import projectPlanner.view.projectPanel.ProjectTab;
+import projectPlanner.view.projectTab.ErrorDialog;
+import projectPlanner.view.projectTab.NoProjectsTab;
+import projectPlanner.view.projectTab.ProjectTab;
 import projectPlanner.view.activityTab.ActivityTab;
 import projectPlanner.Activity;
 
 public class View extends JFrame {
-	
+
 	private LogInDialog logInDialog;
 	private List<Activity> listOfActivities;
 
@@ -45,7 +47,7 @@ public class View extends JFrame {
 		try {
 			listOfActivities = User.getActivities(ProjectPlanner.getCurrentUser());
 		} catch (Exception e){
-			
+
 		}
 
 		this.logInDialog = logInDialog;
@@ -63,12 +65,12 @@ public class View extends JFrame {
 
 		ActivityTab panel3 = new ActivityTab(listOfActivities);
 		tabbedPane.addTab("Activities", icon, panel3, "Activities you are part of" );
-		
+
 		if(checkIfProjectsExist()){
-		ProjectTab panel4 = new ProjectTab();
-		tabbedPane.addTab("Project", icon, panel4, "Project Managers can create new projects" );
+			ProjectTab panel4 = new ProjectTab();
+			tabbedPane.addTab("Project", icon, panel4, "Project Managers can create new projects" );
 		}else{
-			NoProjectsPanel panel4 = new NoProjectsPanel();
+			NoProjectsTab panel4 = new NoProjectsTab();
 			tabbedPane.addTab("Project", icon, panel4, "There are no projects to manage" );
 		}
 
@@ -82,7 +84,7 @@ public class View extends JFrame {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 
-		
+
 
 		//Opens confirmation dialog upon exit
 		WindowListener exitListener = new WindowAdapter() {
@@ -95,22 +97,34 @@ public class View extends JFrame {
 			}
 		};
 		this.addWindowListener(exitListener);
-		
-		
+
+		//Listener for updating tabs when accessed, remember to implement TabUpdate interface for tabs
+		tabbedPane.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(tabbedPane.getSelectedComponent() instanceof ProjectTab){
+					((ProjectTab) tabbedPane.getSelectedComponent()).updateTab();
+				}
+				else if(tabbedPane.getSelectedComponent() instanceof ActivityTab){
+					((ActivityTab) tabbedPane.getSelectedComponent()).updateTab();
+				}
+			}
+		});
+
+
 		this.setVisible(true);
 	}
-	
+
 
 	private void initMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu logOut = new JMenu("Log Out");
-		
+
 		menuBar.add(logOut);
 		this.setJMenuBar(menuBar);
-		
+
 		menuBar.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT); 
-		
-		
+
+
 		logOut.addMenuListener(new MenuListener(){
 			@Override
 			public void menuCanceled(MenuEvent e) {
@@ -131,24 +145,24 @@ public class View extends JFrame {
 				dispose();
 				logInDialog.loginPnl().flush();
 				logInDialog.setVisible(true);
-				
+
 			}
 		});
-		
+
 	}
-	
+
 	public boolean checkIfProjectsExist(){
 		//check if user is a leader off any projects
 		List<Project> projectsList = new ArrayList<Project>();
-				try {
-					projectsList = Project.getProjectByProjectLeader(ProjectPlanner.getCurrentUser());
-				} catch (SQLException e2) {
-					new ErrorDialog("There was an error in connecting to the server");
-				}
-				if(projectsList.size()==0){
-					return false;
-				}
-				return true;
+		try {
+			projectsList = Project.getProjectByProjectLeader(ProjectPlanner.getCurrentUser());
+		} catch (SQLException e2) {
+			new ErrorDialog("There was an error in connecting to the server");
+		}
+		if(projectsList.size()==0){
+			return false;
+		}
+		return true;
 	}
-	
+
 }

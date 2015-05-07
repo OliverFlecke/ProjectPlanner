@@ -1,4 +1,4 @@
-package projectPlanner.view.projectPanel;
+package projectPlanner.view.projectTab;
 
 import java.awt.Checkbox;
 import java.awt.Color;
@@ -206,7 +206,6 @@ public class ManageActivityPanel extends JPanel{
 						listPanel.getCurrentSelectedActivity().addUser(tempUserList.get(tempIndexUser));
 					}
 					if(!(tempIndexEmployee==-1)){
-						System.out.println(2);
 						listPanel.getCurrentSelectedActivity().removeEmployee(tempEmployeeList.get(tempIndexEmployee));
 					}
 					listPanel.refreshActivitiesList();

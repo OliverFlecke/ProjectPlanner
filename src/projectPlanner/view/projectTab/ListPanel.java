@@ -1,4 +1,4 @@
-package projectPlanner.view.projectPanel;
+package projectPlanner.view.projectTab;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -46,7 +46,7 @@ public class ListPanel extends JPanel{
 
 		//set layout
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
+ 
 		//add header
 		JLabel projectHeader = new JLabel("Please select the project you want to manage:");
 		Font font = projectHeader.getFont();

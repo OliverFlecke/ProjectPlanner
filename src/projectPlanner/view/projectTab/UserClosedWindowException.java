@@ -1,4 +1,4 @@
-package projectPlanner.view.projectPanel;
+package projectPlanner.view.projectTab;
 
 public class UserClosedWindowException extends Exception{
 	

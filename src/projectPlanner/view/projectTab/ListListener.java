@@ -1,4 +1,4 @@
-package projectPlanner.view.projectPanel;
+package projectPlanner.view.projectTab;
 
 import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
