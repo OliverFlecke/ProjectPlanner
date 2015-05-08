@@ -1,6 +1,8 @@
 package projectPlanner.view.activityTab;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 import javax.swing.Box;
@@ -26,16 +28,42 @@ public class AddEmployeeToProjectPanel extends JPanel{
 	private StdListPanel employeesNotOnActivity;
 	private JPanel formattingPanel;
 	private JButton addToActivityBtn;
+	private Activity activity;
+	List<User> employeesNotOnActivityLst;
 	
 	public AddEmployeeToProjectPanel(Activity activity) throws Exception{
 		this.projectName = new JLabel(activity.getTitle());
+		this.activity = activity;
 		formattingPanel = new JPanel();
-		addToActivityBtn = new JButton("Add to Activity");
+		
+		
+
 		
 		employeesOnActivity = new StdListPanel(getEmployeesOnActivity(activity), "Employees On Activity", 20, Color.WHITE);
 		employeesNotOnActivity = new StdListPanel(getEmployeesNotOnActivity(activity), "Employees Not On Activity", 20, Color.WHITE);
 		
-		
+		addToActivityBtn = new JButton("Add to Activity");
+		addToActivityBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int[] elementsToMove = employeesNotOnActivity.getListToPop().getSelectedIndices();
+				
+				for (int i=0; i < elementsToMove.length; i++) {
+					employeesOnActivity.getListModel().addElement(employeesNotOnActivity.getListModel().getElementAt(elementsToMove[i]));
+					employeesNotOnActivity.getListModel().remove(elementsToMove[i]);
+					try {
+						activity.addUser(employeesNotOnActivityLst.get(elementsToMove[i]));
+					} catch (Exception e1) {
+						
+					}
+					
+					
+				}
+				
+			}
+		});		
 		
 		formattingPanel.setLayout(new BoxLayout(formattingPanel, BoxLayout.X_AXIS));
 		formattingPanel.add(employeesOnActivity);
@@ -47,6 +75,7 @@ public class AddEmployeeToProjectPanel extends JPanel{
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.add(projectName);
 		this.add(formattingPanel);
+		this.add(addToActivityBtn);
 		this.add(Box.createVerticalGlue());
 		
 		
@@ -54,23 +83,23 @@ public class AddEmployeeToProjectPanel extends JPanel{
 	}
 
 	private List<String> getEmployeesNotOnActivity(Activity activity) throws Exception {
-		List<User> employees = ProjectPlanner.getEmployeesNotInActivity(activity);
-		List<String> employeeNames = new ArrayList<String>();
-		for (User employee: employees) {
+		employeesNotOnActivityLst = ProjectPlanner.getEmployeesNotInActivity(activity);
+		List<String> employees = new ArrayList<String>();
+		for (User employee: employeesNotOnActivityLst) {
 			if (!employee.isAdmin()) {
-				employeeNames.add(employee.getFirstname() + " " + employee.getLastname());
+				employees.add(employee.getFirstname() + " " + employee.getLastname());
 			}
 		}
-		return employeeNames;
+		return employees;
 	}
 
 	private List<String> getEmployeesOnActivity(Activity activity) throws Exception {
-		List<Employee> employees = ProjectPlanner.getEmployeesByActivity(activity);
-		List<String> employeeNames = new ArrayList<String>();
-		for (Employee employee: employees) {
-			employeeNames.add(employee.getFirstname() + employee.getLastname());
+		List<Employee> employeesOnActivity = ProjectPlanner.getEmployeesByActivity(activity);
+		List<String> employees = new ArrayList<String>();
+		for (Employee employee: employeesOnActivity) {
+			employees.add(employee.getFirstname() + employee.getLastname());
 		}
-		return employeeNames;
+		return employees;
 	}
 
 }

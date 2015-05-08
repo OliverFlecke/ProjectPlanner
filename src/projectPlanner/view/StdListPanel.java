@@ -18,6 +18,7 @@ public class StdListPanel extends JPanel{
 	private List<String> listForPop;
 	private JList<String> listToPop;
 	private JLabel listHeadderLbl;
+	private DefaultListModel<String> listModel;
 
 	public StdListPanel(List<String> listForPop, String listLbl) {
 		
@@ -29,7 +30,7 @@ public class StdListPanel extends JPanel{
 		this.listHeadderLbl = new JLabel(listLbl);
 		listHeadderLbl.setFont(new Font("Arial Bold", Font.BOLD, 16));
 		
-		
+		listModel = new DefaultListModel<String>();
 		listToPop = new JList<String>(populateList());
 		listToPop.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listToPop.setLayoutOrientation(JList.HORIZONTAL_WRAP);
@@ -46,7 +47,6 @@ public class StdListPanel extends JPanel{
 		this.add(listHeadderLbl);
 		this.add(listToPop);
 		
-		populateList();
 		
 	}
 	public StdListPanel(List<String> listForPop, String listLbl, int lblFontSize) {
@@ -75,7 +75,6 @@ public class StdListPanel extends JPanel{
 
 	
 	private DefaultListModel<String> populateList() {
-		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		for (String item: listForPop) {
 			listModel.addElement(item);
 		}
@@ -85,5 +84,14 @@ public class StdListPanel extends JPanel{
 
 	public void addTolist(String toAdd) {
 		listForPop.add(toAdd);
+	}
+	
+	public DefaultListModel<String> getListModel() {
+		return listModel;
+	}
+	public void updateListModel (List<String> newListToPop) {
+		listModel.removeAllElements();
+		this.listForPop = newListToPop;
+		populateList();
 	}
 }
