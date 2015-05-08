@@ -57,14 +57,14 @@ public class View extends JFrame {
 		try {
 			icon = new ImageIcon(getClass().getResource("images/icon.png"));
 		} catch (Exception e) {	}
-		//CalendarTab panel1 = new CalendarTab(listOfActivities);
-		//tabbedPane.addTab("Calendar", icon, panel1, "this weeks calendar" );
+		CalendarTab panel1 = new CalendarTab(listOfActivities);
+		tabbedPane.addTab("Calendar", icon, panel1, "this weeks calendar" );
 
-		//PersonalInfoTab panel2 = new PersonalInfoTab();
-		//tabbedPane.addTab("Personal Information", icon, panel2, "Information about you" );
+		PersonalInfoTab panel2 = new PersonalInfoTab();
+		tabbedPane.addTab("Personal Information", icon, panel2, "Information about you" );
 
-		//ActivityTab panel3 = new ActivityTab(listOfActivities);
-		//tabbedPane.addTab("Activities", icon, panel3, "Activities you are part of" );
+		ActivityTab panel3 = new ActivityTab(listOfActivities);
+		tabbedPane.addTab("Activities", icon, panel3, "Activities you are part of" );
 
 		if(checkIfProjectsExist()){
 			ProjectTab panel4 = new ProjectTab();
@@ -74,8 +74,8 @@ public class View extends JFrame {
 			tabbedPane.addTab("Project", icon, panel4, "There are no projects to manage" );
 		}
 
-		//AdminTab panel5 = new AdminTab();
-		//tabbedPane.addTab("adminTab", icon, panel5, "Super secret tab for admins only" );
+		AdminTab panel5 = new AdminTab();
+		tabbedPane.addTab("adminTab", icon, panel5, "Super secret tab for admins only" );
 
 		this.add(tabbedPane, BorderLayout.CENTER);
 		setSize(1200,800);
