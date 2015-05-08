@@ -35,6 +35,7 @@ public class ListPanel extends JPanel{
 	private DefaultListModel<String> activityListModel;
 	private JList<String> selectActivityList;
 	private List<Project> projectsList;
+	private List<Activity> activityList;
 	private boolean refreshingActivities;
 	private boolean refreshingProjects;
 	private DefaultListModel<String> projectListModel;
@@ -123,29 +124,35 @@ public class ListPanel extends JPanel{
 	}
 
 	private List<Project> fetchProjectsList() throws SQLException {
-		List<Project> returnList = new ArrayList<Project>();
-		try {
-			returnList = Project.getProjectByProjectLeader(ProjectPlanner.getCurrentUser());
-		} catch (SQLException e2) {
-			new ErrorDialog("There was an error in connecting to the server");
+		if (this.projectsList == null) {
+			try {
+				projectsList = Project.getProjectByProjectLeader(ProjectPlanner.getCurrentUser());
+			} catch (SQLException e2) {
+				new ErrorDialog("There was an error in connecting to the server");
+			}
+			if(projectsList.size()==0){
+				projectsList.add(new Project("There are no Projects", -1));
+			}
+			return projectsList;
+		} else {
+			return this.projectsList;
 		}
-		if(returnList.size()==0){
-			returnList.add(new Project("There are no Projects", -1));
-		}
-		return returnList;
 	}
 
 	private List<Activity> fetchActivitiesList() throws SQLException {
-		List<Activity> returnList = new ArrayList<Activity>();
+		if (this.activityList == null) {
 		try {
-			returnList = getCurrentSelectedProject().getActivities();			
+			activityList = getCurrentSelectedProject().getActivities();	
 		} catch (SQLException e2) {
 			new ErrorDialog("There was an error in connecting to the server");
 		}
-		if(returnList.size()==0){
-			returnList.add(new Activity("There are no activities", getCurrentSelectedProject()));
+		if(activityList.size()==0){
+			activityList.add(new Activity("There are no activities", getCurrentSelectedProject()));
 		}
-		return returnList;
+		return activityList;
+		} else{
+		return activityList;
+		}
 	}
 
 	private List<String> getProjectNames() throws SQLException {
@@ -239,5 +246,12 @@ public class ListPanel extends JPanel{
 
 	public void setSelectProjectList(JList<String> selectProjectList) {
 		this.selectProjectList = selectProjectList;
+	}
+	public void setProjectsList(List<Project> projectsList) {
+		this.projectsList = projectsList;
+	}
+
+	public void setActivityList(List<Activity> activityList) {
+		this.activityList = activityList;
 	}
 }
