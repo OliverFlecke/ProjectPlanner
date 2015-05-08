@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import projectPlanner.*;
 import projectPlanner.users.User;
 import projectPlanner.view.activityPanel.TextPanel;
+import projectPlanner.view.adminTab.TextNDate;
 
 public class AddTimeToActivityPane extends JPanel {
 	
@@ -27,6 +28,7 @@ public class AddTimeToActivityPane extends JPanel {
 	private CounterPanel addTimePanel;
 	private JButton addTimeBtn;
 	private Activity activity;
+	private TextNDate dateToLogtimePanel;
 	
 	
 
@@ -35,6 +37,8 @@ public class AddTimeToActivityPane extends JPanel {
 		
 		activityName = activity.getTitle();
 		this.activity = activity;
+		
+		dateToLogtimePanel = new TextNDate();
 		
 		
 		addTimePanel = new CounterPanel();
@@ -50,7 +54,7 @@ public class AddTimeToActivityPane extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				activity.addAccumulatedHours(addTimePanel.getCount());
+				//User.setTimeSpendOnActivity(new LoggedTime(activity, ProjectPlanner.getCurrentUser(), User.getTimeSpendOnActivity(ProjectPlanner.getCurrentUser(), activity) + addTimePanel.getCount()));
 				
 				
 			}
@@ -67,6 +71,7 @@ public class AddTimeToActivityPane extends JPanel {
 		this.add(activityTitle);
 		this.add(projectName);
 		this.add(hoursSpent);
+		this.add(dateToLogtimePanel);
 		this.add(addTimePanel);
 		this.add(addTimeBtn);
 		

@@ -25,11 +25,7 @@ public class ActivityHolder extends JPanel {
 	
 	public ActivityHolder(List<Activity> listOfActivties) {
 		this.user = ProjectPlanner.getCurrentUser();
-		try {
-		listOfActivties = User.getActivities(user);
-		} catch (Exception e){
-			
-		}
+		
 		//Set font on JLabel
 		myActivitiesLbl.setFont(new Font("Arial Bold", Font.BOLD, 20));
 		myActivitiesLbl.setAlignmentX(CENTER_ALIGNMENT);
