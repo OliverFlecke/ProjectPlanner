@@ -38,13 +38,14 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 	 * @throws SQLException
 	 */
 	public static LoggedTime getCurrentLoggedTime(ResultSet resultSet) throws SQLException {
-		int activityID = resultSet.getInt("ActivityID");
-		int userID = resultSet.getInt("EmployeeID");
 		double time = resultSet.getDouble("TimeSpend");
 		Calendar date = Calendar.getInstance();
 		date.setTime(resultSet.getDate("Date"));
 		
-		return new LoggedTime(activityID, userID, time, date);
+		User user = UserDatabaseManager.getUserFromResultSet(resultSet);
+		Activity activity = ActivityDatabaseManager.getCurrentActivity(resultSet, true);
+		
+		return new LoggedTime(activity, user, time, date);
 	}
 	
 	/**
@@ -217,7 +218,10 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		List<LoggedTime> list = new ArrayList<LoggedTime>();
 		
 		String SQL = "SELECT * FROM SpendHoursOn "
-				+ "WHERE EmployeeID = " + user.getID();
+				+ "INNER JOIN Employees ON Employees.EmployeeID = SpendHoursOn.EmployeeID "
+				+ "INNER JOIN Activities ON Activities.ActivityID = SpendHoursOn.ActivityID "
+				+ "INNER JOIN Projects ON Activities.ProjectID = Projects.ProjectID "
+				+ "WHERE SpendHoursOn.EmployeeID = " + user.getID();
 		
 		// Execute the query and get the list of time objects
 		resultSet = UserDatabaseManager.executeQuery(SQL);
@@ -237,7 +241,10 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 	public List<LoggedTime> getTimeSpendOnEachActivity(User user) throws SQLException {
 		List<LoggedTime> list = new ArrayList<LoggedTime>();
 		String SQL = "SELECT * FROM SpendHoursOn "
-				+ "WHERE EmployeeID = " + user.getID();
+				+ "INNER JOIN Employees ON Employees.EmployeeID = SpendHoursOn.EmployeeID "
+				+ "INNER JOIN Activities ON Activities.ActivityID = SpendHoursOn.ActivityID "
+				+ "INNER JOIN Projects ON Activities.ProjectID = Projects.ProjectID "
+				+ "WHERE SpendHoursOn.EmployeeID = " + user.getID();
 		
 		resultSet = executeQuery(SQL);
 		while (resultSet.next()) {
