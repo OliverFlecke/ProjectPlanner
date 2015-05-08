@@ -248,6 +248,11 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 	}
 	
 	@Override
+	public void logTimeOnActivity(LoggedTime time) throws SQLException {
+		String SQL = "";
+	}
+	
+	@Override
 	public List<Employee> getEmployees(Activity activity) throws SQLException {
 		List<Employee> list = new ArrayList<Employee>();
 		String SQL = "SELECT * FROM WorksOn "

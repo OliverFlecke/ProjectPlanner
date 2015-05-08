@@ -103,6 +103,13 @@ public interface IUserDataManager {
 	public List<LoggedTime> getTimeSpendOnEachActivity(User user) throws SQLException;
 	
 	/**
+	 * Log time on an activity with a user
+	 * @param time to log on 
+	 * @throws SQLException
+	 */
+	public void logTimeOnActivity(LoggedTime time) throws SQLException;
+	
+	/**
 	 * Get all the employees linked to the passed activity
 	 * @param activity to find employees on
 	 * @return A list of employees working on the given activity

@@ -283,6 +283,15 @@ public abstract class User implements Comparable<User> {
 	}
 	
 	/**
+	 * Set the time a user has spend on an activty
+	 * @param time LoggedTIme object to get data from.
+	 * @throws SQLException
+	 */
+	public static void setTimeSpendOnActivity(LoggedTime time) throws SQLException {
+		dataManager.logTimeOnActivity(time);
+	}
+	
+	/**
 	 * @return The time the user has spend on each activity
 	 * @throws SQLException
 	 */
