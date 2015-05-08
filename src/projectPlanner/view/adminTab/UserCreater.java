@@ -32,7 +32,7 @@ public class UserCreater extends JPanel {
 	private TextNField password;
 	private TextNField verifyPassword;
 	private JButton createUserBtn;
-	private JLabel succesMsg;
+	private JLabel succesLabel;
 	
 	
 	public UserCreater() {
@@ -43,9 +43,9 @@ public class UserCreater extends JPanel {
 		password = new TextNField("Password: ");
 		verifyPassword = new TextNField("Verify Password: ");
 		createUserBtn = new JButton("Create User");
-		succesMsg = new JLabel("");
+		succesLabel = new JLabel("");
 		
-		createUserBtn.addActionListener(new createUserListener());
+		createUserBtn.addActionListener(new CreateNewUserListener());
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
@@ -58,7 +58,7 @@ public class UserCreater extends JPanel {
 		this.add(password);
 		this.add(verifyPassword);
 		this.add(createUserBtn);
-		this.add(succesMsg);
+		this.add(succesLabel);
 		this.add(Box.createVerticalGlue());
 		
 		this.setPreferredSize(new Dimension(300,400));	
@@ -67,7 +67,7 @@ public class UserCreater extends JPanel {
 	/**
 	 * Listener class for the create user interface
 	 */
-	public class createUserListener implements ActionListener {
+	private class CreateNewUserListener implements ActionListener {
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {		
@@ -76,13 +76,15 @@ public class UserCreater extends JPanel {
 				String passwordVerify = UserCreater.this.verifyPassword.getTxt();
 				if (password.equals(passwordVerify)) {
 					new Employee(UserCreater.this.username.getTxt(), password, UserCreater.this.firstname.getTxt(), UserCreater.this.lastname.getTxt());
-					UserCreater.this.succesMsg.setText("The user was create succesfully");
+					UserCreater.this.succesLabel.setText("The user was create succesfully");
 					UserCreater.this.repaint();
 				}
 				else { 
+					UserCreater.this.succesLabel.setText("");
 					new ErrorDialog("The entered password did not match. Please try again");
 				}
 			} catch (SQLException e) {
+				UserCreater.this.succesLabel.setText("");
 				new ErrorDialog("An error occurred when trying to connect to the server. Please try agian");
 			}
 		}

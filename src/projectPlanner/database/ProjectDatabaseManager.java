@@ -111,11 +111,22 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 		
 		// Insert the different data into the statement
 		preStatement.setString(1, project.getTitle());
-		preStatement.setTimestamp(2, new Timestamp(project.getStartDate().getTimeInMillis()));
-		preStatement.setTimestamp(3, new Timestamp(project.getEndDate().getTimeInMillis()));
+		if (project.getStartDate() != null) 
+			preStatement.setTimestamp(2, new Timestamp(project.getStartDate().getTimeInMillis()));
+		else 
+			preStatement.setNull(2, 0);
+		if (project.getEndDate() != null) 
+			preStatement.setTimestamp(3, new Timestamp(project.getEndDate().getTimeInMillis()));
+		else 
+			preStatement.setNull(3, 0);
+		
+		// set the rest of the data and execute
 		preStatement.setBoolean(4, project.isActive());
 		preStatement.setDouble(5, project.getAllottedTime());
-		preStatement.setInt(6, project.getProjectLeader().getID());
+		if (project.getProjectLeader() != null)
+			preStatement.setInt(6, project.getProjectLeader().getID());
+		else 
+			preStatement.setNull(6, 0);
 		preStatement.executeUpdate(); 	// Execute the statement
 	}
 

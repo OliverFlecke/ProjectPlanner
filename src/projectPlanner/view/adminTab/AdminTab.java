@@ -23,8 +23,8 @@ public class AdminTab extends JPanel{
 		this.projectCreater = new ProjectCreater();
 		this.contentPane = new JPanel();
 		
-		userCreater.setMaximumSize(new Dimension(600, 800));
-		projectCreater.setMaximumSize(new Dimension(600,800));
+		userCreater.setMaximumSize(new Dimension(800, 800));
+		projectCreater.setMaximumSize(new Dimension(800,800));
 		
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 		contentPane.add(userCreater);
