@@ -73,9 +73,11 @@ public class View extends JFrame {
 			NoProjectsTab panel4 = new NoProjectsTab();
 			tabbedPane.addTab("Project", icon, panel4, "There are no projects to manage" );
 		}
-
+		
+		if(ProjectPlanner.getCurrentUser().isAdmin()){
 		AdminTab panel5 = new AdminTab();
 		tabbedPane.addTab("adminTab", icon, panel5, "Super secret tab for admins only" );
+		}
 
 		this.add(tabbedPane, BorderLayout.CENTER);
 		setSize(1200,800);

@@ -198,6 +198,7 @@ public class ListPanel extends JPanel{
 	private void refreshActivityNames() throws SQLException {
 		for(String current : getActivityNames()){
 			activityListModel.addElement(current);
+			System.out.println(current);
 		}
 		SwingUtilities.invokeLater(() -> refreshingActivities = false);
 		SwingUtilities.invokeLater(() -> selectActivityList.setSelectedIndex(0));
