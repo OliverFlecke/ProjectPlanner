@@ -260,7 +260,7 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		preStatement.setDouble(3, time.getTime());
 		preStatement.setTimestamp(4, new Timestamp(time.getDate().getTimeInMillis()));
 		
-		preStatement.executeUpdate(SQL);
+		preStatement.executeUpdate();
 	}
 	
 	@Override
