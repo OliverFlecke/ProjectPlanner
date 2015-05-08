@@ -3,6 +3,8 @@ package projectPlanner.view.activityTab;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.Calendar;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -27,8 +29,7 @@ public class AddTimeToActivityPane extends JPanel {
 	private String activityName;
 	private CounterPanel addTimePanel;
 	private JButton addTimeBtn;
-	private Activity activity;
-	private TextNDate dateToLogtimePanel;
+	private TextNDate dateToLogTimePanel;
 	
 	
 
@@ -36,9 +37,9 @@ public class AddTimeToActivityPane extends JPanel {
 	public AddTimeToActivityPane(Activity activity) throws Exception{
 		
 		activityName = activity.getTitle();
-		this.activity = activity;
 		
-		dateToLogtimePanel = new TextNDate();
+		dateToLogTimePanel = new TextNDate();
+		dateToLogTimePanel.setDate(Calendar.getInstance());
 		
 		
 		addTimePanel = new CounterPanel();
@@ -54,8 +55,14 @@ public class AddTimeToActivityPane extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//User.setTimeSpendOnActivity(new LoggedTime(activity, ProjectPlanner.getCurrentUser(), User.getTimeSpendOnActivity(ProjectPlanner.getCurrentUser(), activity) + addTimePanel.getCount()));
 				
+					try {
+						User.setTimeSpendOnActivity(new LoggedTime(activity.getID(), ProjectPlanner.getCurrentUser().getID(), addTimePanel.getCount(), dateToLogTimePanel.getDate()));
+						hoursSpent.setRightText(String.valueOf(User.getTimeSpendOnActivity(ProjectPlanner.getCurrentUser(), activity)));
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+					
 				
 			}
 			
@@ -71,7 +78,7 @@ public class AddTimeToActivityPane extends JPanel {
 		this.add(activityTitle);
 		this.add(projectName);
 		this.add(hoursSpent);
-		this.add(dateToLogtimePanel);
+		this.add(dateToLogTimePanel);
 		this.add(addTimePanel);
 		this.add(addTimeBtn);
 		

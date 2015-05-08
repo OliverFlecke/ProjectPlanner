@@ -1,6 +1,7 @@
 package projectPlanner.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.util.List;
 
@@ -34,9 +35,10 @@ public class StdListPanel extends JPanel{
 		listToPop = new JList<String>(populateList());
 		listToPop.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listToPop.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		listToPop.setVisibleRowCount(6);
+		//listToPop.setVisibleRowCount(6);
 		listToPop.setFont(new Font("Arial Bold", Font.BOLD, 14));
 		listToPop.setBackground(new Color(238,238,238));
+		listToPop.setPreferredSize(new Dimension(100,300));
 		
 		
 		//Set the JList to center.
