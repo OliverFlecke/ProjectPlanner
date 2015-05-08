@@ -51,6 +51,7 @@ public class AddTimeToActivityPane extends JPanel {
 		
 		//Setting up add timeBtn
 		addTimeBtn = new JButton("Add Time");
+		addTimeBtn.setAlignmentX(CENTER_ALIGNMENT);
 		addTimeBtn.addActionListener(new ActionListener() {
 
 			@Override
