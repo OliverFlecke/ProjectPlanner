@@ -44,10 +44,10 @@ public class ListPanel extends JPanel{
 	public ListPanel(){		
 		//temp border until visuals are improved
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
-		
+
 		//set layout
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
- 
+
 		//add header
 		JLabel projectHeader = new JLabel("Please select the project you want to manage:");
 		Font font = projectHeader.getFont();
@@ -111,7 +111,8 @@ public class ListPanel extends JPanel{
 					return;
 				}
 				if(!(isRefreshingProjects())){
-				refreshActivitiesList();
+					setActivityList(null);
+					refreshActivitiesList();
 				}
 			}
 		});
@@ -142,17 +143,17 @@ public class ListPanel extends JPanel{
 
 	private List<Activity> fetchActivitiesList() throws SQLException {
 		if (this.activityList == null) {
-		try {
-			activityList = getCurrentSelectedProject().getActivities();	
-		} catch (SQLException e2) {
-			new ErrorDialog("There was an error in connecting to the server");
-		}
-		if(activityList.size()==0){
-			activityList.add(new Activity("There are no activities", getCurrentSelectedProject()));
-		}
-		return activityList;
+			try {
+				activityList = getCurrentSelectedProject().getActivities();	
+			} catch (SQLException e2) {
+				new ErrorDialog("There was an error in connecting to the server");
+			}
+			if(activityList.size()==0){
+				activityList.add(new Activity("There are no activities", getCurrentSelectedProject()));
+			}
+			return activityList;
 		} else{
-		return activityList;
+			return activityList;
 		}
 	}
 
@@ -192,18 +193,17 @@ public class ListPanel extends JPanel{
 		}
 		SwingUtilities.invokeLater(() -> refreshingProjects = false);
 		SwingUtilities.invokeLater(() -> selectProjectList.setSelectedIndex(0));
-		
-		
+
+
 	}
 
 	private void refreshActivityNames() throws SQLException {
 		for(String current : getActivityNames()){
 			activityListModel.addElement(current);
-			System.out.println(current);
 		}
 		SwingUtilities.invokeLater(() -> refreshingActivities = false);
 		SwingUtilities.invokeLater(() -> selectActivityList.setSelectedIndex(0));
-		
+
 	}
 
 

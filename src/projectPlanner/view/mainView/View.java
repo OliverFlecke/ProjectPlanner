@@ -69,9 +69,6 @@ public class View extends JFrame {
 		if(checkIfProjectsExist()){
 			ProjectTab panel4 = new ProjectTab();
 			tabbedPane.addTab("Project", icon, panel4, "Project Managers can create new projects" );
-		}else{
-			NoProjectsTab panel4 = new NoProjectsTab();
-			tabbedPane.addTab("Project", icon, panel4, "There are no projects to manage" );
 		}
 		
 		if(ProjectPlanner.getCurrentUser().isAdmin()){

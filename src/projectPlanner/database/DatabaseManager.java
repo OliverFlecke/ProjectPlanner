@@ -69,6 +69,7 @@ public abstract class DatabaseManager {
 	 * @param SQL string to send and get result from. 
 	 */
 	protected static ResultSet executeQuery(String SQL) throws SQLException {
+		
 		// Create a connection and a statement and execute it 
 		connection = DriverManager.getConnection(connectionString);
 		statement = connection.createStatement();
