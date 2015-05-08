@@ -40,6 +40,7 @@ public abstract class DatabaseManager {
 			if (connection != null) connection.close();
 			if (statement != null) statement.close();
 			if (resultSet != null) resultSet.close();
+			System.out.println("close connection");
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -59,6 +60,7 @@ public abstract class DatabaseManager {
 		statement.executeUpdate(sql);
 		// Try to close all the connection. 
 		closeConnections();
+		System.out.println("Update string: " + sql);
 		return true;
 	}
 	
@@ -70,6 +72,7 @@ public abstract class DatabaseManager {
 		// Create a connection and a statement and execute it 
 		connection = DriverManager.getConnection(connectionString);
 		statement = connection.createStatement();
+		System.out.println("executeQuery: " + SQL);
 		return statement.executeQuery(SQL);
 	}
 }
