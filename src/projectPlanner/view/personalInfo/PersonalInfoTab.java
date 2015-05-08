@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import projectPlanner.ProjectPlanner;
 import projectPlanner.users.User;
+import projectPlanner.view.ErrorDialog;
 
 @SuppressWarnings("serial")
 public class PersonalInfoTab extends JPanel{
@@ -26,16 +27,13 @@ public class PersonalInfoTab extends JPanel{
 		this.personalInfo = new PersonalInfoPane(name);
 
 		//personalInfo.setMaximumSize(new Dimension(500, 200));
-
-		try {			
+		System.out.println(1);
+		try {	
 			File f = new File(getClass().getResource("images/" + ProjectPlanner.getCurrentUser().getID() +".jpg").toURI());
-			if(f.exists()){
 				icon = new ImageIcon(f.getPath());
-			}
-			else{
-				icon = new ImageIcon(getClass().getResource("images/genericFace.jpg"));
-			}
-		} catch (Exception e) {	}
+		} catch (Exception e) {
+			icon = new ImageIcon(getClass().getResource("images/genericFace.jpg"));
+		}
 
 		this.imagePanel = new ImagePane(icon, name);
 		this.setBorder(new EmptyBorder(10,10,10,10));
