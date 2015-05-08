@@ -249,7 +249,18 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 	
 	@Override
 	public void logTimeOnActivity(LoggedTime time) throws SQLException {
-		String SQL = "";
+		String SQL = "INSERT INTO SpendHoursOn (EmployeeID, ActivityID, TimeSpend, Date) "
+				+ "VALUES(?, ?, ?, ?);";
+		connection = DriverManager.getConnection(connectionString);
+		preStatement = connection.prepareStatement(SQL);
+		
+		// Insert data
+		preStatement.setInt(1, time.getUserID());
+		preStatement.setInt(2, time.getActivityID());
+		preStatement.setDouble(3, time.getTime());
+		preStatement.setTimestamp(4, new Timestamp(time.getDate().getTimeInMillis()));
+		
+		preStatement.executeUpdate(SQL);
 	}
 	
 	@Override
