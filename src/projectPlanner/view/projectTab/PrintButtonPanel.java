@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
+
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+
+import projectPlanner.view.ErrorDialog;
 
 public class PrintButtonPanel extends JPanel {
 	/**

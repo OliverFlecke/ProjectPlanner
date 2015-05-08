@@ -32,6 +32,7 @@ import projectPlanner.Activity;
 import projectPlanner.ProjectPlanner;
 import projectPlanner.users.Employee;
 import projectPlanner.users.User;
+import projectPlanner.view.ErrorDialog;
 import projectPlanner.view.adminTab.TextNDate;
 import projectPlanner.view.adminTab.TextNField;
 

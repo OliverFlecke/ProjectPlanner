@@ -54,7 +54,6 @@ public class ProjectCreater extends JPanel {
 		
 	}
 
-
 	private List<String> getEmps() {
 		List<String> emps = Arrays.asList("Lars","Emil","Mads","Tissemand","lol");
 		return emps;

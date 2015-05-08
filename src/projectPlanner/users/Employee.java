@@ -21,7 +21,7 @@ public class Employee extends User {
 	 * @param lastname of the employee
 	 * @throws Exception 
 	 */
-	public Employee(String username, String password, String firstname, String lastname) throws Exception {
+	public Employee(String username, String password, String firstname, String lastname) throws SQLException {
 		super(username, password, firstname, lastname);
 		this.activities = new ArrayList<Activity>();
 	}

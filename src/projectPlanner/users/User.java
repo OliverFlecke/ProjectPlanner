@@ -30,7 +30,7 @@ public abstract class User implements Comparable<User> {
 	 * @param firstname of the user
 	 * @param lastname of the user
 	 */
-	protected User(String username, String password, String firstname, String lastname) throws Exception {
+	protected User(String username, String password, String firstname, String lastname) throws SQLException {
 		this.username = username;
 		this.password = password;
 		this.firstname = firstname;

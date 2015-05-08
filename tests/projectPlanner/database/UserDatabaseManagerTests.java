@@ -125,9 +125,11 @@ public class UserDatabaseManagerTests {
 	@Test
 	@Category(DatabaseTest.class)
 	public void getLoggedTimeObject() throws SQLException {
-		double time = dataManager.getTimeSpendOnAllActivities(user);
-		Assert.assertTrue(time >= 100);
+		List<LoggedTime> list = user.getLoggedTime();
 		
-		
+		Assert.assertTrue(list.size() > 0);
+		LoggedTime first = list.get(0);
+		Assert.assertNotNull(first.getActivity());
+		Assert.assertNotNull(first.getUser());
 	}
 }
