@@ -5,6 +5,7 @@ import java.util.*;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -24,10 +25,12 @@ public class AddEmployeeToProjectPanel extends JPanel{
 	private StdListPanel employeesOnActivity;
 	private StdListPanel employeesNotOnActivity;
 	private JPanel formattingPanel;
+	private JButton addToActivityBtn;
 	
 	public AddEmployeeToProjectPanel(Activity activity) throws Exception{
 		this.projectName = new JLabel(activity.getTitle());
 		formattingPanel = new JPanel();
+		addToActivityBtn = new JButton("Add to Activity");
 		
 		employeesOnActivity = new StdListPanel(getEmployeesOnActivity(activity), "Employees On Activity", 20, Color.WHITE);
 		employeesNotOnActivity = new StdListPanel(getEmployeesNotOnActivity(activity), "Employees Not On Activity", 20, Color.WHITE);
