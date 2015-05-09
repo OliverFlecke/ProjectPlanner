@@ -113,18 +113,20 @@ public class View extends JFrame {
 			}
 		};
 		this.addWindowListener(exitListener);
-
-		//Listener for updating tabs when accessed, remember to implement TabUpdate interface for tabs
-		tabbedPane.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				if(tabbedPane.getSelectedComponent() instanceof ProjectTab){
-					((ProjectTab) tabbedPane.getSelectedComponent()).updateTab();
-				}
-				else if(tabbedPane.getSelectedComponent() instanceof ActivityTab){
-					((ActivityTab) tabbedPane.getSelectedComponent()).updateTab();
-				}
-			}
-		});
+        // perhaps this functionality is not needed unless you are an admin?? It slows down UI, seeing as everything is run in one thread
+		// maybe if you add time to an activity and it's the first one selected
+		//@TODO speak with team about it
+//		//Listener for updating tabs when accessed, remember to implement TabUpdate interface for tabs
+//		tabbedPane.addChangeListener(new ChangeListener() {
+//			public void stateChanged(ChangeEvent e) {
+//				if(tabbedPane.getSelectedComponent() instanceof ProjectTab){
+//					((ProjectTab) tabbedPane.getSelectedComponent()).updateTab();
+//				}
+//				else if(tabbedPane.getSelectedComponent() instanceof ActivityTab){
+//					((ActivityTab) tabbedPane.getSelectedComponent()).updateTab();
+//				}
+//			}
+//		});
 
 
 		this.setVisible(true);
