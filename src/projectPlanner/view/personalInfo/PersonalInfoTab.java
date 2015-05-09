@@ -27,12 +27,13 @@ public class PersonalInfoTab extends JPanel{
 		this.personalInfo = new PersonalInfoPane(name);
 
 		//personalInfo.setMaximumSize(new Dimension(500, 200));
-		System.out.println(1);
 		try {	
 			File f = new File(getClass().getResource("images/" + ProjectPlanner.getCurrentUser().getID() +".jpg").toURI());
 				icon = new ImageIcon(f.getPath());
 		} catch (Exception e) {
+			try{
 			icon = new ImageIcon(getClass().getResource("images/genericFace.jpg"));
+			}catch(Exception e1){new ErrorDialog("Could not get profile image");}
 		}
 
 		this.imagePanel = new ImagePane(icon, name);
