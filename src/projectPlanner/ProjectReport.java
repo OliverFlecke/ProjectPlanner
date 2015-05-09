@@ -23,8 +23,8 @@ public class ProjectReport {
 	//int that moves spacing down page
 	int spacing = 700;
 	//different levels of indentation
-	int normal = 105;
-	int indent = 120;
+	int normal = 95;
+	int indent = 110;
 
 	public ProjectReport(Project project){
 		this.project = project;
@@ -119,25 +119,36 @@ public class ProjectReport {
 		contentStream.endText();
 		spacing -= 20;
 
+		//activities header columns
+		contentStream.beginText();
+		contentStream.setFont( fontPlain, 10 );
+		contentStream.moveTextPositionByAmount( indent, spacing );
+		contentStream.drawString("Title:                                        Acum. hours:     All. hours:      Active:       Start Date:          End Date:");
+		contentStream.endText();
+		spacing -= 20;
+
 		//the following loops through activitites creating extra pages as needed
 		for(Activity current : project.getActivities()){
 			contentStream.beginText();
-			contentStream.setFont( fontPlain, 9 );
+			contentStream.setFont( fontMono, 9 );
 			contentStream.moveTextPositionByAmount( indent, spacing );
-			System.out.println(current.getTitle());
-			contentStream.drawString("Activity: " + current.getTitle() + "   Time spent: " + current.getTimeAccumulated() + " Hours" );
+//			contentStream.drawString("Activity: " + current.getTitle() + "   Time spent: " + current.getTimeAccumulated() + " Hours" );
+			contentStream.drawString(String.format("%-25s%-14.2f%-11.2f%-9s%-14tF%-8tF",
+					current.getTitle(),current.getTimeAccumulated(),current.getHoursAllotted(),(current.isActive()? "YES" : "NO"),
+					current.getStartDate(),current.getEndDate()));
 			contentStream.endText();
 			if(!(spacing>48)){
- 				contentStream.close();
+				contentStream.close();
 				PDPage loopPage = new PDPage();
 				document.addPage( loopPage );
 				contentStream = new PDPageContentStream(document, loopPage);
 				spacing = 700;
 				contentStream.beginText();
-				contentStream.setFont( fontBold, 18 );
-				contentStream.moveTextPositionByAmount( normal, spacing );
-				contentStream.drawString("Activities continued");
+				contentStream.setFont( fontPlain, 10 );
+				contentStream.moveTextPositionByAmount( indent, spacing );
+				contentStream.drawString("Title:                                        Acum. hours:     All. hours:      Active:       Start Date:          End Date:");
 				contentStream.endText();
+				spacing -= 20;
 			}
 			spacing-=16;
 		}
