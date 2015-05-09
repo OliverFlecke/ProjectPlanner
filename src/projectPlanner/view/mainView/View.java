@@ -35,7 +35,11 @@ public class View extends JFrame {
 	private LogInDialog logInDialog;
 	private List<Activity> listOfActivities;
 
-	ImageIcon icon;
+	ImageIcon activity;
+	private ImageIcon calendartab;
+	private ImageIcon admin;
+	private ImageIcon personal;
+	private ImageIcon project;
 	/**
 	 * 
 	 */
@@ -43,6 +47,13 @@ public class View extends JFrame {
 
 	public View(LogInDialog logInDialog) {
 		super("Project Planner");
+		
+		
+		//set main icon
+		try{
+		ImageIcon img = new ImageIcon(getClass().getResource("images/calendar.png"));
+		setIconImage(img.getImage());
+		}catch(Exception e){}
 
 		try {
 			listOfActivities = User.getActivities(ProjectPlanner.getCurrentUser());
@@ -54,26 +65,32 @@ public class View extends JFrame {
 		initMenuBar();
 		JTabbedPane tabbedPane = new JTabbedPane();
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		//get icons for tabs
 		try {
-			icon = new ImageIcon(getClass().getResource("images/icon.png"));
+			activity = new ImageIcon(getClass().getResource("images/activity.png"));
+			calendartab = new ImageIcon(getClass().getResource("images/calendartab.png"));
+			admin = new ImageIcon(getClass().getResource("images/admin.png"));
+			personal = new ImageIcon(getClass().getResource("images/personal.png"));
+			project = new ImageIcon(getClass().getResource("images/project.png"));
 		} catch (Exception e) {	}
 		CalendarTab panel1 = new CalendarTab(listOfActivities);
-		tabbedPane.addTab("Calendar", icon, panel1, "this weeks calendar" );
+		tabbedPane.addTab("Calendar", calendartab, panel1, "this weeks calendar" );
 
 		PersonalInfoTab panel2 = new PersonalInfoTab();
-		tabbedPane.addTab("Personal Information", icon, panel2, "Information about you" );
+		tabbedPane.addTab("Personal Information", personal, panel2, "Information about you" );
 
 		ActivityTab panel3 = new ActivityTab(listOfActivities);
-		tabbedPane.addTab("Activities", icon, panel3, "Activities you are part of" );
+		tabbedPane.addTab("Activities", activity, panel3, "Activities you are part of" );
 
 		if(checkIfProjectsExist()){
 			ProjectTab panel4 = new ProjectTab();
-			tabbedPane.addTab("Project", icon, panel4, "Project Managers can create new projects" );
+			tabbedPane.addTab("Project", project, panel4, "Project Managers can create new projects" );
 		}
 		
 		if(ProjectPlanner.getCurrentUser().isAdmin()){
 		AdminTab panel5 = new AdminTab();
-		tabbedPane.addTab("adminTab", icon, panel5, "Super secret tab for admins only" );
+		tabbedPane.addTab("adminTab", admin, panel5, "Super secret tab for admins only" );
 		}
 
 		this.add(tabbedPane, BorderLayout.CENTER);
@@ -117,7 +134,6 @@ public class View extends JFrame {
 	private void initMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu logOut = new JMenu("Log Out");
-
 		menuBar.add(logOut);
 		this.setJMenuBar(menuBar);
 

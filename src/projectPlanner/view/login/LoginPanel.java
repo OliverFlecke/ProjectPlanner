@@ -1,5 +1,6 @@
 package projectPlanner.view.login;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import projectPlanner.ProjectPlanner;
 import projectPlanner.users.UserLoginException;
@@ -23,7 +25,6 @@ public class LoginPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 2047661947729049615L;
-	private Cursor hourglassCursor;
 	private JTextField usernameTxtField;
 	private JPasswordField passwordTxtField;
 	private JButton loginBtn;
@@ -31,12 +32,10 @@ public class LoginPanel extends JPanel {
 	private JLabel passwordLbl;
 	private ProjectPlanner projectPlanner;
 	private LogInDialog logInDialog;
-	private Cursor normalCursor;
+	private JLabel updateLabel;
+
 
 	public LoginPanel(LogInDialog logInDialog) {
-		//add wait cursors
-		hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
-		normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
 
 		//reference to logInDialog
 		this.logInDialog = logInDialog;
@@ -85,10 +84,19 @@ public class LoginPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				if(verifyLogin()){
-					new View(logInDialog);
-					logInDialog.setVisible(false);
-				}
+//				updateLabel = logInDialog.getStatusUpdatePnl().getStatusLbl();
+				logInDialog.getStatusUpdatePnl().setStatusColor(Color.decode("#33CC33"));
+				logInDialog.getStatusUpdatePnl().updateMessage("Logging you in. Please wait...");
+				SwingUtilities.invokeLater(new Runnable() {
+				       public void run() {
+				    	   if(verifyLogin()){
+								new View(logInDialog);
+								logInDialog.setVisible(false);
+							}
+				    	   
+				        }
+				      });
+				
 			}
 		});
 
@@ -101,32 +109,31 @@ public class LoginPanel extends JPanel {
 	private boolean verifyLogin(){
 		try{
 			if(isEmpty()){
+				logInDialog.getStatusUpdatePnl().setStatusColor(Color.RED);
 				logInDialog.getStatusUpdatePnl().updateMessage("Please fill out both fields");
 				return false;
 			}
-			logInDialog.setCursor(hourglassCursor);
 			boolean returnValue = projectPlanner.login(usernameTxtField.getText(), passwordTxtField.getText());
-			logInDialog.setCursor(normalCursor);
 			return returnValue;
 		}
 		catch(NullPointerException nullEx){
-			logInDialog.setCursor(normalCursor);
+			logInDialog.getStatusUpdatePnl().setStatusColor(Color.RED);
 			logInDialog.getStatusUpdatePnl().updateMessage("Please fill out both fields");
 			nullEx.printStackTrace();
 			return false;
 		}
 		catch(UserLoginException userEx) {
-			logInDialog.setCursor(normalCursor);
+			logInDialog.getStatusUpdatePnl().setStatusColor(Color.RED);
 			logInDialog.getStatusUpdatePnl().updateMessage("Wrong username or password");
 			return false;
 		}
 		catch(SQLException sQLEx) {
-			logInDialog.setCursor(normalCursor);
+			logInDialog.getStatusUpdatePnl().setStatusColor(Color.RED);
 			logInDialog.getStatusUpdatePnl().updateMessage("No connection to server");
 			return false;
 		}
 		catch(Exception e) {
-			logInDialog.setCursor(normalCursor);
+			logInDialog.getStatusUpdatePnl().setStatusColor(Color.RED);
 			logInDialog.getStatusUpdatePnl().updateMessage("No connection to server");
 			return false;
 		}

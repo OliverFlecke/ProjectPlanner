@@ -35,4 +35,11 @@ public class UpdatePanel extends JPanel {
 		statusLbl.setText(string);
 	}
 
+	public JLabel getStatusLbl() {
+		return statusLbl;
+	}
+	public void setStatusColor(Color color){
+		statusLbl.setForeground(color);
+	}
+
 }
