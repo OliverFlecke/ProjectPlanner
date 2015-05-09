@@ -49,6 +49,11 @@ public class AddActivityPanel extends JPanel{
 		JButton createActivity = new JButton("Create Activity");
 		add(createActivity);
 
+		//Jlabel stating succes
+		JLabel succesLabel = new JLabel(" ");
+		add(succesLabel);
+
+
 		//Actionlistener for button that submits activity, updates activity list and resets fields
 		createActivity.addActionListener( new ActionListener()
 		{
@@ -56,8 +61,11 @@ public class AddActivityPanel extends JPanel{
 			public void actionPerformed(ActionEvent e){
 				try {
 					@SuppressWarnings("unused")
+
 					Activity addAct = new Activity(name.getTxt(),listPanel.getCurrentSelectedProject(),
 							startDate.getDate(),endDate.getDate(),Double.parseDouble(allottedTime.getTxt()));
+					succesLabel.setForeground(Color.decode("#33CC33"));
+					succesLabel.setText(name.getTxt() + " added successfully");
 					name.setTxt("");
 					allottedTime.setTxt("");
 					startDate.setDate(null);

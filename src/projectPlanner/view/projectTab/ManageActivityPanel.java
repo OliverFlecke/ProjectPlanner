@@ -54,6 +54,7 @@ public class ManageActivityPanel extends JPanel{
 	private DefaultListModel<String> currentEmployeeListModel;
 	private DefaultListModel<String> userListModel;
 	private JCheckBox activeCheck;
+	private JLabel succesLabel;
 
 	public ManageActivityPanel(ListPanel listPanel){
 		this.listPanel = listPanel;
@@ -178,6 +179,11 @@ public class ManageActivityPanel extends JPanel{
 		//submit changes button
 		JButton submitChanges = new JButton("Submit changes");
 		add(submitChanges);
+		
+
+		//Jlabel stating succes
+		succesLabel = new JLabel(" ");
+		add(succesLabel);
 
 		//Actionlistener for button that submits changes
 		submitChanges.addActionListener( new ActionListener()
@@ -266,6 +272,8 @@ public class ManageActivityPanel extends JPanel{
 		accumTime.setTxt(Double.toString(listPanel.getCurrentSelectedActivity().getTimeAccumulated()));
 		startDate.setDate(listPanel.getCurrentSelectedActivity().getStartDate());
 		endDate.setDate(listPanel.getCurrentSelectedActivity().getEndDate());
+		succesLabel.setForeground(Color.decode("#33CC33"));
+		succesLabel.setText("Changes apllied successfully");
 		refreshUserNames();
 		refreshActivityNames();
 
