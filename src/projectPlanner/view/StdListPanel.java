@@ -112,7 +112,7 @@ public class StdListPanel extends JPanel{
 	}
 
 	
-	private DefaultListModel<String> populateList() {
+	public DefaultListModel<String> populateList() {
 		for (String item: listForPop) {
 			listModel.addElement(item);
 		}
@@ -131,5 +131,9 @@ public class StdListPanel extends JPanel{
 		listModel.removeAllElements();
 		this.listForPop = newListToPop;
 		populateList();
+		resize();
+	}
+	public void resize() {
+		listToPop.setVisibleRowCount(listToPop.getModel().getSize());
 	}
 }

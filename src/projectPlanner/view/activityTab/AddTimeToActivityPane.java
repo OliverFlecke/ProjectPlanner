@@ -15,6 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -46,6 +47,7 @@ public class AddTimeToActivityPane extends JPanel {
 	private JButton updateTimeBtn;
 	private List<LoggedTime> visibleLoggedTimes;
 	private List<LoggedTime> loggedTimeObjects;
+	private boolean listFlag;
 	
 	
 
@@ -58,7 +60,6 @@ public class AddTimeToActivityPane extends JPanel {
 		visibleLoggedTimes = new ArrayList<LoggedTime>();
 		dateToLogTimePanel = new TextNDate();
 		dateToLogTimePanel.setDate(Calendar.getInstance());
-		loggedTimeObjects = ProjectPlanner.getCurrentUser().getLoggedTime();
 		
 		
 		loggedTimes = new StdListPanel(loggedTimeEntries(activity), "This Months time Logs:");
@@ -66,11 +67,13 @@ public class AddTimeToActivityPane extends JPanel {
 		loggedTimes.getListToPop().addListSelectionListener(new ListSelectionListener() {
 			
 			public void valueChanged(ListSelectionEvent lse) {
-				if (lse.getValueIsAdjusting()){
-					return;
-				}
-				if (!visibleLoggedTimes.isEmpty()) {
-					updateTimePanel.setCounterFld(visibleLoggedTimes.get(loggedTimes.getListToPop().getSelectedIndex()).getTime());
+				if (!getListFlag()) {
+					if (lse.getValueIsAdjusting()){
+						return;
+					}
+					if (!visibleLoggedTimes.isEmpty()) {
+						updateTimePanel.setCounterFld(visibleLoggedTimes.get(loggedTimes.getListToPop().getSelectedIndex()).getTime());
+					}
 				}
 			}
 		});
@@ -101,10 +104,6 @@ public class AddTimeToActivityPane extends JPanel {
 					
 				
 			}
-
-
-			
-			
 		});
 		
 		
@@ -115,13 +114,17 @@ public class AddTimeToActivityPane extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				updateTime(activity);
+				try {
+					User.updateLoggedTime(new LoggedTime(activity.getID(), ProjectPlanner.getCurrentUser().getID(), updateTimePanel.getCount(), visibleLoggedTimes.get(loggedTimes.getListToPop().getSelectedIndex()).getDate()));
+					updateTimeSpent(activity);
 					
-				
+					setListFlag(true);
+					loggedTimes.updateListModel(loggedTimeEntries(activity));
+					SwingUtilities.invokeLater(() -> setListFlag(false));
+				} catch (SQLException e1) {
+					new ErrorDialog("could not update time");
+				}	
 			}
-			
-			
 		});
 		
 		
@@ -170,6 +173,8 @@ public class AddTimeToActivityPane extends JPanel {
 	
 	public List<String> loggedTimeEntries(Activity activity) throws SQLException{
 		
+
+		loggedTimeObjects = ProjectPlanner.getCurrentUser().getLoggedTime();
 		ArrayList<String> listOfLoggedTimes = new ArrayList<String>();
 		SimpleDateFormat sdfr = new SimpleDateFormat("dd/MMM/yyyy");
 		visibleLoggedTimes.clear();
@@ -188,7 +193,8 @@ public class AddTimeToActivityPane extends JPanel {
 		return listOfLoggedTimes;
 		
 	}
-	private void updateTime(Activity activity) {
+	public void updateTime(Activity activity) {
+		
 		
 		try {
 			for (LoggedTime loggedTimeObject: loggedTimeObjects) {
@@ -197,19 +203,37 @@ public class AddTimeToActivityPane extends JPanel {
 						dateToLogTimePanel.getDate().get(Calendar.DAY_OF_WEEK) == loggedTimeObject.getDate().get(Calendar.DAY_OF_WEEK)){
 					hoursSpent.setRightText(String.valueOf(User.getTimeSpendOnActivity(ProjectPlanner.getCurrentUser(), activity)));
 					User.updateLoggedTime(new LoggedTime(activity.getID(), ProjectPlanner.getCurrentUser().getID(), addTimePanel.getCount(), dateToLogTimePanel.getDate()));
+					updateTimeSpent(activity);
+					
+					setListFlag(true);
 					loggedTimes.updateListModel(loggedTimeEntries(activity));
+					SwingUtilities.invokeLater(() -> setListFlag(false));
+					
 					return;
 					
 					
 				}
 			}
 			User.setTimeSpendOnActivity(new LoggedTime(activity.getID(), ProjectPlanner.getCurrentUser().getID(), addTimePanel.getCount(), dateToLogTimePanel.getDate()));
-			hoursSpent.setRightText(String.valueOf(User.getTimeSpendOnActivity(ProjectPlanner.getCurrentUser(), activity)));
+			updateTimeSpent(activity);
+			setListFlag(true);
 			loggedTimes.updateListModel(loggedTimeEntries(activity));
+			SwingUtilities.invokeLater(() -> setListFlag(false));
 		} catch (SQLException e1) {
 			new ErrorDialog("Could not save time worked");
 		}
 		
+	}
+	public void updateTimeSpent(Activity activity) throws SQLException {
+		hoursSpent.setRightText(String.valueOf(User.getTimeSpendOnActivity(ProjectPlanner.getCurrentUser(), activity)));
+	}
+	
+	public boolean getListFlag() {
+		return listFlag;
+	}
+	
+	public void setListFlag(boolean value) {
+		this.listFlag = value;
 	}
 
 }
