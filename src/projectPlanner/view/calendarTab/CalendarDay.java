@@ -1,10 +1,20 @@
 package projectPlanner.view.calendarTab;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+
+import projectPlanner.Activity;
 
 public class CalendarDay extends JPanel {
 	
@@ -29,11 +39,12 @@ public class CalendarDay extends JPanel {
 	private String[] dayNames = { "Sunday", "Monday", "Tuesday", "Wedensday", "Thursday", "Friday", "Saturday"};
 	private int count = 0;
 	private int limit = dayNames.length*5;
+	private List<Activity> listOfActivities;
 
 	
-	public CalendarDay() {
+	public CalendarDay(List<Activity> listOfActivities) {
 		this.setBackground(Color.WHITE);
-		
+		this.listOfActivities =listOfActivities;
 		
 		//Set a date for next month
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -60,7 +71,11 @@ public class CalendarDay extends JPanel {
 			int lastYear = iterator.get(Calendar.YEAR);
 			
 			JPanel dayPane = new JPanel();
-			dayPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			Border border = BorderFactory.createLineBorder(Color.BLACK);
+			Border margin = new EmptyBorder(10,10,10,10);
+			dayPane.setBorder(new CompoundBorder(border, margin));
+			dayPane.setLayout(new BoxLayout(dayPane,BoxLayout.PAGE_AXIS));
+			
 			JLabel dayLbl = new JLabel();
 			
 			if ((lastMonth == month) && (lastYear == year)) {
@@ -75,6 +90,16 @@ public class CalendarDay extends JPanel {
 				dayLbl.setText(" ");
 			}
 			dayPane.add(dayLbl);
+			for(Activity current : this.listOfActivities){
+				System.out.println("sup");
+				if(current.getEndDate().get(Calendar.YEAR) == iterator.get(Calendar.YEAR) &&
+						current.getEndDate().get(Calendar.DAY_OF_YEAR) == iterator.get(Calendar.DAY_OF_YEAR)){
+					System.out.println("sup2");
+					JLabel deadline = new JLabel("<html><body>Deadline:<br>" + current.getTitle() + "</body></html>");
+					deadline.setForeground(Color.RED);
+					dayPane.add(deadline);				
+					}
+			}
 			this.add(dayPane);
 			iterator.add(Calendar.DAY_OF_YEAR, +1);
 			count ++;
