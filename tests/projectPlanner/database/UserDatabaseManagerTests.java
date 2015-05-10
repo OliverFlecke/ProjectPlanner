@@ -200,6 +200,31 @@ public class UserDatabaseManagerTests {
 	@Test 
 	@Category(DatabaseTest.class)
 	public void updateLoggedTimeOnActivity_PassNewLoggedTime() throws SQLException {
-		dataManager.updateLoggedTimeOnActivity(new LoggedTime(1, 2, 10, Calendar.getInstance()));
+		Calendar date = Calendar.getInstance();
+		// This sets the exect date
+		date.setTimeInMillis(1429740000000L);
+//		date.set(2015, 4, 23);
+//		System.out.println(date.getTimeInMillis());
+		dataManager.updateLoggedTimeOnActivity(new LoggedTime(1, 2, 10.5, date));
+	}
+	
+	@Test
+	@Category(DatabaseTest.class)
+	public void deleteLoggedTime_CreateAtgainAfterWards() throws SQLException {
+		Calendar date = Calendar.getInstance();
+		// This sets the exect date
+		date.setTimeInMillis(1429740000000L);
+		LoggedTime time = new LoggedTime(1, 2, 10.5, date);
+		
+		double before = dataManager.getTimeSpendOnEachActivity(user).size();
+		dataManager.deleteLoggedTime(time);
+	
+		// Get the number of objects after the deletion
+		double afterDelete =  dataManager.getTimeSpendOnEachActivity(user).size();
+		Assert.assertTrue(before == afterDelete + 1);
+		
+		dataManager.logTimeOnActivity(time);
+		double afterAdding = dataManager.getTimeSpendOnEachActivity(user).size();
+		Assert.assertTrue(afterDelete + 1 == afterAdding);
 	}
 }

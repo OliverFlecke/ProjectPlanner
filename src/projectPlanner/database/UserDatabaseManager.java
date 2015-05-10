@@ -275,17 +275,28 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 	@Override 
 	public void updateLoggedTimeOnActivity(LoggedTime newTime) throws SQLException {
 		String SQL = "UPDATE SpendHoursOn "
-				+ "SET ActivityID = " + newTime.getActivityID()
-				+ ", EmployeeID = " + newTime.getUserID() 
-				+ ", TimeSpend = " + newTime.getTime() 
-				+ ", Date = ? "
-				+ "WHERE ActivityID = " + newTime.getActivityID() 
-				+ " AND EmployeeID = " + newTime.getUserID();
-		
+				+ "SET TimeSpend = " + newTime.getTime() 
+				+ " WHERE ActivityID = " + newTime.getActivityID() 
+				+ " AND EmployeeID = " + newTime.getUserID()
+				+ " AND Date = ?";
 		connection = DriverManager.getConnection(connectionString);
 		preStatement = connection.prepareStatement(SQL);
 		
-		preStatement.setTimestamp(1, new Timestamp(newTime.getDate().getTimeInMillis()));
+		preStatement.setDate(1, new java.sql.Date(newTime.getDate().getTimeInMillis()));
+		preStatement.executeUpdate();
+		closeConnections();
+	}
+	
+	@Override
+	public void deleteLoggedTime(LoggedTime time) throws SQLException {
+		String SQL = "DELETE SpendHoursOn "
+				+ "WHERE ActivityID = " + time.getActivityID()
+				+ " AND EmployeeID = " + time.getUserID() 
+				+ " AND Date = ?";
+		connection = DriverManager.getConnection(connectionString);
+		preStatement = connection.prepareStatement(SQL);
+		
+		preStatement.setDate(1, new java.sql.Date(time.getDate().getTimeInMillis()));
 		preStatement.executeUpdate();
 		closeConnections();
 	}

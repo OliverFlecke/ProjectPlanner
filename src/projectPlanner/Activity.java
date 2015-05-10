@@ -103,6 +103,14 @@ public class Activity implements Comparable<Activity> {
 	}
 	
 	/**
+	 * Update the datamanager with the passed object
+	 * @param db to be the new datamanager. 
+	 */
+	static void setDataManager(IActivityDatabaseManager db) {
+		dataManager = db;
+	}
+	
+	/**
 	 * Update the activity
 	 * @throws SQLException
 	 */

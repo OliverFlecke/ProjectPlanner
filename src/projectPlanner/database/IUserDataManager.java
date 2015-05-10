@@ -117,6 +117,13 @@ public interface IUserDataManager {
 	public void updateLoggedTimeOnActivity(LoggedTime newTime) throws SQLException;
 	
 	/**
+	 * Delete logged time 
+	 * @param time to delete
+	 * @throws SQLException
+	 */
+	public void deleteLoggedTime(LoggedTime time) throws SQLException;
+	
+	/**
 	 * Get all the employees linked to the passed activity
 	 * @param activity to find employees on
 	 * @return A list of employees working on the given activity

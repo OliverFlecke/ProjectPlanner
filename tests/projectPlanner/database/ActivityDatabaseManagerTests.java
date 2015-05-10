@@ -18,7 +18,6 @@ import projectPlanner.users.*;
 public class ActivityDatabaseManagerTests {
 	private ActivityDatabaseManager db;
 	private Activity expActivity;
-	@SuppressWarnings("unused")
 	private User user;
 	@SuppressWarnings("unused")
 	private Project project;
@@ -66,7 +65,12 @@ public class ActivityDatabaseManagerTests {
 		// This test can not be run each time. This will try to save the activity to the database
 		// We primary look for exceptions
 //		Activity activity = new Activity("Test activity 2", project);
-		Assert.assertTrue(true);
+	}
+	
+	@Test
+	@Category(DatabaseTest.class) 
+	public void deleteActivity_AddAfterward() throws SQLException {
+//		db.deleteActivity(expActivity);
 	}
 	
 	@Test
@@ -82,11 +86,15 @@ public class ActivityDatabaseManagerTests {
 	public void addEmployeeToActivity() throws SQLException {
 		// This test can not run each time, because we need to insert new data into the table
 //		// Get the size of the user list before we add an user
-//		int sizeBefore = db.getUsers(expActivity).size();
-//		db.addEmployee(user, expActivity);
-//		int sizeAfter = db.getUsers(expActivity).size();
-//		
-//		Assert.assertEquals(sizeBefore + 1, sizeAfter);
+		int sizeBefore = db.getUsers(expActivity).size();
+		db.addEmployee(user, expActivity);
+		
+		int sizeAfter = db.getUsers(expActivity).size();
+		Assert.assertEquals(sizeBefore + 1, sizeAfter);
+		
+		db.removeEmployee(user, expActivity);
+		int sizeLast = db.getUsers(expActivity).size();
+		Assert.assertEquals(sizeAfter - 1, sizeLast);
 	}
 	
 	@Test
@@ -108,7 +116,8 @@ public class ActivityDatabaseManagerTests {
 	@Test
 	@Category(DatabaseTest.class) 
 	public void getActivityByEmployee() throws SQLException {
-		
+		List<Activity> list = db.getActivitiesByEmployee((Employee) user);
+		Assert.assertTrue(list.size() > 0);
 	}
 	
 	@Test 
@@ -126,10 +135,10 @@ public class ActivityDatabaseManagerTests {
 		Assert.assertTrue(true);
 	}
 	
-	@Test 
-	@Category(DatabaseTest.class)
-	public void removeEmployee() throws SQLException {
-		db.removeEmployee(user, expActivity);
-		db.addEmployee(user, expActivity);
-	}
+//	@Test 
+//	@Category(DatabaseTest.class)
+//	public void removeEmployee() throws SQLException {
+//		db.removeEmployee(user, expActivity);
+//		db.addEmployee(user, expActivity);
+//	}
 }

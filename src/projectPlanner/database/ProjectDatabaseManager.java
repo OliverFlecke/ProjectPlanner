@@ -39,26 +39,6 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 		return new Project(id, title, time, projectLeader, startDate, endDate);
 	}
 	
-//	/**
-//	 * Create a project from the data in the result set, without getting the user
-//	 * @param resultSet to get the data from
-//	 * @param projectLeaderID the ID of the project leader
-//	 * @return The project which is currently in the result set
-//	 * @throws SQLException
-//	 */
-//	public static Project getCurrentProject(ResultSet resultSet, int projectLeaderID) throws SQLException {
-//		int id = resultSet.getInt("ProjectID");
-//		String title = resultSet.getString("Title");
-//		double time = resultSet.getFloat("AlottedTime");
-//		
-//		Calendar startDate = Calendar.getInstance();
-//		Calendar endDate = Calendar.getInstance();
-//		startDate.setTime(resultSet.getDate("StartDate"));
-//		endDate.setTime(resultSet.getDate("EndDate"));
-//		
-//		return new Project(id, title, time, projectLeaderID, startDate, endDate);
-//	}
-	
 	@Override
 	public Project getProject(int id) throws SQLException {
 		String SQL = "SELECT Projects.*, Employees.* FROM Projects " +
@@ -104,6 +84,8 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 
 	@Override
 	public void saveProject(Project project) throws SQLException {
+		if (project.getID() != 0) return; // The project is already in the database
+		
 		String SQL = "INSERT INTO Projects (ProjectTitle, StartDate, EndDate, IsActive, AlottedTime, ProjectLeader)"
 				+ " Values(?, ?, ?, ?, ?, ?)";		
 		// Create the connection and prepare the statement
@@ -113,11 +95,11 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 		// Insert the different data into the statement
 		preStatement.setString(1, project.getTitle());
 		if (project.getStartDate() != null) 
-			preStatement.setTimestamp(2, new Timestamp(project.getStartDate().getTimeInMillis()));
+			preStatement.setDate(2, new java.sql.Date(project.getStartDate().getTimeInMillis()));
 		else 
 			preStatement.setNull(2, 0);
 		if (project.getEndDate() != null) 
-			preStatement.setTimestamp(3, new Timestamp(project.getEndDate().getTimeInMillis()));
+			preStatement.setDate(3, new java.sql.Date(project.getEndDate().getTimeInMillis()));
 		else 
 			preStatement.setNull(3, 0);
 		
@@ -146,11 +128,11 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 		
 		// CHeck for null values and set dates
 		if (project.getStartDate() != null) 
-			preStatement.setTimestamp(2, new Timestamp(project.getStartDate().getTimeInMillis()));
+			preStatement.setDate(2, new java.sql.Date(project.getStartDate().getTimeInMillis()));
 		else 
 			preStatement.setNull(2, 0);
 		if (project.getEndDate() != null) 
-			preStatement.setTimestamp(3, new Timestamp(project.getEndDate().getTimeInMillis()));
+			preStatement.setDate(3, new java.sql.Date(project.getEndDate().getTimeInMillis()));
 		else 
 			preStatement.setNull(3, 0);		preStatement.setBoolean(4, project.isActive());
 		

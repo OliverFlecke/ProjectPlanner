@@ -24,7 +24,8 @@ public class AdminTest {
 	
 	@Test
 	public void CreateAdmin() throws SQLException {
-		Assert.assertEquals(User.getNumberOfUsers(), admin.getID());
+		User admin = new Admin();
+		Assert.assertTrue(admin.isAdmin());
 	}
 	
 	@Test 

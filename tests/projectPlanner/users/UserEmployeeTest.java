@@ -140,4 +140,10 @@ public class UserEmployeeTest {
 			Assert.assertEquals("Wrong password", ex.getMessage());
 		}
 	}
+	
+	@Test
+	@Category(UserTest.class) 
+	public void toStringTest() {
+		Assert.assertEquals("Ole Jensen Username: Ole42 Password: Qwer!234 ID: 0", employee.toString());
+	}
 }

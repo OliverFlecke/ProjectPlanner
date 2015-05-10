@@ -19,6 +19,7 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 	 * @throws SQLException if something fails in the extraction from the result set
 	 */
 	public static Activity getCurrentActivity(ResultSet result, boolean getProject) throws SQLException {
+		// Get all the basic info from the result set
 		String title = result.getString("Title");
 		int ID = result.getInt("ActivityID");
 		double hours = result.getDouble("AccumulatedHours");
@@ -43,20 +44,15 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		if (getProject) {
 			Project project = ProjectDatabaseManager.getCurrentProject(result);
 			return new Activity(ID, title, project, hours, status, startDate, endDate, allottedHours);
-		} else 
+		} else {
 			return new Activity(ID, title, projectID, hours, status, startDate, endDate, allottedHours);
+		}
 	}
 	
 	@Override
 	public void saveActivity(Activity activity) throws SQLException {
-//		String SQL = "INSERT INTO Activities (Title, AccumulatedHours, ProjectID, "
-//				+ "StartDateForActivity, EndDateForActivity, AllottedHours) " +
-//				"VALUES('" + activity.getTitle() + "', " +
-//				activity.getTimeAccumulated() + ", " +
-//				activity.getProjectID() + ","
-//				+ activity.getStartDate() + ", "
-//				+ activity.getEndDate() + ", "
-//				+ activity.getHoursAllotted() + ");";
+		if (activity.getID() != 0) return; // The activity is already saved in the database
+		
 		String SQL = "INSERT INTO Activities (Title, AccumulatedHours, ProjectID, "
 				+ "StartDateForActivity, EndDateForActivity, AllottedHours) "
 				+ "VALUES(?, ?, ?, ?, ?, ?);";
@@ -70,13 +66,13 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		
 		// Insert dates
 		if (activity.getStartDate() != null)
-			preStatement.setTimestamp(4, new Timestamp(activity.getStartDate().getTimeInMillis()));
+			preStatement.setDate(4, new java.sql.Date(activity.getStartDate().getTimeInMillis()));
 		else 
-			preStatement.setTimestamp(4, new Timestamp(0));
+			preStatement.setDate(4, new java.sql.Date(0));
 		if (activity.getEndDate() != null) 
-			preStatement.setTimestamp(5, new Timestamp(activity.getEndDate().getTimeInMillis()));
+			preStatement.setDate(5, new java.sql.Date(activity.getEndDate().getTimeInMillis()));
 		else 
-			preStatement.setTimestamp(5, new Timestamp(0));
+			preStatement.setDate(5, new java.sql.Date(0));
 		
 		preStatement.executeUpdate();
 		
@@ -97,6 +93,7 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		if (resultSet.next()) 
 			activity = getCurrentActivity(resultSet, true);
 		
+		closeConnections();
 		return activity;
 	}
 	
@@ -112,6 +109,7 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		if (resultSet.next()) 
 			activity = getCurrentActivity(resultSet, true);
 		
+		closeConnections();
 		return activity;
 	}
 	
@@ -129,6 +127,7 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		while (resultSet.next()) {
 			list.add(UserDatabaseManager.getUserFromResultSet(resultSet));
 		}
+		closeConnections();
 		return list;
 	}
 	
@@ -150,14 +149,6 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 	
 	@Override 
 	public void updateActivity(Activity activity) throws SQLException {
-//		String SQL = "UPDATE Activities " +
-//				"SET Title = '" + 				activity.getTitle() + "'," +
-//				"AccumulatedHours = " + 		activity.getTimeAccumulated() 	+ ", " +
-//				"ProjectID = " + 				activity.getProjectID() 		+ ", " 
-//				+ "StartDateForActivity = " +	activity.getStartDate() 		+ ", "
-//				+ "EndDateForActivity = " + 	activity.getEndDate() 			+ ", "
-//				+ "AllottedHours = " + 			activity.getHoursAllotted() + " "
-//				+ "WHERE ActivityID = " + 		activity.getID();
 		String SQL = "UPDATE Activities "
 				+ "SET Title = ?, AccumulatedHours = ?, ProjectID = ?, StartDateForActivity = ?, "
 				+ "EndDateForActivity = ?, AllottedHours = ? "
@@ -175,17 +166,18 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		
 		// Insert the dates. Check for null pointers
 		if (activity.getStartDate() != null)
-			preStatement.setTimestamp(4, new Timestamp(activity.getStartDate().getTimeInMillis()));
+			preStatement.setDate(4, new java.sql.Date(activity.getStartDate().getTimeInMillis()));
 		else 
-			preStatement.setTimestamp(4, new Timestamp(0));
+			preStatement.setDate(4, new java.sql.Date(0));
 			
 		if (activity.getEndDate() != null)	
-			preStatement.setTimestamp(5, new Timestamp(activity.getEndDate().getTimeInMillis()));
+			preStatement.setDate(5, new java.sql.Date(activity.getEndDate().getTimeInMillis()));
 		else 
-			preStatement.setTimestamp(5, new Timestamp(0));
+			preStatement.setDate(5, new java.sql.Date(0));
 		
-		// Execute
+		// Execute the statement
 		preStatement.executeUpdate();
+		closeConnections();
 	}
 	
 	@Override
@@ -193,12 +185,13 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		List<Activity> activities = new ArrayList<Activity>();
 		String SQL = "SELECT * FROM WorksOn "
 				+ "INNER JOIN Employees ON Employees.EmployeeID = WorksOn.EmployeeID "
-				+ "INNER JOIN Activities ON Activity.ActivityID = WorksOn.ActivityID "
+				+ "INNER JOIN Activities ON Activities.ActivityID = WorksOn.ActivityID "
 				+ "WHERE WorksOn.EmployeeID = " + employee.getID();
 		resultSet = executeQuery(SQL);
 		while (resultSet.next()) {
 			activities.add(getCurrentActivity(resultSet, false));
 		}
+		closeConnections();
 		return activities;
 	}
 	
@@ -214,6 +207,7 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		while (resultSet.next()) {
 			activities.add(ActivityDatabaseManager.getCurrentActivity(resultSet, true));
 		}
+		closeConnections();
 		return activities;
 	}
 
