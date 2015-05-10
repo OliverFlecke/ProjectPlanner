@@ -32,6 +32,18 @@ public abstract class DatabaseManager {
 	protected static ResultSet resultSet = null;
 	
 	/**
+	 * Set the preStatement. For testing purpese
+	 * @param preStatement
+	 */
+	static void setPrestatement(PreparedStatement preStatement) {
+		DatabaseManager.preStatement = preStatement;
+	}
+	
+	static void setStatement(PreparedStatement statement) {
+		DatabaseManager.statement = statement;
+	}
+	
+	/**
 	 * Close all the connections to the server, if they are still active 
 	 */
 	protected static void closeConnections() {
@@ -40,6 +52,7 @@ public abstract class DatabaseManager {
 			if (connection != null) connection.close();
 			if (statement != null) statement.close();
 			if (resultSet != null) resultSet.close();
+			if (preStatement != null) preStatement.close();
 			System.out.println("close connection");
 		} catch (SQLException ex) {
 			ex.printStackTrace();

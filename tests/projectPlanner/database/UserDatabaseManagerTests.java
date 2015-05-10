@@ -1,6 +1,7 @@
 package projectPlanner.database;
 
 import java.sql.*;
+import java.util.Calendar;
 import java.util.List;
 
 import projectPlanner.*;
@@ -24,12 +25,33 @@ public class UserDatabaseManagerTests {
 	// Field for the database manager to test
 	private UserDatabaseManager dataManager;
 	private User user;
+	private String password;
+	private Activity activity;
 	
 	@Before 
 	public void setup() {
 		dataManager = new UserDatabaseManager();
 		// Create a copy of the user in the database
 		user = new Employee("Oliver", "1234", "Oliver", "Fleckenstein", 2);
+		password = "1234";
+	}
+	
+	@Test 
+	@Category(DatabaseTest.class) 
+	public void saveEmployeeByUserObject() throws SQLException {
+		dataManager.saveEmployee(user, password);
+	}
+	
+	@Test
+	@Category(DatabaseTest.class)
+	public void saveEmployeeWithAllData() throws SQLException {
+		try {
+			dataManager.saveEmployee(user.getID(), user.getFirstname(), user.getLastname(), 
+				user.getUsername(), password);
+		} catch (SQLException ex) {
+			Assert.assertEquals("Cannot insert explicit value for identity column in table 'Employees' when IDENTITY_INSERT is set to OFF.", 
+					ex.getMessage());
+		}
 	}
 	
 	@Test
@@ -131,5 +153,53 @@ public class UserDatabaseManagerTests {
 		LoggedTime first = list.get(0);
 		Assert.assertNotNull(first.getActivity());
 		Assert.assertNotNull(first.getUser());
+	}
+	
+	@Test 
+	@Category(DatabaseTest.class) 
+	public void getEmployeeByUsername() throws SQLException {
+		User output = dataManager.getEmployee("Oliver");
+		Assert.assertEquals(user, output);
+	}
+	
+	@Test
+	@Category(DatabaseTest.class)
+	public void getEmployeeByFullName() throws SQLException {
+		User output = dataManager.getEmployee("Oliver", "Fleckenstein");
+		Assert.assertEquals(user, output);
+	}
+	
+	@Test
+	@Category(DatabaseTest.class)
+	public void getTimeSpendOnActivity() throws SQLException {
+		activity = Activity.getActivity(1);
+		double time = dataManager.getTimeSpendOnActivity(user, activity);
+		
+		Assert.assertEquals(10.5, time, 0);
+	}
+	
+	@Test
+	@Category(DatabaseTest.class) 
+	public void getTimeSpendOnAllActivitiesByUser() throws SQLException {
+		double time = dataManager.getTimeSpendOnAllActivities(user);
+		
+		Assert.assertTrue(time >= 121.75);
+	}
+	
+	@Test
+	@Category(DatabaseTest.class) 
+	public void logTimeOnActivity_PassedLoggedTimeObject() throws SQLException {
+		try {
+			dataManager.logTimeOnActivity(new LoggedTime(1, 2, 10, Calendar.getInstance()));
+		} catch (SQLException ex) {
+			Assert.assertEquals("Violation of PRIMARY KEY constraint 'PK__SpendHou__7AD04FF1F1BC864F'. Cannot insert duplicate key in object 'dbo.SpendHoursOn'. The duplicate key value is (2, 1, 2015-05-10).", 
+					ex.getMessage());
+		}
+	}
+	
+	@Test 
+	@Category(DatabaseTest.class)
+	public void updateLoggedTimeOnActivity_PassNewLoggedTime() throws SQLException {
+		dataManager.updateLoggedTimeOnActivity(new LoggedTime(1, 2, 10, Calendar.getInstance()));
 	}
 }

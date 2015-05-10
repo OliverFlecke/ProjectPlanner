@@ -1,11 +1,13 @@
 package projectPlanner.database;
 
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
 import org.junit.*;
 import org.junit.experimental.categories.*;
+import org.mockito.Mock;
 
+import static org.mockito.Mockito.*;
 import projectPlanner.testCategories.*;
 import projectPlanner.users.*;
 import projectPlanner.*;
@@ -13,6 +15,7 @@ import projectPlanner.*;
 public class ProjectDatabaseManagerTests {
 	private ProjectDatabaseManager db;
 	private User expUser;
+	private User admin;
 	private Project expProject;
 	
 	@Before
@@ -41,6 +44,14 @@ public class ProjectDatabaseManagerTests {
 		Assert.assertEquals(expProject, project);
 	}
 	
+	@Test 
+	@Category(DatabaseTest.class) 
+	public void getProjectByID_NobodyFound() throws SQLException {
+		// Try to get a project, which is not in the database
+		Project project = db.getProject(-1);
+		Assert.assertNull(project);
+	}
+	
 	@Test
 	@Category(DatabaseTest.class) 
 	public void getProjectByTitleTest() throws SQLException {
@@ -55,10 +66,34 @@ public class ProjectDatabaseManagerTests {
 	
 	@Test
 	@Category(DatabaseTest.class) 
-	public void saveProjectTest() throws SQLException {
-		// This test can not be done each time, because we need a unique title for the project. 
-		// This SHOULD be run each time the saveProject method is changed
-		//db.saveProject(expProject);
+	public void getProjectByTitle_ProjectNotInDatabase() throws SQLException {
+		Project project = db.getProject("Project not in database!");
+		Assert.assertNull(project);
+	}
+	
+	@Test
+	@Category(DatabaseTest.class) 
+	public void saveProjectTest() throws SQLException, ActionNotAllowedException {
+		// We will try to save the same project each time. This should throw a exception
+		// Because we already have the project in our database
+		try {
+			db.saveProject(expProject);
+		} catch (SQLException ex) {
+			Assert.assertEquals("Violation of UNIQUE KEY constraint 'UQ__Project__2CB664DCFBB2D4F4'. Cannot insert duplicate key in object 'dbo.Projects'. The duplicate key value is (Database setup).",
+					ex.getMessage());
+		}
+		
+		// Try to add a project without any project leader or any dates
+		try {
+			admin = User.getUser(1);
+			expProject.setProjectLeader(admin, null);
+			expProject.setEndDate(null);
+			expProject.setStartDate(null);
+			db.saveProject(expProject);
+		} catch (SQLException ex) {
+			Assert.assertEquals("Violation of UNIQUE KEY constraint 'UQ__Project__2CB664DCFBB2D4F4'. Cannot insert duplicate key in object 'dbo.Projects'. The duplicate key value is (Database setup).",
+					ex.getMessage());			
+		}
 	}
 	
 	@Test
@@ -83,7 +118,7 @@ public class ProjectDatabaseManagerTests {
 		List<Project> projects = db.getProjectsByProjectLeader(expUser);
 		
 		// Will just check, that more than one project is returned
-		Assert.assertTrue(projects.size() == 2);
+		Assert.assertTrue(projects.size() >= 2);
 	}
 	
 	@Test

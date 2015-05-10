@@ -110,6 +110,13 @@ public interface IUserDataManager {
 	public void logTimeOnActivity(LoggedTime time) throws SQLException;
 	
 	/**
+	 * Update a logged activity in the database
+	 * @param newTime to save to the database
+	 * @throws SQLException
+	 */
+	public void updateLoggedTimeOnActivity(LoggedTime newTime) throws SQLException;
+	
+	/**
 	 * Get all the employees linked to the passed activity
 	 * @param activity to find employees on
 	 * @return A list of employees working on the given activity

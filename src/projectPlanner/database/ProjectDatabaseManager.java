@@ -97,6 +97,7 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 		while (resultSet.next()) {
 			list.add(ProjectDatabaseManager.getCurrentProject(resultSet));
 		}		
+		closeConnections();
 		return list;
 	}
 
@@ -141,11 +142,24 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 		connection = DriverManager.getConnection(connectionString);
 		preStatement = connection.prepareStatement(SQL);
 		preStatement.setString(1, project.getTitle());
-		preStatement.setTimestamp(2, new Timestamp(project.getStartDate().getTimeInMillis()));
-		preStatement.setTimestamp(3, new Timestamp(project.getEndDate().getTimeInMillis()));
-		preStatement.setBoolean(4, project.isActive());
 		preStatement.setDouble(5, project.getAllottedTime());
-		preStatement.setInt(6, project.getProjectLeader().getID());
+		
+		// CHeck for null values and set dates
+		if (project.getStartDate() != null) 
+			preStatement.setTimestamp(2, new Timestamp(project.getStartDate().getTimeInMillis()));
+		else 
+			preStatement.setNull(2, 0);
+		if (project.getEndDate() != null) 
+			preStatement.setTimestamp(3, new Timestamp(project.getEndDate().getTimeInMillis()));
+		else 
+			preStatement.setNull(3, 0);		preStatement.setBoolean(4, project.isActive());
+		
+		// Check for user object
+		if (project.getProjectLeader() != null)
+			preStatement.setInt(6, project.getProjectLeader().getID());
+		else 
+			preStatement.setNull(6, 0);
+		
 		preStatement.executeUpdate();
 	}
 
@@ -161,6 +175,7 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 		while (resultSet.next()) {
 			projects.add(getCurrentProject(resultSet));
 		}
+		closeConnections();
 		return projects;
 	}
 
@@ -176,6 +191,7 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 		while (resultSet.next()) {
 			projects.add(getCurrentProject(resultSet));
 		}
+		closeConnections();
 		return projects;
 	}
 
@@ -206,6 +222,7 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 		while (resultSet.next()) {
 			activities.add(ActivityDatabaseManager.getCurrentActivity(resultSet, true));
 		}
+		closeConnections();
 		return activities;
 	}
 }

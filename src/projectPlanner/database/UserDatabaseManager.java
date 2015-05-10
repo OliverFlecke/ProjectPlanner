@@ -103,11 +103,9 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		String sql = "SELECT COUNT (EmployeeID) FROM Employees";
 		resultSet = executeQuery(sql);
 		
-		// Use of a while loop to insure we have some result. Does not loop through anything
-		while (resultSet.next()) {
+		// We should only have one element returned
+		resultSet.next();
 			return resultSet.getInt(1);
-		}
-		return -1;		// Returned if nothing was found
 	}
 
 	@Override
@@ -124,6 +122,7 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		// Get the first result and return it
 		if (resultSet.next()) 
 			user = getUserFromResultSet(resultSet);
+		closeConnections();
 		return user;
 	}
 
@@ -135,6 +134,7 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		resultSet = UserDatabaseManager.executeQuery(SQL);
 		if (resultSet.next()) 
 			user = getUserFromResultSet(resultSet);
+		closeConnections();
 		return user;
 	}
 	
@@ -166,6 +166,7 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		while (resultSet.next()) {
 			list.add(getUserFromResultSet(resultSet));
 		}	
+		closeConnections();
 		return list;
 	}
 
@@ -233,7 +234,7 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		for (LoggedTime current : list) {
 			result += current.getTime();
 		}
-		
+		closeConnections();
 		return result;
 	}
 	
@@ -250,7 +251,7 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		while (resultSet.next()) {
 			list.add(getCurrentLoggedTime(resultSet));
 		}
-		
+		closeConnections();
 		return list;
 	}
 	
@@ -268,6 +269,25 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		preStatement.setTimestamp(4, new Timestamp(time.getDate().getTimeInMillis()));
 		
 		preStatement.executeUpdate();
+		closeConnections();
+	}
+	
+	@Override 
+	public void updateLoggedTimeOnActivity(LoggedTime newTime) throws SQLException {
+		String SQL = "UPDATE SpendHoursOn "
+				+ "SET ActivityID = " + newTime.getActivityID()
+				+ ", EmployeeID = " + newTime.getUserID() 
+				+ ", TimeSpend = " + newTime.getTime() 
+				+ ", Date = ? "
+				+ "WHERE ActivityID = " + newTime.getActivityID() 
+				+ " AND EmployeeID = " + newTime.getUserID();
+		
+		connection = DriverManager.getConnection(connectionString);
+		preStatement = connection.prepareStatement(SQL);
+		
+		preStatement.setTimestamp(1, new Timestamp(newTime.getDate().getTimeInMillis()));
+		preStatement.executeUpdate();
+		closeConnections();
 	}
 	
 	@Override
@@ -281,6 +301,7 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 		while (resultSet.next()) {
 			list.add(getUserFromResultSet(resultSet));
 		}
+		closeConnections();
 		return list;
 	}
 }

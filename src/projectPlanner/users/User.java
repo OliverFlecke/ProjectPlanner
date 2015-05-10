@@ -245,6 +245,17 @@ public abstract class User implements Comparable<User> {
 	}
 	
 	/**
+	 * Get an employee by his firstname and lastname
+	 * @param firstname
+	 * @param lastname
+	 * @return A user with the passed firstname and lastname
+	 * @throws SQLException
+	 */
+	public static User getUser(String firstname, String lastname) throws SQLException {
+		return dataManager.getEmployee(firstname, lastname);
+	}
+	
+	/**
 	 * Get all the employees in the database
 	 * @return All the employees in the database
 	 * @throws SQLException
@@ -289,6 +300,15 @@ public abstract class User implements Comparable<User> {
 	 */
 	public static void setTimeSpendOnActivity(LoggedTime time) throws SQLException {
 		dataManager.logTimeOnActivity(time);
+	}
+	
+	/**
+	 * Update a logged time object
+	 * @param newTime to update to
+	 * @throws SQLException
+	 */
+	public static void updateLoggedTime(LoggedTime newTime) throws SQLException {
+		dataManager.updateLoggedTimeOnActivity(newTime);
 	}
 	
 	/**
