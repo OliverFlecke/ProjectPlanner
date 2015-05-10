@@ -117,16 +117,16 @@ public class View extends JFrame {
 		// maybe if you add time to an activity and it's the first one selected
 		//@TODO speak with team about it
 //		//Listener for updating tabs when accessed, remember to implement TabUpdate interface for tabs
-//		tabbedPane.addChangeListener(new ChangeListener() {
-//			public void stateChanged(ChangeEvent e) {
-//				if(tabbedPane.getSelectedComponent() instanceof ProjectTab){
-//					((ProjectTab) tabbedPane.getSelectedComponent()).updateTab();
-//				}
-//				else if(tabbedPane.getSelectedComponent() instanceof ActivityTab){
-//					((ActivityTab) tabbedPane.getSelectedComponent()).updateTab();
-//				}
-//			}
-//		});
+		tabbedPane.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(tabbedPane.getSelectedComponent() instanceof ProjectTab){
+					((ProjectTab) tabbedPane.getSelectedComponent()).updateTab();
+				}
+				else if(tabbedPane.getSelectedComponent() instanceof ActivityTab){
+					((ActivityTab) tabbedPane.getSelectedComponent()).updateTab();
+				}
+			}
+		});
 
 
 		this.setVisible(true);
