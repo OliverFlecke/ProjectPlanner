@@ -27,6 +27,7 @@ public class UserDatabaseManagerTests {
 	private User user;
 	private String password;
 	private Activity activity;
+	private Calendar date;
 	
 	@Before 
 	public void setup() {
@@ -34,6 +35,10 @@ public class UserDatabaseManagerTests {
 		// Create a copy of the user in the database
 		user = new Employee("Oliver", "1234", "Oliver", "Fleckenstein", 2);
 		password = "1234";
+		date = Calendar.getInstance();
+		// This sets the exect date
+//		date.setTimeInMillis(1429740000000L);
+		date.set(2015, 5, 10);
 	}
 	
 	@Test 
@@ -190,9 +195,9 @@ public class UserDatabaseManagerTests {
 	@Category(DatabaseTest.class) 
 	public void logTimeOnActivity_PassedLoggedTimeObject() throws SQLException {
 		try {
-			dataManager.logTimeOnActivity(new LoggedTime(1, 2, 10, Calendar.getInstance()));
+			dataManager.logTimeOnActivity(new LoggedTime(1, 2, 10, date));
 		} catch (SQLException ex) {
-			Assert.assertEquals("Violation of PRIMARY KEY constraint 'PK__SpendHou__7AD04FF1F1BC864F'. Cannot insert duplicate key in object 'dbo.SpendHoursOn'. The duplicate key value is (2, 1, 2015-05-10).", 
+			Assert.assertEquals("Violation of PRIMARY KEY constraint 'PK__SpendHou__7AD04FF1F1BC864F'. Cannot insert duplicate key in object 'dbo.SpendHoursOn'. The duplicate key value is (2, 1, 2015-06-10).", 
 					ex.getMessage());
 		}
 	}
@@ -211,13 +216,10 @@ public class UserDatabaseManagerTests {
 	@Test
 	@Category(DatabaseTest.class)
 	public void deleteLoggedTime_CreateAtgainAfterWards() throws SQLException {
-		Calendar date = Calendar.getInstance();
-		// This sets the exect date
-//		date.setTimeInMillis(1429740000000L);
 		date.set(2015, 5, 10);
 		LoggedTime time = new LoggedTime(1, 2, 10.5, date);
 		double before = dataManager.getTimeSpendOnEachActivity(user).size();
-
+		
 		// Part 1 add the logged time obejct 
 		dataManager.logTimeOnActivity(time);
 		double afterAdding = dataManager.getTimeSpendOnEachActivity(user).size();

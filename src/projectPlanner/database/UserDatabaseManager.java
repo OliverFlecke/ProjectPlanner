@@ -207,10 +207,11 @@ public class UserDatabaseManager extends DatabaseManager implements IUserDataMan
 				+ "WHERE ActivityID = " + activity.getID() + " AND "
 						+ "EmployeeID = " + user.getID();
 		resultSet = executeQuery(SQL);
-		if (resultSet.next()) 
-			return resultSet.getDouble("TimeSpend");
-		else 
-			return 0;
+		
+		double result = 0;
+		while (resultSet.next()) 
+			result += resultSet.getDouble("TimeSpend");
+		return result;
 	}
 	
 	@Override

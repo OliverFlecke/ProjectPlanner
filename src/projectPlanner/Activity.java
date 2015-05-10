@@ -42,7 +42,7 @@ public class Activity implements Comparable<Activity> {
 	 * @throws SQLException
 	 */
 	public Activity(String title, Project project, Calendar startDate, Calendar endDate) throws SQLException {
-		createActivity(title, project, startDate, endDate, 0);
+		this(title, project, startDate, endDate, 0);
 	}
 	
 	/**

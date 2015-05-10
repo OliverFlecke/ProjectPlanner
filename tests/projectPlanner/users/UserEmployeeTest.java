@@ -94,13 +94,9 @@ public class UserEmployeeTest {
 	}
 	
 	@Test
-	public void ChangeUsername() throws SQLException {
+	public void ChangeUsername() throws SQLException, ActionNotAllowedException {
 		String newUsername = "Ole43";
-		try {
-			employee.updateUsername(newUsername, password);
-		} catch (ActionNotAllowedException ex){
-			Assert.fail(ex.getMessage());
-		}
+		employee.updateUsername(newUsername, password);
 		Assert.assertEquals(newUsername, employee.getUsername());
 	}
 	
@@ -119,13 +115,10 @@ public class UserEmployeeTest {
 	}
 	
 	@Test 
-	public void SetNameOfTheUser() throws SQLException {
+	public void SetNameOfTheUser() throws SQLException, ActionNotAllowedException {
 		String newName = "Ole Hansen";
-		try {		
-			employee.updateFirstname(newName, password);
-		} catch (ActionNotAllowedException ex) {
-			Assert.fail(ex.getMessage());
-		}
+		employee.updateFirstname(newName, password);
+
 		Assert.assertEquals(newName, employee.getFirstname());
 	}
 	
