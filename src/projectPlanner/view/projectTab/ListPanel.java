@@ -78,7 +78,7 @@ public class ListPanel extends JPanel{
 		add(selectProjectList);
 
 		//add header in leftmost column for activities belonging to selected project
-		actListHeader = new JLabel("Activities for project:" + getCurrentSelectedProject().getTitle());
+		actListHeader = new JLabel("Activities for project: " + getCurrentSelectedProject().getTitle());
 		actListHeader.setFont(boldFont);
 		add(actListHeader);
 
