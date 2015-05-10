@@ -73,6 +73,7 @@ public class ActivityPane extends JPanel {
 		List<Employee> employees = ProjectPlanner.getEmployeesByActivity(activity);
 		List<String> employeeNames = new ArrayList<String>();
 		for (Employee employee: employees) {
+			employeeNames.add(employee.getFirstname() +" "+ employee.getLastname());
 		}
 		return employeeNames;
 	}
