@@ -35,7 +35,7 @@ public class StdListPanel extends JPanel{
 		listModel = new DefaultListModel<String>();
 		listToPop = new JList<String>(populateList());
 		listToPop.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listToPop.setLayoutOrientation(JList.VERTICAL_WRAP);
+		listToPop.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		listToPop.setVisibleRowCount(5);
 		listToPop.setFont(new Font("Arial Bold", Font.BOLD, 14));
 		listToPop.setBackground(new Color(238,238,238));

@@ -25,7 +25,6 @@ import projectPlanner.view.adminTab.AdminTab;
 import projectPlanner.view.calendarTab.CalendarTab;
 import projectPlanner.view.login.LogInDialog;
 import projectPlanner.view.personalInfo.PersonalInfoTab;
-import projectPlanner.view.projectTab.NoProjectsTab;
 import projectPlanner.view.projectTab.ProjectTab;
 import projectPlanner.view.activityTab.ActivityTab;
 import projectPlanner.Activity;
@@ -58,7 +57,7 @@ public class View extends JFrame {
 		try {
 			listOfActivities = User.getActivities(ProjectPlanner.getCurrentUser());
 		} catch (Exception e){
-
+			new ErrorDialog("There was an error in connecting to the server");
 		}
 
 		this.logInDialog = logInDialog;

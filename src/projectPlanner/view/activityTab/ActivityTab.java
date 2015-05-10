@@ -8,6 +8,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 import projectPlanner.Activity;
+import projectPlanner.ProjectPlanner;
+import projectPlanner.users.User;
+import projectPlanner.view.ErrorDialog;
 import projectPlanner.view.TabUpdate;
 
 
@@ -43,7 +46,15 @@ public class ActivityTab extends JPanel implements TabUpdate {
 
 	@Override
 	public void updateTab() {
-		// TODO Auto-generated method stub
+		List<Activity> newActivities;
+		try {
+			newActivities = User.getActivities(ProjectPlanner.getCurrentUser());
+			rightPane = new ActivityModificationPane(newActivities);
+		    leftPane = new ActivityListPane(newActivities, rightPane);
+		} catch (Exception e){
+			new ErrorDialog("Acttivities Tab didn't update.");
+		}
+
 		
 	}
 
