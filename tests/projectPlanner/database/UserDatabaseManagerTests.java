@@ -183,7 +183,7 @@ public class UserDatabaseManagerTests {
 	public void getTimeSpendOnAllActivitiesByUser() throws SQLException {
 		double time = dataManager.getTimeSpendOnAllActivities(user);
 		
-		Assert.assertTrue(time >= 121.75);
+		Assert.assertTrue(time >= 10);
 	}
 	
 	@Test
@@ -213,18 +213,19 @@ public class UserDatabaseManagerTests {
 	public void deleteLoggedTime_CreateAtgainAfterWards() throws SQLException {
 		Calendar date = Calendar.getInstance();
 		// This sets the exect date
-		date.setTimeInMillis(1429740000000L);
+//		date.setTimeInMillis(1429740000000L);
+		date.set(2015, 5, 10);
 		LoggedTime time = new LoggedTime(1, 2, 10.5, date);
-		
 		double before = dataManager.getTimeSpendOnEachActivity(user).size();
-		dataManager.deleteLoggedTime(time);
-	
-		// Get the number of objects after the deletion
-		double afterDelete =  dataManager.getTimeSpendOnEachActivity(user).size();
-		Assert.assertTrue(before == afterDelete + 1);
-		
+
+		// Part 1 add the logged time obejct 
 		dataManager.logTimeOnActivity(time);
 		double afterAdding = dataManager.getTimeSpendOnEachActivity(user).size();
-		Assert.assertTrue(afterDelete + 1 == afterAdding);
+		Assert.assertEquals(before + 1, afterAdding, 0);
+		
+		// Part 2 remove the logged time obect 
+		dataManager.deleteLoggedTime(time);	
+		double afterDelete =  dataManager.getTimeSpendOnEachActivity(user).size();
+		Assert.assertEquals(afterAdding - 1, afterDelete, 0);
 	}
 }
