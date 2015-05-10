@@ -1,5 +1,6 @@
 package projectPlanner.view.adminTab;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.Calendar;
 import java.util.Date;
@@ -44,6 +45,7 @@ public class TextNDate extends JPanel{
 		this.setLayout(new FlowLayout());
 		this.add(fieldLbl);
 		this.add(datePicker);
+
 		
 	}
 	

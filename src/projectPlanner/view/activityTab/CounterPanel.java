@@ -69,6 +69,7 @@ public class CounterPanel extends JPanel{
 		this.add(counterFld);
 		this.add(moreBtn);
 		
+		
 		setCounterFld();
 		
 

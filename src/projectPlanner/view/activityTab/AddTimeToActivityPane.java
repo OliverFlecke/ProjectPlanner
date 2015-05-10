@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Calendar;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -30,6 +31,7 @@ public class AddTimeToActivityPane extends JPanel {
 	private CounterPanel addTimePanel;
 	private JButton addTimeBtn;
 	private TextNDate dateToLogTimePanel;
+	private JPanel addTimeContainerPanel;
 	
 	
 
@@ -38,8 +40,12 @@ public class AddTimeToActivityPane extends JPanel {
 		
 		activityName = activity.getTitle();
 		
+		
 		dateToLogTimePanel = new TextNDate();
 		dateToLogTimePanel.setDate(Calendar.getInstance());
+		
+		
+		
 		
 		
 		addTimePanel = new CounterPanel();
@@ -74,14 +80,27 @@ public class AddTimeToActivityPane extends JPanel {
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
+		
+		addTimeContainerPanel = new JPanel();
+		addTimeContainerPanel.setLayout(new BoxLayout(addTimeContainerPanel, BoxLayout.PAGE_AXIS));
+		addTimeContainerPanel.add(dateToLogTimePanel);
+		addTimeContainerPanel.add(addTimePanel);
+		addTimeContainerPanel.add(addTimeBtn);
+		addTimeContainerPanel.add(Box.createVerticalGlue());
+		
+		
+		//Set size on panels
+		hoursSpent.setMaximumSize(new Dimension(300, 200));
+		
+		addTimeContainerPanel.setMaximumSize(new Dimension(300, 200));
+		
 	
 		//Adding elements to the JPanel 
 		this.add(activityTitle);
 		this.add(projectName);
 		this.add(hoursSpent);
-		this.add(dateToLogTimePanel);
-		this.add(addTimePanel);
-		this.add(addTimeBtn);
+		this.add(addTimeContainerPanel);
+		this.add(Box.createVerticalGlue());
 		
 		
 		// centering the elements.
