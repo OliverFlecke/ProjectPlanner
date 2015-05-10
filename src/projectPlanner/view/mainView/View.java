@@ -145,24 +145,24 @@ public class View extends JFrame {
 		logOut.addMenuListener(new MenuListener(){
 			@Override
 			public void menuCanceled(MenuEvent e) {
-				dispose();
-				logInDialog.loginPnl().flush();
-				logInDialog.setVisible(true);
+				createNewLogin();
 			}
 
 			@Override
 			public void menuDeselected(MenuEvent e) {
-				dispose();
-				logInDialog.loginPnl().flush();
-				logInDialog.setVisible(true);
+				createNewLogin();
 			}
 
 			@Override
 			public void menuSelected(MenuEvent e) {
+				createNewLogin();
+			}
+			
+			private void createNewLogin() {
 				dispose();
+				View.this.dispose();
 				logInDialog.loginPnl().flush();
 				logInDialog.setVisible(true);
-
 			}
 		});
 
