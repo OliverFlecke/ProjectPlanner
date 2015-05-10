@@ -94,6 +94,7 @@ public class AdminLogOnTest {
 	 * @throws UserLoginException 
 	 */
 	@Test
+	@Category(FastTest.class)
 	public void testLoginFailedWrongUsernameNWrongPassword() throws SQLException, Exception {
 	
 		ProjectPlanner planner = new ProjectPlanner();
@@ -114,17 +115,18 @@ public class AdminLogOnTest {
 		assertFalse(planner.getIsLoggedIn());
 	}
 
-/** 
- * Tests the scenario when the administrator wants to log in with the right username and the wrong password.
- * <ol>
- *  <li> The administrator logs in with the right username and wrong password
- *  <li> The project planner responds false to the login request
- *  <li> The administrator is not logged in to the project planner
- * </ol>
- * @throws Exception 
- * @throws SQLException 
- */
+	/** 
+	 * Tests the scenario when the administrator wants to log in with the right username and the wrong password.
+	 * <ol>
+	 *  <li> The administrator logs in with the right username and wrong password
+	 *  <li> The project planner responds false to the login request
+	 *  <li> The administrator is not logged in to the project planner
+	 * </ol>
+	 * @throws Exception 
+	 * @throws SQLException 
+	 */
 	@Test
+	@Category(FastTest.class)
 	public void testLoginFailedRightUsernameNWrongPassword() throws SQLException, Exception {
 	
 		ProjectPlanner planner = new ProjectPlanner();
@@ -156,6 +158,7 @@ public class AdminLogOnTest {
 	 * @throws SQLException 
 	 */
 	@Test
+	@Category(FastTest.class)
 	public void testLoginFailedWrongUsernameNRightPassword() throws SQLException, Exception {
 	
 		ProjectPlanner planner = new ProjectPlanner();

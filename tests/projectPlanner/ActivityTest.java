@@ -5,13 +5,13 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 
 import static org.mockito.Mockito.*;
-
 import projectPlanner.database.*;
 import projectPlanner.testCategories.*;
 /**
  * Test activity methodes
  */
 public class ActivityTest {
+	@SuppressWarnings("unused")
 	private Activity activity;
 	
 	@Mock 
