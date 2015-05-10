@@ -77,7 +77,7 @@ public class CounterPanel extends JPanel{
 		
 	}
 	
-	public CounterPanel(int counter) {
+	public CounterPanel(double counter) {
 		this();
 		this.counter = counter;
 		setCounterFld();
@@ -88,6 +88,11 @@ public class CounterPanel extends JPanel{
 	}
 
 	public void setCounterFld() {
+		this.counterFld.setText(String.valueOf(counter));
+	}
+
+	public void setCounterFld(double value) {
+		this.counter = value;
 		this.counterFld.setText(String.valueOf(counter));
 	}
 
