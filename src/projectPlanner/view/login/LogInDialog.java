@@ -21,7 +21,7 @@ public class LogInDialog extends JFrame {
 
 
 	public LogInDialog() {
-		super("Please Login");
+		this.setTitle("Please Login");
 		try{
 		ImageIcon img = new ImageIcon(getClass().getResource("images/lock.png"));
 		setIconImage(img.getImage());

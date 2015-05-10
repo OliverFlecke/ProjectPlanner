@@ -91,7 +91,9 @@ public class LoginPanel extends JPanel {
 				       public void run() {
 				    	   if(verifyLogin()){
 								new View(logInDialog);
+								System.out.println(1);
 								logInDialog.setVisible(false);
+								System.out.println(2);
 							}
 				    	   
 				        }
