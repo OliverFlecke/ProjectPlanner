@@ -80,6 +80,7 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		activity.setID(getActivity(activity.getTitle()).getID());
 		closeConnections();
 	}
+
 	
 	@Override
 	public Activity getActivity(int ID) throws SQLException {
@@ -102,7 +103,8 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 		String SQL = "SELECT * FROM Activities "
 				+ "INNER JOIN Projects ON Projects.ProjectID = Activities.ProjectID "
 				+ "INNER JOIN Employees ON Projects.ProjectLeader = Employees.EmployeeID "
-				+ "WHERE Activities.Title = '" + title + "';";
+				+ "WHERE Activities.Title = '" + title + "' "
+				+ "ORDER BY Activities.ActivityID DESC;";
 		resultSet = executeQuery(SQL);
 		
 		Activity activity = null;

@@ -195,7 +195,7 @@ public class ManageActivityPanel extends JPanel{
 					listPanel.getCurrentSelectedActivity().update(name.getTxt(), listPanel.getCurrentSelectedProject(),
 							Double.parseDouble(accumTime.getTxt()), Double.parseDouble(allottedTime.getTxt()), 
 							activeCheck.isSelected(), startDate.getDate(), endDate.getDate());
-					succesLabel.setText("Changes apllied successfully");
+					
 
 					//removes and adds employees, the new list are so problems dont occour with updating lists, ruining index locations
 						int tempIndexUser = userList.getSelectedIndex();
@@ -217,6 +217,7 @@ public class ManageActivityPanel extends JPanel{
 						listPanel.getCurrentSelectedActivity().removeEmployee(tempEmployeeList.get(tempIndexEmployee));
 					}
 					listPanel.refreshActivitiesList();
+					succesLabel.setText("Changes apllied successfully");
 				} catch (SQLException e1) {
 					new ErrorDialog("There was a problem in connecting to the server");
 					e1.printStackTrace();

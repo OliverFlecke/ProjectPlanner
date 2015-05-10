@@ -58,6 +58,7 @@ public class LogInDialog extends JFrame {
 	public UpdatePanel getStatusUpdatePnl() {
 		return statusUpdatePnl;
 	}
+	
 	public LoginPanel loginPnl(){
 		return (LoginPanel) loginPnl;
 	}

@@ -111,7 +111,7 @@ public class Project implements Comparable<Project> {
 		dataManager.saveProject(this);
 	}
 	
-	static void setDataManager	(IProjectDatabaseManager db) {
+	static void setDataManager(IProjectDatabaseManager db) {
 		dataManager = db;
 	}
 	

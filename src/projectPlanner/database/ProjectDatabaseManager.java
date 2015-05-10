@@ -179,9 +179,8 @@ public class ProjectDatabaseManager extends DatabaseManager implements IProjectD
 
 	@Override
 	public void addActivityToProject(Project project, Activity activity) throws SQLException {
-		//String SQL = "INSERT INTO MemberOfProject VALUES(" + project.getID() + ", " + activity.getID() + ")";	
 		String SQL = "INSERT INTO MemberOfProject VALUES(" + project.getID() + ", " + activity.getID() + ")";
-		executeUpdate(SQL);
+		executeUpdate(SQL); 
 	}
 
 	@Override
