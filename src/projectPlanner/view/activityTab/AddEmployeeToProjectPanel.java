@@ -98,7 +98,7 @@ public class AddEmployeeToProjectPanel extends JPanel{
 		List<Employee> employeesOnActivity = ProjectPlanner.getEmployeesByActivity(activity);
 		List<String> employees = new ArrayList<String>();
 		for (Employee employee: employeesOnActivity) {
-			employees.add(employee.getFirstname() + employee.getLastname());
+			employees.add(employee.getFirstname() + " " + employee.getLastname());
 		}
 		return employees;
 	}

@@ -7,6 +7,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import projectPlanner.Activity;
+import projectPlanner.view.ErrorDialog;
 
 public class ActivityModificationPane extends JPanel {
 	
@@ -39,7 +40,7 @@ public class ActivityModificationPane extends JPanel {
 			timeToActivityPane = new AddTimeToActivityPane(activity);
 			addEmpPane = new AddEmployeeToProjectPanel(activity);
 		} catch (Exception e) {
-			
+			new ErrorDialog("Could not reload panels");
 		}
 		uiFormatPanel.add(timeToActivityPane);
 		uiFormatPanel.add(addEmpPane);

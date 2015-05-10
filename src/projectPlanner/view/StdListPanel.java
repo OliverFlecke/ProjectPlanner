@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -42,13 +43,14 @@ public class StdListPanel extends JPanel{
 		listToPop = new JList<String>(populateList());
 		listToPop.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listToPop.setLayoutOrientation(JList.VERTICAL_WRAP);
-		listToPop.setVisibleRowCount(10);
+		listToPop.setVisibleRowCount(listToPop.getModel().getSize());
 		
 		
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		container.add(listToPop);
 		JScrollPane scrollList = new JScrollPane(container);
-		scrollList.setMinimumSize(new Dimension(100,150));
+		scrollList.setBorder(BorderFactory.createEmptyBorder());
+		//scrollList.setMinimumSize(new Dimension(100,150));
 
 //		Box listBox = new Box(BoxLayout.Y_AXIS);
 //		listBox.add(scrollList);
@@ -116,7 +118,7 @@ public class StdListPanel extends JPanel{
 		}
 		return listModel;
 		
-	}
+	} 
 
 	public void addTolist(String toAdd) {
 		listForPop.add(toAdd);
