@@ -94,4 +94,12 @@ public class LoggedTime {
 	public Calendar getDate() {
 		return this.date;
 	}
+	
+	/**
+	 * Add time to this object
+	 * @param timeToAdd Time to add
+	 */
+	public void addTime(double timeToAdd) {
+		this.time += timeToAdd;
+	}
 }
