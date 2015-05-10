@@ -5,9 +5,7 @@ import java.util.*;
 
 import org.junit.*;
 import org.junit.experimental.categories.*;
-import org.mockito.Mock;
 
-import static org.mockito.Mockito.*;
 import projectPlanner.testCategories.*;
 import projectPlanner.users.*;
 import projectPlanner.*;
