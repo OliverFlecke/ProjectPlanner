@@ -195,6 +195,7 @@ public class ManageActivityPanel extends JPanel{
 					listPanel.getCurrentSelectedActivity().update(name.getTxt(), listPanel.getCurrentSelectedProject(),
 							Double.parseDouble(accumTime.getTxt()), Double.parseDouble(allottedTime.getTxt()), 
 							activeCheck.isSelected(), startDate.getDate(), endDate.getDate());
+					succesLabel.setText("Changes apllied successfully");
 
 					//removes and adds employees, the new list are so problems dont occour with updating lists, ruining index locations
 						int tempIndexUser = userList.getSelectedIndex();
@@ -273,7 +274,6 @@ public class ManageActivityPanel extends JPanel{
 		startDate.setDate(listPanel.getCurrentSelectedActivity().getStartDate());
 		endDate.setDate(listPanel.getCurrentSelectedActivity().getEndDate());
 		succesLabel.setForeground(Color.decode("#33CC33"));
-		succesLabel.setText("Changes apllied successfully");
 		refreshUserNames();
 		refreshActivityNames();
 

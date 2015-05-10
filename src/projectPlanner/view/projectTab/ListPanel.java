@@ -40,6 +40,7 @@ public class ListPanel extends JPanel{
 	private boolean refreshingActivities;
 	private boolean refreshingProjects;
 	private DefaultListModel<String> projectListModel;
+	private int selIndex;
 
 	public ListPanel(){		
 		//temp border until visuals are improved
@@ -166,7 +167,8 @@ public class ListPanel extends JPanel{
 	}
 	public void refreshActivitiesList() {
 		refreshingActivities = true;
-		//refresh header
+		//refresh headeract
+		selIndex = selectActivityList.getSelectedIndex();
 		actListHeader.setText("Activities for project:" + getCurrentSelectedProject().getTitle());
 		//refresh list
 		activityListModel.removeAllElements();
@@ -176,33 +178,36 @@ public class ListPanel extends JPanel{
 			new ErrorDialog("There was an error in connecting to the server");
 		}
 	}
-	public void refreshProjectsList() {
-		refreshingProjects = true;
-		projectListModel.removeAllElements();
-		try {
-			refreshProjectNames();
-		} catch (SQLException e) {
-			new ErrorDialog("There was an error in connecting to the server");
-		}
-	}
-
-
-	private void refreshProjectNames() throws SQLException {
-		for(String current : getProjectNames()){
-			projectListModel.addElement(current);
-		}
-		SwingUtilities.invokeLater(() -> refreshingProjects = false);
-		SwingUtilities.invokeLater(() -> selectProjectList.setSelectedIndex(0));
-
-
-	}
+	
+//	//agreed that if one is added to a project by an admin
+//	//logging out and the logging in, is not an unreasonable request
+//	public void refreshProjectsList() {
+//		refreshingProjects = true;
+//		projectListModel.removeAllElements();
+//		try {
+//			refreshProjectNames();
+//		} catch (SQLException e) {
+//			new ErrorDialog("There was an error in connecting to the server");
+//		}
+//	}
+//
+//
+//	private void refreshProjectNames() throws SQLException {
+//		for(String current : getProjectNames()){
+//			projectListModel.addElement(current);
+//		}
+//		SwingUtilities.invokeLater(() -> refreshingProjects = false);
+//		SwingUtilities.invokeLater(() -> selectProjectList.setSelectedIndex(0));
+//
+//
+//	}
 
 	private void refreshActivityNames() throws SQLException {
 		for(String current : getActivityNames()){
 			activityListModel.addElement(current);
 		}
 		SwingUtilities.invokeLater(() -> refreshingActivities = false);
-		SwingUtilities.invokeLater(() -> selectActivityList.setSelectedIndex(0));
+		SwingUtilities.invokeLater(() -> selectActivityList.setSelectedIndex(selIndex));
 
 	}
 
@@ -256,4 +261,8 @@ public class ListPanel extends JPanel{
 	public void setActivityList(List<Activity> activityList) {
 		this.activityList = activityList;
 	}
+	public void setActivitySelection(int i){
+		selectProjectList.setSelectedIndex(i);
+	}
+	
 }

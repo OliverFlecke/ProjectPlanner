@@ -73,6 +73,7 @@ public class View extends JFrame {
 			personal = new ImageIcon(getClass().getResource("images/personal.png"));
 			project = new ImageIcon(getClass().getResource("images/project.png"));
 		} catch (Exception e) {	}
+		
 		CalendarTab panel1 = new CalendarTab(listOfActivities);
 		tabbedPane.addTab("Calendar", calendartab, panel1, "this weeks calendar" );
 
