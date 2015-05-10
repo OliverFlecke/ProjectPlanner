@@ -39,7 +39,7 @@ public class AddEmployeeToProjectPanel extends JPanel{
 		
 
 		
-		employeesOnActivity = new StdListPanel(getEmployeesOnActivity(activity), "Employees On Activity", 20, Color.WHITE);
+		employeesOnActivity = new StdListPanel(getEmployeesOnActivity(activity), "Employees On Activity", 20, Color.WHITE, false);
 		employeesNotOnActivity = new StdListPanel(getEmployeesNotOnActivity(activity), "Employees Not On Activity", 20, Color.WHITE);
 		
 		addToActivityBtn = new JButton("Add to Activity");
