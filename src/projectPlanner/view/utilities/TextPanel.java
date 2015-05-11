@@ -1,4 +1,4 @@
-package projectPlanner.view.activityPanel;
+package projectPlanner.view.utilities;
 
 import java.awt.FlowLayout;
 
