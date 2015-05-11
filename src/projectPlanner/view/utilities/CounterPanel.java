@@ -15,10 +15,10 @@ public class CounterPanel extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 4656605166735492765L;
-	private JButton lessBtn;
-	private JButton moreBtn;
-	private JTextField counterFld;
-	private double counter;
+	protected JButton lessBtn;
+	protected JButton moreBtn;
+	protected JTextField counterFld;
+	protected double counter;
 
 
 
@@ -28,7 +28,7 @@ public class CounterPanel extends JPanel{
 		this.counter = 0.0;
 		
 		//fld formatting
-		counterFld = new JTextField(5);
+		counterFld = new JTextField(8);
 		counterFld.setEditable(false);
 		counterFld.setHorizontalAlignment(JTextField.CENTER);
 		
