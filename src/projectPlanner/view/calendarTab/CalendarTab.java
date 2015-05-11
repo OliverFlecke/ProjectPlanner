@@ -61,11 +61,10 @@ public class CalendarTab extends JPanel{
 	}
 	
 	public void repaintCalendar(int month, int year){
-		this.remove(this.calendarContainer);
-		this.calendarContainer = new CalendarDay(listOfActivities, month, year);
-		this.add(this.calendarContainer);
-		
-		this.repaint();	
-		calendarContainer.repaint();
+		System.out.println("hej");
+		this.remove(calendarContainer);
+		this.revalidate();
+		this.repaint();
+		//this.calendarContainer = new CalendarDay(listOfActivities, month, year);
 	}
 }
