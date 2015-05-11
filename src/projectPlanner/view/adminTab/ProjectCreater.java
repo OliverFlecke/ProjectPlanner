@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.Box;
@@ -92,8 +93,18 @@ public class ProjectCreater extends JPanel {
 				double time = ((Number)ProjectCreater.this.allottedTime.getValue()).doubleValue();
 				User user = User.getUser(ProjectCreater.this.projectLeader.getTxt());
 				
+				Calendar start = ProjectCreater.this.startDateFld.getDate();
+				Calendar end = ProjectCreater.this.deadLineFld.getDate();
+				if (start != null && end != null) {
+					if (start.compareTo(end) > 0) {
+						succesLabel.setText("");
+						new ErrorDialog("The startdate is after the end date. Please enter a later end date");
+						return;
+					}
+				}
+				
 				new Project(ProjectCreater.this.projectName.getTxt(), time, user, 
-						ProjectCreater.this.startDateFld.getDate(), ProjectCreater.this.deadLineFld.getDate());
+						start, end);
 				ProjectCreater.this.succesLabel.setText("The project has succesfully been created!");
 			} catch (SQLException ex) {
 				ProjectCreater.this.succesLabel.setText("");

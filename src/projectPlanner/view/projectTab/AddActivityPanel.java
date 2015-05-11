@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Calendar;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -58,10 +60,17 @@ public class AddActivityPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e){
 				try {
-					@SuppressWarnings("unused")
-
-					Activity addAct = new Activity(name.getTxt(),listPanel.getCurrentSelectedProject(),
-							startDate.getDate(),endDate.getDate(),Double.parseDouble(allottedTime.getTxt()));
+					Calendar start = startDate.getDate();
+					Calendar end = endDate.getDate();
+					if (start != null && end != null) {
+						if (start.compareTo(end) > 0) {
+							succesLabel.setText("");
+							new ErrorDialog("The startdate is after the end date. Please enter a later end date");
+							return;
+						}
+					}
+					new Activity(name.getTxt(), listPanel.getCurrentSelectedProject(),
+							start, end, Double.parseDouble(allottedTime.getTxt()));
 					succesLabel.setForeground(Color.decode("#33CC33"));
 					succesLabel.setText(name.getTxt() + " added successfully");
 					name.setTxt("");
@@ -69,6 +78,7 @@ public class AddActivityPanel extends JPanel{
 					startDate.setDate(null);
 					endDate.setDate(null);
 					listPanel.refreshActivitiesList();
+					
 				} catch (SQLException e1) {
 					new ErrorDialog("There was a problem in connecting to the server");
 					e1.printStackTrace();
