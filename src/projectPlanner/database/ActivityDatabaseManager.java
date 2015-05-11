@@ -183,7 +183,7 @@ public class ActivityDatabaseManager extends DatabaseManager implements IActivit
 	}
 	
 	@Override
-	public List<Activity> getActivitiesByEmployee(Employee employee) throws SQLException {
+	public List<Activity> getActivitiesByEmployee(User employee) throws SQLException {
 		List<Activity> activities = new ArrayList<Activity>();
 		String SQL = "SELECT * FROM WorksOn "
 				+ "INNER JOIN Employees ON Employees.EmployeeID = WorksOn.EmployeeID "

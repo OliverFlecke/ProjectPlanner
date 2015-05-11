@@ -47,35 +47,32 @@ public class Project implements Comparable<Project> {
 	 * @param allottedTime Time set aside for the project
 	 * @throws SQLException
 	 */
-	public Project(String title, int allottedTime) throws SQLException {
-		this.createProject(title, allottedTime);
+	public Project(String title, double allottedTime) throws SQLException {
+		this(title, allottedTime, null);
 	}
 	
 	/**
 	 * Create a project with a title, allotted time,s and a project leader. 
-	 * @param name of the project
+	 * @param title of the project
 	 * @param allottedTime
 	 * @param projectLeader
 	 * @throws SQLException
 	 */
-	public Project(String name, double allottedTime, User projectLeader) throws SQLException {
-		this.projectLeader = projectLeader;
-		this.createProject(name, allottedTime);
+	public Project(String title, double allottedTime, User projectLeader) throws SQLException {
+		this(title, allottedTime, projectLeader, null);
 	}
 	
 	/**
 	 * Create a project with everything but an end date
-	 * @param name of the project
+	 * @param title of the project
 	 * @param allottedTime to the project
 	 * @param projectLeaderID of the project leader of this project
 	 * @param startDate
 	 * @param endDate
 	 * @throws SQLException
 	 */
-	public Project(String name, double allottedTime, User projectLeader, Calendar startDate) throws SQLException{
-		this.projectLeader = projectLeader;
-		this.startDate = startDate;
-		this.createProject(name, allottedTime);
+	public Project(String title, double allottedTime, User projectLeader, Calendar startDate) throws SQLException{
+		this(title, allottedTime, projectLeader, startDate, null);
 	}
 	
 	/**
@@ -87,21 +84,11 @@ public class Project implements Comparable<Project> {
 	 * @param endDate
 	 * @throws SQLException
 	 */
-	public Project(String name, double allottedTime, User projectLeader, Calendar startDate, Calendar endDate) throws SQLException{
+	public Project(String title, double allottedTime, User projectLeader, Calendar startDate, Calendar endDate) throws SQLException{
 		this.endDate = endDate;
 		this.startDate = startDate;
 		this.projectLeader = projectLeader;
-		this.createProject(name, allottedTime);
-	}
-
-	
-	/**
-	 * Save the project
-	 * @param title of the project
-	 * @param allottedTime to the project
-	 * @throws SQLException 
-	 */
-	private void createProject(String title, double allottedTime) throws SQLException {
+		
 		this.title = title;
 		this.allottedTime = allottedTime;
 		this.isActive = true;
@@ -110,7 +97,7 @@ public class Project implements Comparable<Project> {
 			dataManager = new ProjectDatabaseManager();
 		dataManager.saveProject(this);
 	}
-	
+
 	static void setDataManager(IProjectDatabaseManager db) {
 		dataManager = db;
 	}
@@ -135,6 +122,15 @@ public class Project implements Comparable<Project> {
 	 */
 	public void activateProject() throws SQLException {
 		this.isActive = true;
+		dataManager.updateProject(this);
+	}
+	
+	/**
+	 * Set this project as inactive
+	 * @throws SQLException
+	 */
+	public void setProjectAsInactive() throws SQLException {
+		this.isActive = false;
 		dataManager.updateProject(this);
 	}
 	

@@ -67,4 +67,34 @@ public class ProjectTest {
 			Assert.assertEquals("You do not have the rights to remove the project leader", ex.getMessage());
 		}
 	}
+	
+	@Test 
+	@Category(FastTest.class)
+	public void testToStringMetode() throws SQLException {
+		Assert.assertEquals(project.getTitle(), project.toString());
+	}
+	
+	@Test
+	@Category(FastTest.class)
+	public void updateTitleOfProject() throws SQLException {
+		project.setTitle("New title");
+		Assert.assertEquals("New title", project.getTitle());
+	}
+	
+	@Test 
+	@Category(FastTest.class)
+	public void setProjectAsInactive_ThenAsActive() throws SQLException {
+		project.setProjectAsInactive();
+		Assert.assertFalse(project.isActive());
+		
+		project.activateProject();
+		Assert.assertTrue(project.isActive());
+	}
+	
+	@Test
+	@Category(FastTest.class) 
+	public void setAllottedTime() throws SQLException {
+		project.setAllottedTime(20);
+		Assert.assertEquals(20, project.getAllottedTime(), 0);
+	}
 }

@@ -19,7 +19,6 @@ public class ActivityDatabaseManagerTests {
 	private ActivityDatabaseManager db;
 	private Activity expActivity;
 	private User user;
-	@SuppressWarnings("unused")
 	private Project project;
 	
 	@Before
@@ -64,13 +63,8 @@ public class ActivityDatabaseManagerTests {
 	public void saveActivityToDatabase() throws SQLException {
 		// This test can not be run each time. This will try to save the activity to the database
 		// We primary look for exceptions
-//		Activity activity = new Activity("Test activity 2", project);
-	}
-	
-	@Test
-	@Category(DatabaseTest.class) 
-	public void deleteActivity_AddAfterward() throws SQLException {
-//		db.deleteActivity(expActivity);
+		Activity activity = new Activity("Test activity 2", project);
+		db.deleteActivity(activity);
 	}
 	
 	@Test
@@ -84,8 +78,7 @@ public class ActivityDatabaseManagerTests {
 	@Test 
 	@Category(DatabaseTest.class)
 	public void addEmployeeToActivity() throws SQLException {
-		// This test can not run each time, because we need to insert new data into the table
-//		// Get the size of the user list before we add an user
+		// Get the size of the user list before we add an user
 		int sizeBefore = db.getUsers(expActivity).size();
 		db.addEmployee(user, expActivity);
 		
@@ -127,18 +120,4 @@ public class ActivityDatabaseManagerTests {
 		
 		Assert.assertTrue(list.size() > 0);		
 	}
-	
-	@Test
-	@Category(DatabaseTest.class) 
-	public void deleteActivity() throws SQLException {
-//		db.deleteActivity(expActivity);
-		Assert.assertTrue(true);
-	}
-	
-//	@Test 
-//	@Category(DatabaseTest.class)
-//	public void removeEmployee() throws SQLException {
-//		db.removeEmployee(user, expActivity);
-//		db.addEmployee(user, expActivity);
-//	}
 }

@@ -31,7 +31,7 @@ public class Activity implements Comparable<Activity> {
 	 * @throws SQLException 
 	 */
 	public Activity(String title, Project project) throws SQLException {
-		createActivity(title, project, null, null, 0);
+		this(title, project, null, null);
 	}
 	
 	/**
@@ -260,7 +260,7 @@ public class Activity implements Comparable<Activity> {
 	
 	@Override
 	public int compareTo(Activity other) {
-		return Integer.compare(this.id, other.getID());
+		return Integer.compare(this.getID(), other.getID());
 	}
 
 	/**
@@ -269,7 +269,7 @@ public class Activity implements Comparable<Activity> {
 	 * @return A list of related activities
 	 * @throws SQLException
 	 */
-	public static List<Activity> getActivities(Employee employee) throws SQLException {
+	public static List<Activity> getActivities(User employee) throws SQLException {
 		return dataManager.getActivitiesByEmployee(employee);
 	}
 

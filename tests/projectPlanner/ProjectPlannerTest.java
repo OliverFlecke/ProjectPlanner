@@ -4,10 +4,11 @@ import java.sql.SQLException;
 
 import org.junit.*;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mock;
 
+import static org.mockito.Mockito.*;
 import projectPlanner.testCategories.*;
 import projectPlanner.users.*;
-import projectPlanner.users.UserLoginException;
 
 /**
  * @author Oliver Fleckenstein
@@ -17,9 +18,19 @@ public class ProjectPlannerTest {
 
 	private ProjectPlanner projectPlanner;
 	
+	@Mock
+	private User user;
+	@Mock 
+	private Project project;
+	@Mock
+	private Activity activity;
+	
 	@Before
 	public void setup() {
 		projectPlanner = new ProjectPlanner();
+		user = mock(User.class);
+		project = mock(Project.class);
+		activity = mock(Activity.class);
 	}
 	
 	@After
@@ -72,5 +83,33 @@ public class ProjectPlannerTest {
 		} catch (SQLException ex) { 
 			Assert.fail("Exception should not be thrown here.");
 		}
+	}
+	
+	@Test
+	@Category(SlowTest.class)
+	public void getCurrentUsersActivities() throws SQLException {
+		Assert.assertNotNull(projectPlanner.getCurrentUsersActivities());
+	}
+	
+	@Test
+	@Category(FastTest.class)
+	public void getEmployees() throws SQLException {
+		projectPlanner.getActivitiesByEmployee(user);
+		projectPlanner.getActivitiesByProject(project);
+		ProjectPlanner.getEmployeesByActivity(activity);
+		ProjectPlanner.getEmployeesNotInActivity(activity);
+	}
+	
+	@Test 
+	@Category(FastTest.class)
+	public void loginAndLogout() throws UserLoginException, Exception {
+		Assert.assertTrue(projectPlanner.login("Oliver", "1234"));
+		projectPlanner.logout();
+	}
+	
+	@Test 
+	@Category(FastTest.class)
+	public void createNewUserThroughProjectPlaner() throws Exception {
+		projectPlanner.createNewUser("New username", "Password", "Firstname", "Lastname");
 	}
 }

@@ -9,9 +9,6 @@ import projectPlanner.*;
  * Standard employee account, which will have be able to work and log time
  */
 public class Employee extends User {
-
-	@SuppressWarnings("unused")
-	private List<Activity> activities;
 	
 	/**
 	 * Default contructor, which takes a username, a password, and a name for the user
@@ -23,13 +20,11 @@ public class Employee extends User {
 	 */
 	public Employee(String username, String password, String firstname, String lastname) throws SQLException {
 		super(username, password, firstname, lastname);
-		this.activities = new ArrayList<Activity>();
 	}
 	
 	
 	public Employee(String username, String password, String firstname, String lastname, int id) {
 		super(username, password, firstname, lastname, id);
-		this.activities = new ArrayList<Activity>();
 	}
 
 	public static List<Employee> getEmployees(Activity activity) throws SQLException {

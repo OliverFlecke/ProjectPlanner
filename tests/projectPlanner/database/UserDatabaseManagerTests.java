@@ -35,6 +35,7 @@ public class UserDatabaseManagerTests {
 		// Create a copy of the user in the database
 		user = new Employee("Oliver", "1234", "Oliver", "Fleckenstein", 2);
 		password = "1234";
+		
 		date = Calendar.getInstance();
 		// This sets the exect date
 //		date.setTimeInMillis(1429740000000L);
@@ -180,7 +181,7 @@ public class UserDatabaseManagerTests {
 		activity = Activity.getActivity(1);
 		double time = dataManager.getTimeSpendOnActivity(user, activity);
 		
-		Assert.assertEquals(10.5, time, 0);
+		Assert.assertTrue(10.5 <= time);
 	}
 	
 	@Test
@@ -215,9 +216,14 @@ public class UserDatabaseManagerTests {
 	
 	@Test
 	@Category(DatabaseTest.class)
-	public void deleteLoggedTime_CreateAtgainAfterWards() throws SQLException {
+	public void deleteLoggedTime_CreateAgainAfterards() throws SQLException {
+		Calendar date = Calendar.getInstance();
+		// This sets the exect date
+//		date.setTimeInMillis(1429740000000L);
 		date.set(2015, 5, 10);
 		LoggedTime time = new LoggedTime(1, 2, 10.5, date);
+		
+		dataManager.deleteLoggedTime(time);	
 		double before = dataManager.getTimeSpendOnEachActivity(user).size();
 		
 		// Part 1 add the logged time obejct 

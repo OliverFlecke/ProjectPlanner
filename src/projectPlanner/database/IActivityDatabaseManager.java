@@ -72,7 +72,7 @@ public interface IActivityDatabaseManager {
 	 * @param employee to get the related activities from
 	 * @return A list of activities related to the employee
 	 */
-	public List<Activity> getActivitiesByEmployee(Employee employee) throws SQLException;
+	public List<Activity> getActivitiesByEmployee(User employee) throws SQLException;
 
 	/**
 	 * Get all the activities related to the passed project

@@ -1,6 +1,7 @@
 package projectPlanner.users;
 
 import java.sql.SQLException;
+import java.util.Calendar;
 
 import projectPlanner.*;
 import projectPlanner.database.IUserDataManager;
@@ -20,19 +21,21 @@ public class UserEmployeeTest {
 	private String password;
 	
 	@Mock 
-	private IUserDataManager dataManager;
+	private IUserDataManager db;
+	
+	@Mock
+	private Activity activity;
 	
 	@Before
-	public void setup() {
+	public void setup() throws SQLException {
 		password = "Qwer!234";
 		
-		dataManager = mock(IUserDataManager.class);
-		User.setDataManager(dataManager);
-		try {
-			employee = new Employee("Ole42", password, "Ole", "Jensen");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		db = mock(IUserDataManager.class);
+		when(db.getNumberOfUsers()).thenReturn(2);
+		User.setDataManager(db);
+		activity = mock(Activity.class);
+		
+		employee = new Employee("Ole42", password, "Ole", "Jensen");
 	}
 	
 	@After
@@ -76,6 +79,7 @@ public class UserEmployeeTest {
 			employee.updatePassword(password, newPassword);
 		} catch (ActionNotAllowedException ex) {
 			Assert.fail("Password was wrong, but should be correct");
+			Assert.assertEquals(employee, ex.getUser());
 		}
 		Assert.assertTrue(employee.checkPassword(newPassword));
 	}
@@ -138,5 +142,41 @@ public class UserEmployeeTest {
 	@Category(UserTest.class) 
 	public void toStringTest() {
 		Assert.assertEquals("Ole Jensen Username: Ole42 Password: Qwer!234 ID: 0", employee.toString());
+	}
+	
+	@Test
+	@Category(UserTest.class)
+	public void getNumberOfUsers() throws SQLException {
+		Assert.assertEquals(2, User.getNumberOfUsers());
+	}
+	
+	@Test
+	@Category(UserTest.class)
+	public void testGetterMethods() throws SQLException {
+		User.getActivities(employee);
+		User.getTimeSpendOnActivity(employee, activity);
+		employee.getTimeSpendOnAllActivities();
+		User.getUser("Oliver", "Fleckenstein");
+		User.getAllUsers();
+		Employee.getEmployees(activity);
+		
+		// Get datamanager
+		IUserDataManager dataManager = User.getDataManager();
+		Assert.assertEquals(db, dataManager);
+	}
+	
+	@Test 
+	@Category(UserTest.class) 
+	public void logTimeThroughUser() throws SQLException {
+		User.setTimeSpendOnActivity(new LoggedTime(1, 1, 10, Calendar.getInstance()));
+		User.updateLoggedTime(new LoggedTime(1, 1, 20, Calendar.getInstance()));
+	}
+	
+	@Test 
+	@Category(UserTest.class) 
+	public void compareUsers() throws SQLException {
+		User newUser = new Employee("Username", "Password", "Firstname", "lastname", 2);
+		int result = newUser.compareTo(employee);
+		Assert.assertEquals(1, result);
 	}
 }

@@ -64,7 +64,7 @@ public abstract class User implements Comparable<User> {
 	/**
 	 * @return get the userdata manager
 	 */
-	IUserDataManager getDataManager() {
+	static IUserDataManager getDataManager() {
 		return dataManager;
 	}
 	

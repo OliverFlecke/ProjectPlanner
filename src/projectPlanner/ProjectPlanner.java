@@ -78,7 +78,7 @@ public class ProjectPlanner {
 	 * @param employee to get the activities 
 	 * @return A list of activities the passed employee is working on
 	 */
-	public List<Activity> getActivitiesByEmployee(Employee employee) throws SQLException {
+	public List<Activity> getActivitiesByEmployee(User employee) throws SQLException {
 		return Activity.getActivities(employee);
 	}
 	

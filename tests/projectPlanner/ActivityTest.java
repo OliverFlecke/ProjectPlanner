@@ -33,7 +33,7 @@ public class ActivityTest {
 		project = mock(Project.class);	
 		user = mock(User.class);
 		
-		activity = new Activity("Test activity", project, Calendar.getInstance(), Calendar.getInstance());
+		activity = new Activity(1, "Test activity", project, 20, true, Calendar.getInstance(), Calendar.getInstance(), 1);
 	}
 	
 	@Test 
@@ -51,6 +51,41 @@ public class ActivityTest {
 		before = activity.getHoursAllotted();
 		activity.setHoursAllotted(before + 2);
 		Assert.assertEquals(before + 2, activity.getHoursAllotted(), 0);
+	}
+	
+	@Test
+	@Category(FastTest.class) 
+	public void getterMethodsCheck() throws SQLException {
+		// Test that we can call all these metodes without getting exceptions
+		Activity.deleteActicity(activity);
+		Activity.getActivities(user);
+		Activity.getActivities(project);
+	}
+	
+	@Test 
+	@Category(FastTest.class) 
+	public void updateDates() throws SQLException {
+		Calendar date = Calendar.getInstance();
+		activity.setEndDate(date);
+		Assert.assertEquals(date, activity.getEndDate());
+		
+		// Set and get the start date
+		activity.setStartDate(date);
+		Assert.assertEquals(date, activity.getStartDate());
+	}
+	
+	@Test
+	@Category(FastTest.class)
+	public void compareActivities() throws SQLException {
+		Activity other = new Activity(2, "Test activity", project, 20, true, Calendar.getInstance(), Calendar.getInstance(), 1);
+		int result = activity.compareTo(other);
+		Assert.assertEquals(-1, result);
+	}
+	
+	@Test 
+	@Category(FastTest.class)
+	public void testToStringOverride() {
+		Assert.assertEquals("Test activity", activity.toString());
 	}
 	
 	@Test
@@ -85,9 +120,8 @@ public class ActivityTest {
 	
 	@Test
 	@Category(FastTest.class)
-	public void activitcCompareTest() throws SQLException {
-		Activity compareActivity = new Activity("Test activity", project, Calendar.getInstance(), Calendar.getInstance());
+	public void activityCompareTest() throws SQLException {
+		Activity compareActivity = new Activity(1, "Test activity", project, 20, true, Calendar.getInstance(), Calendar.getInstance(), 1);
 		Assert.assertEquals(activity, compareActivity); 
 	}
-	
 }
