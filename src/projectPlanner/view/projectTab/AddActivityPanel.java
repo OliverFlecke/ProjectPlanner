@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import projectPlanner.Activity;
-import projectPlanner.view.ErrorDialog;
+import projectPlanner.view.utilities.ErrorDialog;
 import projectPlanner.view.utilities.TextNDate;
 import projectPlanner.view.utilities.TextNField;
 

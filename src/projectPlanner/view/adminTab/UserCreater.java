@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 import projectPlanner.view.*;
 import projectPlanner.users.Employee;
+import projectPlanner.view.utilities.ErrorDialog;
 import projectPlanner.view.utilities.NameObject;
 import projectPlanner.view.utilities.TextNField;
 

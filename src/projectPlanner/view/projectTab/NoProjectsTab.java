@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import projectPlanner.view.TabUpdate;
+import projectPlanner.view.utilities.TabUpdate;
 
 public class NoProjectsTab extends JPanel{
 	/**

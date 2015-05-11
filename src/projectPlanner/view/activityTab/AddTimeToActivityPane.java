@@ -21,9 +21,9 @@ import javax.swing.event.ListSelectionListener;
 
 import projectPlanner.*;
 import projectPlanner.users.User;
-import projectPlanner.view.ErrorDialog;
-import projectPlanner.view.StdListPanel;
 import projectPlanner.view.utilities.CounterPanel;
+import projectPlanner.view.utilities.ErrorDialog;
+import projectPlanner.view.utilities.StdListPanel;
 import projectPlanner.view.utilities.TextNDate;
 import projectPlanner.view.utilities.TextPanel;
 

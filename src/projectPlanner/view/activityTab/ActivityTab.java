@@ -10,8 +10,8 @@ import javax.swing.JSplitPane;
 import projectPlanner.Activity;
 import projectPlanner.ProjectPlanner;
 import projectPlanner.users.User;
-import projectPlanner.view.ErrorDialog;
-import projectPlanner.view.TabUpdate;
+import projectPlanner.view.utilities.ErrorDialog;
+import projectPlanner.view.utilities.TabUpdate;
 
 
 

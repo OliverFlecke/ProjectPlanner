@@ -3,7 +3,7 @@ package projectPlanner.view.projectTab;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import projectPlanner.view.TabUpdate;
+import projectPlanner.view.utilities.TabUpdate;
 
 public class ProjectTab extends JPanel implements TabUpdate{
 

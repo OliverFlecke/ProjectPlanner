@@ -15,7 +15,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDPixelMap;
 
-import projectPlanner.view.ErrorDialog;
+import projectPlanner.view.utilities.ErrorDialog;
 
 public class ProjectReport {
 	private BufferedImage bIMG;

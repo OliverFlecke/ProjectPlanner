@@ -10,7 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import projectPlanner.ProjectPlanner;
 import projectPlanner.users.User;
-import projectPlanner.view.ErrorDialog;
+import projectPlanner.view.utilities.ErrorDialog;
 
 @SuppressWarnings("serial")
 public class PersonalInfoTab extends JPanel{

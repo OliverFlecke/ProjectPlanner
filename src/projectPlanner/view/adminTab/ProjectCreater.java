@@ -16,9 +16,9 @@ import javax.swing.border.EmptyBorder;
 
 import projectPlanner.Project;
 import projectPlanner.users.User;
-import projectPlanner.view.ErrorDialog;
-import projectPlanner.view.StdListPanel;
+import projectPlanner.view.utilities.ErrorDialog;
 import projectPlanner.view.utilities.NameObject;
+import projectPlanner.view.utilities.StdListPanel;
 import projectPlanner.view.utilities.TextNDate;
 import projectPlanner.view.utilities.TextNField;
 import projectPlanner.view.utilities.TextNNumber;

@@ -1,4 +1,4 @@
-package projectPlanner.view;
+package projectPlanner.view.utilities;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

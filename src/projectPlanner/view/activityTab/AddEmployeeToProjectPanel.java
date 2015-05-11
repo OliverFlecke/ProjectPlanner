@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import projectPlanner.Activity;
 import projectPlanner.users.Employee;
 import projectPlanner.users.User;
-import projectPlanner.view.StdListPanel;
+import projectPlanner.view.utilities.StdListPanel;
 import projectPlanner.ProjectPlanner;
 
 public class AddEmployeeToProjectPanel extends JPanel{

@@ -25,7 +25,7 @@ import javax.swing.event.ListSelectionListener;
 import projectPlanner.ProjectPlanner;
 import projectPlanner.users.Employee;
 import projectPlanner.users.User;
-import projectPlanner.view.ErrorDialog;
+import projectPlanner.view.utilities.ErrorDialog;
 import projectPlanner.view.utilities.TextNDate;
 import projectPlanner.view.utilities.TextNField;
 
