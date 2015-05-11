@@ -3,6 +3,7 @@ package projectPlanner.view.calendarTab;
 import java.awt.Color;
 import java.util.Calendar;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -27,19 +28,16 @@ public class CalendarDay extends JPanel {
 	private int thisMonth  = today.get(Calendar.MONTH);
 	private int thisYear  = today.get(Calendar.YEAR);
 
-	//Month to display
-	private int month = 4;
-	private int year = 2015;
 
 
-//	private String[] monthNames = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 	private String[] dayNames = { "Sunday", "Monday", "Tuesday", "Wedensday", "Thursday", "Friday", "Saturday"};
 	private int count = 0;
 	private int limit = dayNames.length*5;
 	private List<Activity> listOfActivities;
 
 
-	public CalendarDay(List<Activity> listOfActivities) {
+	public CalendarDay(List<Activity> listOfActivities, int month, int year) {
+		
 		this.setBackground(Color.WHITE);
 		this.listOfActivities =listOfActivities;
 

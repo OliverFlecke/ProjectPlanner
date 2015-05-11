@@ -53,10 +53,8 @@ public class MonthCounter extends CounterPanel{
 					monthInt++;
 				}
 				monthToDisplay = monthNames[monthInt] + "-" + String.valueOf(yearCounter);
+				setCounterFld();			
 				calendarTab.repaintCalendar(monthInt, yearCounter);
-				setCounterFld();
-				
-				
 			}
 			
 		});
