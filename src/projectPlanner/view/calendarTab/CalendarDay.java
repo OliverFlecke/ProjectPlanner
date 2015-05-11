@@ -3,7 +3,6 @@ package projectPlanner.view.calendarTab;
 import java.awt.Color;
 import java.util.Calendar;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;

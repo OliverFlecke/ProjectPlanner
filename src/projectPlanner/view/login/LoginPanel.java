@@ -1,7 +1,6 @@
 package projectPlanner.view.login;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -32,7 +31,6 @@ public class LoginPanel extends JPanel {
 	private JLabel passwordLbl;
 	private ProjectPlanner projectPlanner;
 	private LogInDialog logInDialog;
-	private JLabel updateLabel;
 
 
 	public LoginPanel(LogInDialog logInDialog) {
@@ -84,7 +82,6 @@ public class LoginPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-//				updateLabel = logInDialog.getStatusUpdatePnl().getStatusLbl();
 				logInDialog.getStatusUpdatePnl().setStatusColor(Color.decode("#33CC33"));
 				logInDialog.getStatusUpdatePnl().updateMessage("Logging you in. Please wait...");
 				SwingUtilities.invokeLater(new Runnable() {
