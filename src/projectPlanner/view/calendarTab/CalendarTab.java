@@ -12,6 +12,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
 
 import projectPlanner.Activity;
 import projectPlanner.view.activityPanel.*;
@@ -46,12 +47,12 @@ public class CalendarTab extends JPanel{
 	    
 	    JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftSideScrollPane, rightPane);
 	    
-	    
+	    	
 	    rightPane.setLayout(new BoxLayout(rightPane, BoxLayout.Y_AXIS));
 	    rightPane.add(monthCounter);
 	    rightPane.add(calendarContainer);
 	    
-	    rightPane.add(Box.createVerticalGlue());
+	    //rightPane.add(Box.createVerticalGlue());
 	    
 	    splitPane.setOneTouchExpandable(true);
 	    splitPane.setDividerLocation(400);
@@ -62,9 +63,12 @@ public class CalendarTab extends JPanel{
 	
 	public void repaintCalendar(int month, int year){
 		System.out.println("hej");
-		this.remove(calendarContainer);
-		this.revalidate();
-		this.repaint();
-		//this.calendarContainer = new CalendarDay(listOfActivities, month, year);
+		rightPane.remove(calendarContainer);
+		this.calendarContainer = new CalendarDay(listOfActivities, month, year);
+		SwingUtilities.invokeLater(() -> validate());
+		SwingUtilities.invokeLater(() -> repaint());
+		rightPane.add(calendarContainer);
+		calendarContainer.setLayout(new GridLayout(0,7));
+	    calendarContainer.setBackground(new Color(238,238,238));	
 	}
 }
