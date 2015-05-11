@@ -28,6 +28,7 @@ import projectPlanner.users.User;
 import projectPlanner.view.utilities.ErrorDialog;
 import projectPlanner.view.utilities.TextNDate;
 import projectPlanner.view.utilities.TextNField;
+import projectPlanner.view.utilities.TextNNumber;
 
 public class ManageActivityPanel extends JPanel{
 
@@ -41,7 +42,7 @@ public class ManageActivityPanel extends JPanel{
 	private JLabel activityHeader;
 	private TextNField name;
 	private TextNField accumTime;
-	private TextNField allottedTime;
+	private TextNNumber allottedTime;
 	private TextNDate startDate;
 	private TextNDate endDate;
 	private DefaultListModel<String> currentEmployeeListModel;
@@ -76,8 +77,8 @@ public class ManageActivityPanel extends JPanel{
 		this.add(activeCheck);
 
 		//allotted time field
-		allottedTime = new TextNField("Alotted Man-Hours");
-		allottedTime.setTxt(Double.toString(listPanel.getCurrentSelectedActivity().getHoursAllotted()));
+		allottedTime = new TextNNumber("Alotted Man-Hours");
+		allottedTime.setText(Double.toString(listPanel.getCurrentSelectedActivity().getHoursAllotted()));
 		add(allottedTime);
 
 		//accumulated time

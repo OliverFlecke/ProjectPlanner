@@ -48,4 +48,8 @@ public class TextNNumber extends JPanel {
 	public double getValue() {
 		return ((Number)this.allottedTime.getValue()).doubleValue();
 	}
+
+	public void setText(String string) {
+		allottedTime.setText(string);
+	}
 }
