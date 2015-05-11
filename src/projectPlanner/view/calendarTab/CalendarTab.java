@@ -39,7 +39,7 @@ public class CalendarTab extends JPanel{
 	    leftPane = new ActivityHolder(listOfActivities);
 	    calendarContainer = new CalendarDay(listOfActivities, Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.YEAR));
 	    calendarContainer.setLayout(new GridLayout(0,7));
-	    calendarContainer.setBackground(new Color(255,220,122));
+	    calendarContainer.setBackground(new Color(238,238,238));
 	    leftSideScrollPane = new JScrollPane(leftPane);
 	    monthCounter = new MonthCounter(this);
 	    monthCounter.setMaximumSize(new Dimension(500,100));
