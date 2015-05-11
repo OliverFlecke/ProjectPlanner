@@ -340,13 +340,12 @@ public class Project implements Comparable<Project> {
 	 * @return Total spent time on project
 	 * @throws SQLException
 	 */
-	public float getSpentTime() throws SQLException{
-		float spentTime = 0;
-		for(Activity current : getActivities()){
+	public double getSpentTime() throws SQLException{
+		double spentTime = 0;
+		for (Activity current : getActivities()) {
 			spentTime += current.getTimeAccumulated();
 		}
 		return spentTime;
-		
 	}
 	
 	/**
