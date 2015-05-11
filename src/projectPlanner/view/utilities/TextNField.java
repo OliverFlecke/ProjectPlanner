@@ -1,4 +1,4 @@
-package projectPlanner.view.adminTab;
+package projectPlanner.view.utilities;
 
 
 import javax.swing.JPanel;

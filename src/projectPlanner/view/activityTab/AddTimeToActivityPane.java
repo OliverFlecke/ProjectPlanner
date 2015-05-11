@@ -23,7 +23,8 @@ import projectPlanner.*;
 import projectPlanner.users.User;
 import projectPlanner.view.ErrorDialog;
 import projectPlanner.view.StdListPanel;
-import projectPlanner.view.adminTab.TextNDate;
+import projectPlanner.view.utilities.CounterPanel;
+import projectPlanner.view.utilities.TextNDate;
 import projectPlanner.view.utilities.TextPanel;
 
 public class AddTimeToActivityPane extends JPanel {

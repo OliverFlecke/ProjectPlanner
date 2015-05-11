@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -20,12 +21,13 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
 import projectPlanner.ProjectPlanner;
 import projectPlanner.users.Employee;
 import projectPlanner.users.User;
 import projectPlanner.view.ErrorDialog;
-import projectPlanner.view.adminTab.TextNDate;
-import projectPlanner.view.adminTab.TextNField;
+import projectPlanner.view.utilities.TextNDate;
+import projectPlanner.view.utilities.TextNField;
 
 public class ManageActivityPanel extends JPanel{
 

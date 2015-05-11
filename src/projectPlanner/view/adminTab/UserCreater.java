@@ -14,7 +14,8 @@ import javax.swing.border.EmptyBorder;
 
 import projectPlanner.view.*;
 import projectPlanner.users.Employee;
-import projectPlanner.view.personalInfo.NameObject;
+import projectPlanner.view.utilities.NameObject;
+import projectPlanner.view.utilities.TextNField;
 
 /**
  * Class to create a user from the UI

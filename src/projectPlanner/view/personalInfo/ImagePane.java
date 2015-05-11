@@ -6,6 +6,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import projectPlanner.view.utilities.NameObject;
+
 public class ImagePane extends JPanel{
 	
 	/**

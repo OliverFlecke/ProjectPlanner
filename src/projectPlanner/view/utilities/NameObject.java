@@ -1,4 +1,4 @@
-package projectPlanner.view.personalInfo;
+package projectPlanner.view.utilities;
 
 import java.awt.Font;
 

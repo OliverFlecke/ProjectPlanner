@@ -15,8 +15,8 @@ import javax.swing.JPanel;
 
 import projectPlanner.Activity;
 import projectPlanner.view.ErrorDialog;
-import projectPlanner.view.adminTab.TextNDate;
-import projectPlanner.view.adminTab.TextNField;
+import projectPlanner.view.utilities.TextNDate;
+import projectPlanner.view.utilities.TextNField;
 
 public class AddActivityPanel extends JPanel{
 	/**

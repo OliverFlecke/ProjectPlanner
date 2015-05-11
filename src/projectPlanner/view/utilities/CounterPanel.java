@@ -1,4 +1,4 @@
-package projectPlanner.view.activityTab;
+package projectPlanner.view.utilities;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;

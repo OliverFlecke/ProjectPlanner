@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import projectPlanner.view.utilities.NameObject;
+
 @SuppressWarnings("serial")
 public class PersonalInfoPane extends JPanel {
 	

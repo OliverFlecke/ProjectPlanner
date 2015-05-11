@@ -1,4 +1,4 @@
-package projectPlanner.view.adminTab;
+package projectPlanner.view.utilities;
 
 import java.awt.*;
 import java.text.NumberFormat;
