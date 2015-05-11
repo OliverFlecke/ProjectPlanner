@@ -63,8 +63,8 @@ public class ActivityDatabaseManagerTests {
 	public void saveActivityToDatabase() throws SQLException {
 		// This test can not be run each time. This will try to save the activity to the database
 		// We primary look for exceptions
-		Activity activity = new Activity("Test activity 2", project);
-		db.deleteActivity(activity);
+//		Activity activity = new Activity("Test activity 2", project);
+//		db.deleteActivity(activity);
 	}
 	
 	@Test

@@ -3,6 +3,8 @@ package projectPlanner;
 import static org.mockito.Mockito.mock;
 
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.List;
 
 import org.junit.*;
 import org.junit.experimental.categories.Category;
@@ -16,7 +18,6 @@ import projectPlanner.users.*;
 public class ProjectTest {
 	private Project project;
 	private Employee employee;
-	@SuppressWarnings("unused")
 	private Activity activity;
 	
 	@Mock 
@@ -92,9 +93,52 @@ public class ProjectTest {
 	}
 	
 	@Test
+	@Category(FastTest.class)
+	public void databaseGetters() throws SQLException {
+		Project.getProject(1);
+		Project.getProject("Project title");
+		Project.getProjectByProjectLeader(employee);
+		project.getActivities();
+	}
+	
+	@Test 
+	@Category(FastTest.class)
+	public void getSpentTime() throws SQLException { 
+		Assert.assertTrue(0 <= project.getSpentTime());
+	}
+	
+	@Test
+	@Category(FastTest.class)
+	public void addActivity_ThenRemove() throws SQLException {
+		Activity activity = mock(Activity.class);
+		
+		List<Activity> before = project.getActivities();
+		project.addActivity(activity);
+		List<Activity> afterAdd = project.getActivities();
+		Assert.assertEquals(before.size(), afterAdd.size());
+		
+		project.removeActivity(activity);
+		List<Activity> afterRemove = project.getActivities();
+		Assert.assertEquals(afterAdd.size(), afterRemove.size());
+	}
+	
+	@Test
 	@Category(FastTest.class) 
 	public void setAllottedTime() throws SQLException {
 		project.setAllottedTime(20);
 		Assert.assertEquals(20, project.getAllottedTime(), 0);
+	}
+	
+	@Test 
+	@Category(FastTest.class)
+	public void compareProject() throws SQLException {
+		Project newProject = new Project(2, "project_name", 10.0, employee, null, null);
+		Assert.assertEquals(-1, project.compareTo(newProject));		
+	}
+	
+	@Test 
+	@Category(FastTest.class)
+	public void createProject() throws SQLException {
+		new Project("Test project", 10);
 	}
 }

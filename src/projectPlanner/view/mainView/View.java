@@ -20,12 +20,12 @@ import javax.swing.event.MenuListener;
 import projectPlanner.Project;
 import projectPlanner.ProjectPlanner;
 import projectPlanner.users.User;
-import projectPlanner.view.ErrorDialog;
 import projectPlanner.view.adminTab.AdminTab;
 import projectPlanner.view.calendarTab.CalendarTab;
 import projectPlanner.view.login.LogInDialog;
 import projectPlanner.view.personalInfo.PersonalInfoTab;
 import projectPlanner.view.projectTab.ProjectTab;
+import projectPlanner.view.utilities.ErrorDialog;
 import projectPlanner.view.activityTab.ActivityTab;
 import projectPlanner.Activity;
 

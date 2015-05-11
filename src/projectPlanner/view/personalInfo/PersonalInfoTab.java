@@ -9,7 +9,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import projectPlanner.ProjectPlanner;
+<<<<<<< HEAD
 import projectPlanner.view.ErrorDialog;
+=======
+import projectPlanner.users.User;
+import projectPlanner.view.utilities.ErrorDialog;
+>>>>>>> origin/master
 
 @SuppressWarnings("serial")
 public class PersonalInfoTab extends JPanel{

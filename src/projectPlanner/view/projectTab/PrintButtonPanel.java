@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import projectPlanner.view.ErrorDialog;
+import projectPlanner.view.utilities.ErrorDialog;
 
 public class PrintButtonPanel extends JPanel {
 	/**

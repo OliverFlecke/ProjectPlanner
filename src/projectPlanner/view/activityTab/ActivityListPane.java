@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import projectPlanner.view.StdListPanel;
+import projectPlanner.view.utilities.StdListPanel;
 import projectPlanner.Activity;
 
 public class ActivityListPane extends JPanel {

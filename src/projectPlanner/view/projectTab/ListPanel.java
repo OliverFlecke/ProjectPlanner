@@ -23,7 +23,7 @@ import javax.swing.event.ListSelectionListener;
 import projectPlanner.Activity;
 import projectPlanner.Project;
 import projectPlanner.ProjectPlanner;
-import projectPlanner.view.ErrorDialog;
+import projectPlanner.view.utilities.ErrorDialog;
 
 public class ListPanel extends JPanel{
 

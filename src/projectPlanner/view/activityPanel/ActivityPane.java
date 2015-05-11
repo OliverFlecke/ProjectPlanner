@@ -19,7 +19,8 @@ import projectPlanner.Activity;
 import projectPlanner.ProjectPlanner;
 import projectPlanner.users.Employee;
 import projectPlanner.users.User;
-import projectPlanner.view.StdListPanel;
+import projectPlanner.view.utilities.StdListPanel;
+import projectPlanner.view.utilities.TextPanel;
 
 public class ActivityPane extends JPanel {
 	
