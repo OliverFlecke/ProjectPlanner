@@ -11,6 +11,10 @@ import javax.swing.JTextField;
 
 public class CounterPanel extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4656605166735492765L;
 	private JButton lessBtn;
 	private JButton moreBtn;
 	private JTextField counterFld;

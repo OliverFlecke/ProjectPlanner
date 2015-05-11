@@ -68,6 +68,7 @@ public class ProjectPlannerTest {
 	@Category(UserStoryTest.class)
 	public void createActivityAsProjectLeader() throws SQLException {
 		// Setup
+		@SuppressWarnings("unused")
 		User user = new Employee("Oliver", "1234", "Oliver", "Fleckenstein", 2);
 		Project project = null;
 		try {
@@ -79,6 +80,7 @@ public class ProjectPlannerTest {
 		// Create new activity 
 		try {
 			// The activity will insure it gets added to the passed project
+			@SuppressWarnings("unused")
 			Activity activity = new Activity("New usercase project", project);		
 		} catch (SQLException ex) { 
 			Assert.fail("Exception should not be thrown here.");

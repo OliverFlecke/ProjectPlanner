@@ -13,8 +13,6 @@ public class ImagePane extends JPanel{
 	 */
 	private static final long serialVersionUID = -4030752740965199017L;
 	private JLabel imgLbl = new JLabel();
-	private NameObject name;
-	private NameObject position;
 	private JPanel namePane = new JPanel();
 	private JPanel imgPane = new JPanel();	
 	

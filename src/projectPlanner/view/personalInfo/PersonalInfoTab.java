@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import projectPlanner.ProjectPlanner;
-import projectPlanner.users.User;
 import projectPlanner.view.ErrorDialog;
 
 @SuppressWarnings("serial")

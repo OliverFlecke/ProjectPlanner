@@ -1,17 +1,14 @@
 package projectPlanner.view.activityTab;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import projectPlanner.Activity;
 import projectPlanner.users.Employee;
 import projectPlanner.users.User;
@@ -29,12 +26,10 @@ public class AddEmployeeToProjectPanel extends JPanel{
 	private StdListPanel employeesNotOnActivity;
 	private JPanel formattingPanel;
 	private JButton addToActivityBtn;
-	private Activity activity;
 	List<User> employeesNotOnActivityLst;
 	
 	public AddEmployeeToProjectPanel(Activity activity) throws Exception{
 		this.projectName = new JLabel(activity.getTitle());
-		this.activity = activity;
 		formattingPanel = new JPanel();
 		
 		

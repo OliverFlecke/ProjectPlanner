@@ -1,11 +1,8 @@
 package projectPlanner.view.projectTab;
 
 import java.awt.*;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import projectPlanner.view.TabUpdate;
 
 public class NoProjectsTab extends JPanel{
 	/**

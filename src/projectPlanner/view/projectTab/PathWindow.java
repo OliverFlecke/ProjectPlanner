@@ -15,6 +15,7 @@ public class PathWindow extends JFileChooser{
 	public PathWindow() throws UserClosedWindowException{
 		super();
 		JFrame jframe = new JFrame();
+		@SuppressWarnings("unused")
 		int returnVal = this.showSaveDialog(jframe);
 		
 		try{

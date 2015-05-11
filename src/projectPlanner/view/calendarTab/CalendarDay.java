@@ -32,7 +32,7 @@ public class CalendarDay extends JPanel {
 	private int year = 2015;
 
 
-	private String[] monthNames = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+//	private String[] monthNames = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 	private String[] dayNames = { "Sunday", "Monday", "Tuesday", "Wedensday", "Thursday", "Friday", "Saturday"};
 	private int count = 0;
 	private int limit = dayNames.length*5;

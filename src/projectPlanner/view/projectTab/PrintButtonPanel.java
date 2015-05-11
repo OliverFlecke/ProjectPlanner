@@ -41,8 +41,6 @@ public class PrintButtonPanel extends JPanel {
 					path = choosePath();
 				} catch (UserClosedWindowException e1) {}
 				try {
-					System.out.println(path);
-					System.out.println(listPanel.getCurrentSelectedProject().getTitle());
 					listPanel.getCurrentSelectedProject().printProjectReport(path);
 				} catch (IOException | SQLException e1) {
 					new ErrorDialog("There was a problem in generating the report");

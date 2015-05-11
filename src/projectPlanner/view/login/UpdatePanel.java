@@ -14,7 +14,6 @@ public class UpdatePanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 7009252657272574378L;
-	private JLabel statusUpdateLbl;
 	private JLabel statusLbl;
 	private JLabel marginLbl;
 	
@@ -28,7 +27,8 @@ public class UpdatePanel extends JPanel {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
 		this.add(statusLbl);
-		this.add(marginLbl = new JLabel(" "));
+		marginLbl = new JLabel(" ");
+		this.add(marginLbl);
 	}
 	
 	public void updateMessage(String string){

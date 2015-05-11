@@ -1,14 +1,11 @@
 package projectPlanner.view.adminTab;
 
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
