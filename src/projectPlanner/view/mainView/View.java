@@ -45,7 +45,7 @@ public class View extends JFrame {
 	private static final long serialVersionUID = 1669099048319235705L;
 
 	public View(LogInDialog logInDialog) {
-		super("Project Planner");
+		super("Project Planner 4000");
 		
 		
 		//set main icon

@@ -1,6 +1,6 @@
 Readme for ProjectPlanner 4000 by group 44, for the course 02161 software engineering.
 By
-Sebastian Ake Aaen - s144453
+Sebastian Ake Aaen - s144463
 Oliver Fleckenstein - s144472
 Mark Bo Jensen - s144474
 
@@ -14,6 +14,8 @@ The program (.jar)
 Eclipse project
 This Readme
 Repport Part 3
+Updated program design (.pdf)
+Updated database design (.pdf)
 
 Logging into the Server
 ---------------------------------------
@@ -69,8 +71,7 @@ How To Use the program
 
 Printing a report
 ----------------------------------------
-Printing a report generates a .pdf file, that will be stored locally. It needs to be 
-manually deleted after use.
+Printing a report generates a .pdf file, that will be stored locally.
 The Project save dialog defaults to user\currentUser\documents
 A filename must be specified i order to save a report.
 Upon saving the .pdf will be generated and open by itself.
