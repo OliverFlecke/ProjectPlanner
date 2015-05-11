@@ -4,11 +4,6 @@ import java.awt.*;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-<<<<<<< HEAD
-=======
-import projectPlanner.view.utilities.TabUpdate;
-
->>>>>>> origin/master
 public class NoProjectsTab extends JPanel{
 	/**
 	 * 

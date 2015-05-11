@@ -4,15 +4,12 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import projectPlanner.view.*;
 import projectPlanner.users.Employee;
 import projectPlanner.view.utilities.ErrorDialog;
 import projectPlanner.view.utilities.NameObject;

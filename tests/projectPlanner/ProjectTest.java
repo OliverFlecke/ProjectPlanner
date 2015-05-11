@@ -3,7 +3,6 @@ package projectPlanner;
 import static org.mockito.Mockito.mock;
 
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.List;
 
 import org.junit.*;
@@ -18,6 +17,7 @@ import projectPlanner.users.*;
 public class ProjectTest {
 	private Project project;
 	private Employee employee;
+	@SuppressWarnings("unused")
 	private Activity activity;
 	
 	@Mock 

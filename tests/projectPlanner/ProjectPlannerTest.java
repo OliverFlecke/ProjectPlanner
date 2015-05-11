@@ -77,7 +77,7 @@ public class ProjectPlannerTest {
 			Assert.fail("Exception should not be thrown here. This is an issue in the project class");
 		}
 		
-<<<<<<< HEAD
+ 
 		// Create new activity 
 		try {
 			// The activity will insure it gets added to the passed project
@@ -86,10 +86,10 @@ public class ProjectPlannerTest {
 		} catch (SQLException ex) { 
 			Assert.fail("Exception should not be thrown here.");
 		}
-=======
+
 		// The activity will insure it gets added to the passed project
+		@SuppressWarnings("unused")
 		Activity activity = new Activity(1, "New usercase project", project, 0, false, null, null, 0);
->>>>>>> origin/master
 	}
 	
 	@Test

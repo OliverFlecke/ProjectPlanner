@@ -7,19 +7,16 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import projectPlanner.ProjectPlanner;
-<<<<<<< HEAD
-import projectPlanner.view.ErrorDialog;
-=======
-import projectPlanner.users.User;
 import projectPlanner.view.utilities.ErrorDialog;
->>>>>>> origin/master
 
-@SuppressWarnings("serial")
 public class PersonalInfoTab extends JPanel{
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1929560358837751483L;
 	private String name;
 	private ImagePane imagePanel;
 	private PersonalInfoPane personalInfo;
