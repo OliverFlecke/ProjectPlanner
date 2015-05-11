@@ -71,10 +71,14 @@ How To Use the program
 
 Printing a report
 ----------------------------------------
+<<<<<<< HEAD
 Printing a report generates a .pdf file, that will be stored locally.
+=======
+Printing a report generates a .pdf file for saving.
+>>>>>>> origin/master
 The Project save dialog defaults to user\currentUser\documents
 A filename must be specified i order to save a report.
-Upon saving the .pdf will be generated and open by itself.
+Upon saving the PDF will be generated and open by itself.
 
 
 
