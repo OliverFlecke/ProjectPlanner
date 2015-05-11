@@ -52,4 +52,8 @@ public class TextNNumber extends JPanel {
 	public void setText(String string) {
 		allottedTime.setText(string);
 	}
+	
+	public String getText() {
+		return allottedTime.getText();
+	}
 }

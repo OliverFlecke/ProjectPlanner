@@ -187,7 +187,7 @@ public class ManageActivityPanel extends JPanel{
 				try {
 					//updates other stuff
 					listPanel.getCurrentSelectedActivity().update(name.getTxt(), listPanel.getCurrentSelectedProject(),
-							Double.parseDouble(accumTime.getTxt()), Double.parseDouble(allottedTime.getTxt()), 
+							Double.parseDouble(accumTime.getTxt()), Double.parseDouble(allottedTime.getText()), 
 							activeCheck.isSelected(), startDate.getDate(), endDate.getDate());
 					
 
@@ -264,7 +264,7 @@ public class ManageActivityPanel extends JPanel{
 		name.setTxt(listPanel.getCurrentSelectedActivity().getTitle());
 		name.getTxtField().setCaretPosition(0);
 		activeCheck.setSelected(listPanel.getCurrentSelectedActivity().isActive());
-		allottedTime.setTxt(Double.toString(listPanel.getCurrentSelectedActivity().getHoursAllotted()));
+		allottedTime.setText(Double.toString(listPanel.getCurrentSelectedActivity().getHoursAllotted()));
 		accumTime.setTxt(Double.toString(listPanel.getCurrentSelectedActivity().getTimeAccumulated()));
 		startDate.setDate(listPanel.getCurrentSelectedActivity().getStartDate());
 		endDate.setDate(listPanel.getCurrentSelectedActivity().getEndDate());
